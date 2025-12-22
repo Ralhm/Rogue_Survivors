@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://ck1o0bswmv6nb"]
+
+[ext_resource type="Script" uid="uid://wynddw7085io" path="res://Assets/Scripts/CombatManager.cs" id="1_muef8"]
+
+[node name="CombatManager" type="Node"]
+script = ExtResource("1_muef8")

@@ -1,0 +1,72 @@
+[gd_scene load_steps=5 format=3 uid="uid://b3ii7ur55tkmw"]
+
+[ext_resource type="PackedScene" uid="uid://d4g38mll22831" path="res://Assets/Managers/Player_Controller.tscn" id="1_ekklr"]
+[ext_resource type="PackedScene" uid="uid://ck1o0bswmv6nb" path="res://Assets/Managers/Combat_Manager.tscn" id="2_xudph"]
+[ext_resource type="PackedScene" uid="uid://cl80nmrn4b3cx" path="res://Assets/Characters/Character_Base.tscn" id="3_jpshy"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_lgvcj"]
+
+[node name="CombatScene" type="Node2D"]
+
+[node name="PlayerController" parent="." node_paths=PackedStringArray("Allies") instance=ExtResource("1_ekklr")]
+Allies = [NodePath("../Characters/Allies/Character_Base"), NodePath("../Characters/Allies/Character_Base2"), NodePath("../Characters/Allies/Character_Base3")]
+
+[node name="CombatManager" parent="." instance=ExtResource("2_xudph")]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(0.39, 0.39)
+
+[node name="Characters" type="Node" parent="."]
+
+[node name="Allies" type="Node" parent="Characters"]
+
+[node name="Character_Base" parent="Characters/Allies" instance=ExtResource("3_jpshy")]
+
+[node name="Character_Base2" parent="Characters/Allies" instance=ExtResource("3_jpshy")]
+position = Vector2(611, 0)
+
+[node name="Character_Base3" parent="Characters/Allies" instance=ExtResource("3_jpshy")]
+position = Vector2(-793, -6)
+
+[node name="Enemies" type="Node" parent="Characters"]
+
+[node name="Walls" type="Node" parent="."]
+
+[node name="Wall" type="StaticBody2D" parent="Walls"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Wall"]
+position = Vector2(0, 832)
+scale = Vector2(10.4397, 6.51621)
+shape = SubResource("WorldBoundaryShape2D_lgvcj")
+one_way_collision_margin = 0.0
+debug_color = Color(0.415463, 0.605513, 0, 1)
+
+[node name="Wall2" type="StaticBody2D" parent="Walls"]
+position = Vector2(7, -843)
+rotation = 3.14159
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Wall2"]
+scale = Vector2(10.4397, 6.51621)
+shape = SubResource("WorldBoundaryShape2D_lgvcj")
+one_way_collision_margin = 0.0
+debug_color = Color(0.415463, 0.605513, 0, 1)
+
+[node name="Wall3" type="StaticBody2D" parent="Walls"]
+position = Vector2(-1480, -68)
+rotation = 1.5708
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Wall3"]
+scale = Vector2(10.4397, 6.51621)
+shape = SubResource("WorldBoundaryShape2D_lgvcj")
+one_way_collision_margin = 0.0
+debug_color = Color(0.415463, 0.605513, 0, 1)
+
+[node name="Wall4" type="StaticBody2D" parent="Walls"]
+position = Vector2(1479, 5)
+rotation = 4.71239
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Wall4"]
+scale = Vector2(10.4397, 6.51621)
+shape = SubResource("WorldBoundaryShape2D_lgvcj")
+one_way_collision_margin = 0.0
+debug_color = Color(0.415463, 0.605513, 0, 1)

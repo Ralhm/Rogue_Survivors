@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="CharacterUpgradeContainer" load_steps=2 format=3 uid="uid://bmeq78tmr4fkj"]
+
+[ext_resource type="Script" uid="uid://b61d5rwgk47cb" path="res://Assets/Scripts/Data/CharacterUpgradeContainer.cs" id="1_bbcv0"]
+
+[resource]
+script = ExtResource("1_bbcv0")
+MaxHealth = 0
+MoveRange = 0.0
+Attack = 0
+Magic = 0
+PhysDefense = 0
+MagDefense = 0
+metadata/_custom_type_script = "uid://b61d5rwgk47cb"
