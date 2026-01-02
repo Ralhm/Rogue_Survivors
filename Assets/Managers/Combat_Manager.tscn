@@ -1,6 +1,16 @@
-[gd_scene load_steps=2 format=3 uid="uid://ck1o0bswmv6nb"]
+[gd_scene load_steps=4 format=3 uid="uid://ck1o0bswmv6nb"]
 
 [ext_resource type="Script" uid="uid://wynddw7085io" path="res://Assets/Scripts/CombatManager.cs" id="1_muef8"]
+[ext_resource type="PackedScene" uid="uid://cuyvqkp5ydlom" path="res://Assets/UI/World/range_indicator_circle.tscn" id="2_ex0b1"]
+[ext_resource type="PackedScene" uid="uid://b3d0lq06cl1nm" path="res://Assets/UI/World/cursor.tscn" id="3_iv22g"]
 
-[node name="CombatManager" type="Node"]
+[node name="CombatManager" type="Node" node_paths=PackedStringArray("AllyList", "EnemyList", "Indices", "Cursor")]
 script = ExtResource("1_muef8")
+AllyList = []
+EnemyList = []
+Indices = NodePath("RangeIndicatorCircle")
+Cursor = NodePath("Cursor")
+
+[node name="RangeIndicatorCircle" parent="." instance=ExtResource("2_ex0b1")]
+
+[node name="Cursor" parent="." instance=ExtResource("3_iv22g")]

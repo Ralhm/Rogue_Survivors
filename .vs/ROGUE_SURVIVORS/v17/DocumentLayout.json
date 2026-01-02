@@ -1,0 +1,205 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\MyStuff\\GameDev\\Godot\\GodotGames\\Rogue_Survivors\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{A25394F5-4912-4388-88A4-C117E847A60A}|Rogue_Survivors.csproj|c:\\mystuff\\gamedev\\godot\\godotgames\\rogue_survivors\\assets\\levels\\rangeindicatorcontainer.cs||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{A25394F5-4912-4388-88A4-C117E847A60A}|Rogue_Survivors.csproj|solutionrelative:assets\\levels\\rangeindicatorcontainer.cs||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A25394F5-4912-4388-88A4-C117E847A60A}|Rogue_Survivors.csproj|c:\\mystuff\\gamedev\\godot\\godotgames\\rogue_survivors\\assets\\scripts\\combatmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A25394F5-4912-4388-88A4-C117E847A60A}|Rogue_Survivors.csproj|solutionrelative:assets\\scripts\\combatmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A25394F5-4912-4388-88A4-C117E847A60A}|Rogue_Survivors.csproj|c:\\mystuff\\gamedev\\godot\\godotgames\\rogue_survivors\\assets\\scripts\\playercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A25394F5-4912-4388-88A4-C117E847A60A}|Rogue_Survivors.csproj|solutionrelative:assets\\scripts\\playercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A25394F5-4912-4388-88A4-C117E847A60A}|Rogue_Survivors.csproj|c:\\mystuff\\gamedev\\godot\\godotgames\\rogue_survivors\\assets\\scripts\\character.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A25394F5-4912-4388-88A4-C117E847A60A}|Rogue_Survivors.csproj|solutionrelative:assets\\scripts\\character.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A25394F5-4912-4388-88A4-C117E847A60A}|Rogue_Survivors.csproj|c:\\mystuff\\gamedev\\godot\\godotgames\\rogue_survivors\\assets\\scripts\\ui\\abilitydisplaybutton.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A25394F5-4912-4388-88A4-C117E847A60A}|Rogue_Survivors.csproj|solutionrelative:assets\\scripts\\ui\\abilitydisplaybutton.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A25394F5-4912-4388-88A4-C117E847A60A}|Rogue_Survivors.csproj|c:\\mystuff\\gamedev\\godot\\godotgames\\rogue_survivors\\assets\\scripts\\data\\characterdata.cs||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{A25394F5-4912-4388-88A4-C117E847A60A}|Rogue_Survivors.csproj|solutionrelative:assets\\scripts\\data\\characterdata.cs||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A25394F5-4912-4388-88A4-C117E847A60A}|Rogue_Survivors.csproj|c:\\mystuff\\gamedev\\godot\\godotgames\\rogue_survivors\\assets\\scripts\\data\\ability.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A25394F5-4912-4388-88A4-C117E847A60A}|Rogue_Survivors.csproj|solutionrelative:assets\\scripts\\data\\ability.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A25394F5-4912-4388-88A4-C117E847A60A}|Rogue_Survivors.csproj|c:\\mystuff\\gamedev\\godot\\godotgames\\rogue_survivors\\assets\\scripts\\ui\\attackbutton.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A25394F5-4912-4388-88A4-C117E847A60A}|Rogue_Survivors.csproj|solutionrelative:assets\\scripts\\ui\\attackbutton.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A25394F5-4912-4388-88A4-C117E847A60A}|Rogue_Survivors.csproj|c:\\mystuff\\gamedev\\godot\\godotgames\\rogue_survivors\\assets\\scripts\\ui\\defendbutton.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A25394F5-4912-4388-88A4-C117E847A60A}|Rogue_Survivors.csproj|solutionrelative:assets\\scripts\\ui\\defendbutton.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A25394F5-4912-4388-88A4-C117E847A60A}|Rogue_Survivors.csproj|c:\\mystuff\\gamedev\\godot\\godotgames\\rogue_survivors\\assets\\scripts\\ui\\waitbutton.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A25394F5-4912-4388-88A4-C117E847A60A}|Rogue_Survivors.csproj|solutionrelative:assets\\scripts\\ui\\waitbutton.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A25394F5-4912-4388-88A4-C117E847A60A}|Rogue_Survivors.csproj|c:\\mystuff\\gamedev\\godot\\godotgames\\rogue_survivors\\assets\\scripts\\ui\\abilitybutton.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A25394F5-4912-4388-88A4-C117E847A60A}|Rogue_Survivors.csproj|solutionrelative:assets\\scripts\\ui\\abilitybutton.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "RangeIndicatorContainer.cs",
+              "DocumentMoniker": "C:\\MYSTUFF\\GAMEDEV\\GODOT\\GODOTGAMES\\ROGUE_SURVIVORS\\Assets\\Levels\\RangeIndicatorContainer.cs",
+              "RelativeDocumentMoniker": "Assets\\Levels\\RangeIndicatorContainer.cs",
+              "ToolTip": "C:\\MYSTUFF\\GAMEDEV\\GODOT\\GODOTGAMES\\ROGUE_SURVIVORS\\Assets\\Levels\\RangeIndicatorContainer.cs",
+              "RelativeToolTip": "Assets\\Levels\\RangeIndicatorContainer.cs",
+              "ViewState": "AgIAAAEAAAAAAAAAAAAgwBoAAAAUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-02T04:28:56.559Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "CharacterData.cs",
+              "DocumentMoniker": "C:\\MyStuff\\GameDev\\Godot\\GodotGames\\Rogue_Survivors\\Assets\\Scripts\\Data\\CharacterData.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Data\\CharacterData.cs",
+              "ToolTip": "C:\\MyStuff\\GameDev\\Godot\\GodotGames\\Rogue_Survivors\\Assets\\Scripts\\Data\\CharacterData.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Data\\CharacterData.cs",
+              "ViewState": "AgIAACIAAAAAAAAAAAAuwC8AAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-01T01:32:18.237Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "DefendButton.cs",
+              "DocumentMoniker": "C:\\MyStuff\\GameDev\\Godot\\GodotGames\\Rogue_Survivors\\Assets\\Scripts\\UI\\DefendButton.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\UI\\DefendButton.cs",
+              "ToolTip": "C:\\MyStuff\\GameDev\\Godot\\GodotGames\\Rogue_Survivors\\Assets\\Scripts\\UI\\DefendButton.cs",
+              "RelativeToolTip": "Assets\\Scripts\\UI\\DefendButton.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAIwA8AAAAvAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-31T23:08:53.401Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "WaitButton.cs",
+              "DocumentMoniker": "C:\\MyStuff\\GameDev\\Godot\\GodotGames\\Rogue_Survivors\\Assets\\Scripts\\UI\\WaitButton.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\UI\\WaitButton.cs",
+              "ToolTip": "C:\\MyStuff\\GameDev\\Godot\\GodotGames\\Rogue_Survivors\\Assets\\Scripts\\UI\\WaitButton.cs",
+              "RelativeToolTip": "Assets\\Scripts\\UI\\WaitButton.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAvAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-31T22:52:18.816Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "AttackButton.cs",
+              "DocumentMoniker": "C:\\MyStuff\\GameDev\\Godot\\GodotGames\\Rogue_Survivors\\Assets\\Scripts\\UI\\AttackButton.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\UI\\AttackButton.cs",
+              "ToolTip": "C:\\MyStuff\\GameDev\\Godot\\GodotGames\\Rogue_Survivors\\Assets\\Scripts\\UI\\AttackButton.cs",
+              "RelativeToolTip": "Assets\\Scripts\\UI\\AttackButton.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAvAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-31T22:51:44.431Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "AbilityButton.cs",
+              "DocumentMoniker": "C:\\MyStuff\\GameDev\\Godot\\GodotGames\\Rogue_Survivors\\Assets\\Scripts\\UI\\AbilityButton.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\UI\\AbilityButton.cs",
+              "ToolTip": "C:\\MyStuff\\GameDev\\Godot\\GodotGames\\Rogue_Survivors\\Assets\\Scripts\\UI\\AbilityButton.cs",
+              "RelativeToolTip": "Assets\\Scripts\\UI\\AbilityButton.cs",
+              "ViewState": "AgIAAAUAAAAAAAAAAAAIwBkAAAA9AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-30T02:59:57.776Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "AbilityDisplayButton.cs",
+              "DocumentMoniker": "C:\\MyStuff\\GameDev\\Godot\\GodotGames\\Rogue_Survivors\\Assets\\Scripts\\UI\\AbilityDisplayButton.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\UI\\AbilityDisplayButton.cs",
+              "ToolTip": "C:\\MyStuff\\GameDev\\Godot\\GodotGames\\Rogue_Survivors\\Assets\\Scripts\\UI\\AbilityDisplayButton.cs",
+              "RelativeToolTip": "Assets\\Scripts\\UI\\AbilityDisplayButton.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAA0AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-30T03:18:46.298Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Character.cs",
+              "DocumentMoniker": "C:\\MyStuff\\GameDev\\Godot\\GodotGames\\Rogue_Survivors\\Assets\\Scripts\\Character.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Character.cs",
+              "ToolTip": "C:\\MyStuff\\GameDev\\Godot\\GodotGames\\Rogue_Survivors\\Assets\\Scripts\\Character.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Character.cs",
+              "ViewState": "AgIAAP8AAAAAAAAAAAAhwBIBAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-30T01:51:19.986Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "PlayerController.cs",
+              "DocumentMoniker": "C:\\MyStuff\\GameDev\\Godot\\GodotGames\\Rogue_Survivors\\Assets\\Scripts\\PlayerController.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\PlayerController.cs",
+              "ToolTip": "C:\\MyStuff\\GameDev\\Godot\\GodotGames\\Rogue_Survivors\\Assets\\Scripts\\PlayerController.cs",
+              "RelativeToolTip": "Assets\\Scripts\\PlayerController.cs",
+              "ViewState": "AgIAAJABAAAAAAAAAAArwJ8BAAAwAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-30T01:51:26.608Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "CombatManager.cs",
+              "DocumentMoniker": "C:\\MyStuff\\GameDev\\Godot\\GodotGames\\Rogue_Survivors\\Assets\\Scripts\\CombatManager.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\CombatManager.cs",
+              "ToolTip": "C:\\MyStuff\\GameDev\\Godot\\GodotGames\\Rogue_Survivors\\Assets\\Scripts\\CombatManager.cs",
+              "RelativeToolTip": "Assets\\Scripts\\CombatManager.cs",
+              "ViewState": "AgIAABIAAAAAAAAAAAAowBsAAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-30T01:48:32.388Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Ability.cs",
+              "DocumentMoniker": "C:\\MyStuff\\GameDev\\Godot\\GodotGames\\Rogue_Survivors\\Assets\\Scripts\\Data\\Ability.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Data\\Ability.cs",
+              "ToolTip": "C:\\MyStuff\\GameDev\\Godot\\GodotGames\\Rogue_Survivors\\Assets\\Scripts\\Data\\Ability.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Data\\Ability.cs",
+              "ViewState": "AgIAABkAAAAAAAAAAIA6wDAAAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-30T03:30:29.43Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

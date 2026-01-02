@@ -14,6 +14,9 @@ public partial class CharacterUpgradeContainer : Resource
     private float MoveRangeMult = 1.0f;
 
     [Export]
+    private float AttackRangeMult = 1.0f;
+
+    [Export]
     private float AttackMult = 1.0f;
 
     [Export]
@@ -39,6 +42,12 @@ public partial class CharacterUpgradeContainer : Resource
     public float GetMoveRangeMult()
     {
         return MoveRangeMult;
+    }
+
+
+    public float GetAttackRangeMult()
+    {
+        return AttackRangeMult;
     }
 
     public void SetMoveRangeMult(float Increment)

@@ -4,10 +4,11 @@
 
 [resource]
 script = ExtResource("1_bbcv0")
-MaxHealth = 0
-MoveRange = 0.0
-Attack = 0
-Magic = 0
-PhysDefense = 0
-MagDefense = 0
+MaxHealthMod = 0
+MoveRangeMult = 1.0
+AttackRangeMult = 1.0
+AttackMult = 1.0
+MagicMult = 1.0
+PhysDefenseMult = 1.0
+MagDefenseMult = 1.0
 metadata/_custom_type_script = "uid://b61d5rwgk47cb"

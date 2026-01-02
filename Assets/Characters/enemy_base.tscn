@@ -1,0 +1,91 @@
+[gd_scene load_steps=7 format=3 uid="uid://n7i0rx6wvwsw"]
+
+[ext_resource type="Texture2D" uid="uid://vmm4pb6m67gs" path="res://Assets/Sprites/Knight_Sheet.png" id="1_gs2pf"]
+[ext_resource type="Script" uid="uid://058ky1jc5hky" path="res://Assets/Scripts/Character.cs" id="1_kjprv"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kjprv"]
+atlas = ExtResource("1_gs2pf")
+region = Rect2(0, 0, 366, 432)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cck4a"]
+atlas = ExtResource("1_gs2pf")
+region = Rect2(366, 0, 366, 432)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ips7h"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kjprv")
+}],
+"loop": true,
+"name": &"Back_Idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kjprv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cck4a")
+}],
+"loop": true,
+"name": &"Back_Walk",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kjprv")
+}],
+"loop": true,
+"name": &"Front_Idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kjprv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cck4a")
+}],
+"loop": true,
+"name": &"Front_Walk",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kjprv")
+}],
+"loop": true,
+"name": &"Side_Idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kjprv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cck4a")
+}],
+"loop": true,
+"name": &"Side_Walk",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_gs2pf"]
+radius = 62.0
+height = 174.0
+
+[node name="Enemy_Base" type="CharacterBody2D"]
+script = ExtResource("1_kjprv")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(57.4, -157.2)
+scale = Vector2(0.8, 0.8)
+sprite_frames = SubResource("SpriteFrames_ips7h")
+animation = &"Side_Idle"
+
+[node name="HitBox" type="CollisionShape2D" parent="."]
+position = Vector2(0.400009, -81.2)
+shape = SubResource("CapsuleShape2D_gs2pf")
+
+[node name="NavAgent" type="NavigationAgent2D" parent="."]

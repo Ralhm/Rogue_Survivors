@@ -1,17 +1,35 @@
-[gd_scene load_steps=5 format=3 uid="uid://b3ii7ur55tkmw"]
+[gd_scene load_steps=14 format=3 uid="uid://b3ii7ur55tkmw"]
 
 [ext_resource type="PackedScene" uid="uid://d4g38mll22831" path="res://Assets/Managers/Player_Controller.tscn" id="1_ekklr"]
 [ext_resource type="PackedScene" uid="uid://ck1o0bswmv6nb" path="res://Assets/Managers/Combat_Manager.tscn" id="2_xudph"]
 [ext_resource type="PackedScene" uid="uid://cl80nmrn4b3cx" path="res://Assets/Characters/Character_Base.tscn" id="3_jpshy"]
+[ext_resource type="PackedScene" uid="uid://n7i0rx6wvwsw" path="res://Assets/Characters/enemy_base.tscn" id="4_qtxkn"]
+[ext_resource type="PackedScene" uid="uid://cmmk2q7c388e4" path="res://Assets/UI/abilities_box.tscn" id="4_wbc2q"]
+[ext_resource type="FontFile" uid="uid://brwe5ydicky4n" path="res://Assets/Fonts/PixelOperator8-Bold.ttf" id="4_xudph"]
+[ext_resource type="Script" uid="uid://cb0j42yebakpx" path="res://Assets/Scripts/UI/AttackButton.cs" id="5_30g5k"]
+[ext_resource type="Script" uid="uid://b4wck6ufpvjnp" path="res://Assets/UI/AbilityMenu.cs" id="5_qtxkn"]
+[ext_resource type="PackedScene" uid="uid://c2rlyb737dtld" path="res://Assets/UI/ability_button.tscn" id="6_31wla"]
+[ext_resource type="Script" uid="uid://chfcb7ao7h7cu" path="res://Assets/Scripts/UI/WaitButton.cs" id="7_yrmfr"]
+[ext_resource type="Script" uid="uid://bejwp42u3bf4v" path="res://Assets/Scripts/UI/AbilityDisplayButton.cs" id="9_60qja"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_lgvcj"]
 
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_qtxkn"]
+vertices = PackedVector2Array(1491.87, 819, -1465.95, 819, -1458.05, -832, 1471.12, -832)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-1468, -842, -1476, 829, 1502, 829, 1481, -842)])
+
 [node name="CombatScene" type="Node2D"]
 
-[node name="PlayerController" parent="." node_paths=PackedStringArray("Allies") instance=ExtResource("1_ekklr")]
-Allies = [NodePath("../Characters/Allies/Character_Base"), NodePath("../Characters/Allies/Character_Base2"), NodePath("../Characters/Allies/Character_Base3")]
+[node name="CombatManager" parent="." node_paths=PackedStringArray("AllyList", "EnemyList") instance=ExtResource("2_xudph")]
+AllyList = [NodePath("../Characters/Allies/Character_Base"), NodePath("../Characters/Allies/Character_Base2"), NodePath("../Characters/Allies/Character_Base3")]
+EnemyList = [NodePath("../Characters/Enemies/Enemy_Base"), NodePath("../Characters/Enemies/Enemy_Base2")]
 
-[node name="CombatManager" parent="." instance=ExtResource("2_xudph")]
+[node name="PlayerController" parent="." node_paths=PackedStringArray("Allies", "ActionMenu", "AbilityMenu", "ExecutionMenu") instance=ExtResource("1_ekklr")]
+Allies = [NodePath("../Characters/Allies/Character_Base"), NodePath("../Characters/Allies/Character_Base2"), NodePath("../Characters/Allies/Character_Base3")]
+ActionMenu = NodePath("../ActionMenu")
+AbilityMenu = NodePath("../AbilitiesMenu")
+ExecutionMenu = NodePath("../ExecutionMenu")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(0.39, 0.39)
@@ -29,6 +47,12 @@ position = Vector2(611, 0)
 position = Vector2(-793, -6)
 
 [node name="Enemies" type="Node" parent="Characters"]
+
+[node name="Enemy_Base" parent="Characters/Enemies" instance=ExtResource("4_qtxkn")]
+position = Vector2(-414, -244)
+
+[node name="Enemy_Base2" parent="Characters/Enemies" instance=ExtResource("4_qtxkn")]
+position = Vector2(328, -259)
 
 [node name="Walls" type="Node" parent="."]
 
@@ -70,3 +94,104 @@ scale = Vector2(10.4397, 6.51621)
 shape = SubResource("WorldBoundaryShape2D_lgvcj")
 one_way_collision_margin = 0.0
 debug_color = Color(0.415463, 0.605513, 0, 1)
+
+[node name="ActionMenu" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 122.0
+offset_top = -785.0
+offset_right = 1682.0
+offset_bottom = 334.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="ActionMenu"]
+layout_mode = 0
+offset_right = 674.0
+offset_bottom = 1247.0
+
+[node name="MainMenu" parent="ActionMenu/PanelContainer" instance=ExtResource("4_wbc2q")]
+layout_mode = 2
+
+[node name="AttackButton" type="Button" parent="ActionMenu/PanelContainer/MainMenu"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_xudph")
+theme_override_font_sizes/font_size = 128
+text = "Attack"
+script = ExtResource("5_30g5k")
+
+[node name="AbilitiesButton" type="Button" parent="ActionMenu/PanelContainer/MainMenu"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_xudph")
+theme_override_font_sizes/font_size = 128
+text = "Abilities"
+script = ExtResource("9_60qja")
+
+[node name="WaitButton" type="Button" parent="ActionMenu/PanelContainer/MainMenu"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_xudph")
+theme_override_font_sizes/font_size = 128
+text = "Wait
+"
+script = ExtResource("7_yrmfr")
+
+[node name="DashButton" type="Button" parent="ActionMenu/PanelContainer/MainMenu"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_xudph")
+theme_override_font_sizes/font_size = 128
+text = "Dash
+"
+script = ExtResource("7_yrmfr")
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
+visible = false
+navigation_polygon = SubResource("NavigationPolygon_qtxkn")
+
+[node name="ExecutionMenu" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="ExecutionMenu"]
+custom_minimum_size = Vector2(1500, 200)
+layout_mode = 0
+offset_left = -751.0
+offset_top = -843.0
+offset_right = 749.0
+offset_bottom = -643.0
+theme_override_fonts/normal_font = ExtResource("4_xudph")
+theme_override_font_sizes/normal_font_size = 128
+text = "Execute?
+"
+horizontal_alignment = 1
+
+[node name="AbilitiesMenu" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 122.0
+offset_top = -785.0
+offset_right = 1682.0
+offset_bottom = 334.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="AbilitiesMenu"]
+layout_mode = 0
+offset_right = 674.0
+offset_bottom = 1247.0
+
+[node name="AbilitiesBox" parent="AbilitiesMenu/PanelContainer" instance=ExtResource("4_wbc2q")]
+visible = false
+layout_mode = 2
+script = ExtResource("5_qtxkn")
+
+[node name="AbilityButton" parent="AbilitiesMenu/PanelContainer/AbilitiesBox" instance=ExtResource("6_31wla")]
+layout_mode = 2

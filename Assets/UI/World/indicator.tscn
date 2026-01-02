@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://bm6hrle7fh6xr"]
+
+[ext_resource type="Texture2D" uid="uid://ba8tt8wup0xn1" path="res://Assets/Sprites/RangeIndicator.png" id="1_6yib8"]
+
+[node name="Indicator" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, 32)
+texture = ExtResource("1_6yib8")

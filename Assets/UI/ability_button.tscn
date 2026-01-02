@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://c2rlyb737dtld"]
+
+[ext_resource type="FontFile" uid="uid://brwe5ydicky4n" path="res://Assets/Fonts/PixelOperator8-Bold.ttf" id="1_kiuqf"]
+[ext_resource type="Script" uid="uid://pshah1fb7jto" path="res://Assets/Scripts/UI/AbilityButton.cs" id="2_y148x"]
+
+[node name="AbilityButton" type="Button"]
+theme_override_fonts/font = ExtResource("1_kiuqf")
+theme_override_font_sizes/font_size = 128
+text = "ABILITY"
+script = ExtResource("2_y148x")

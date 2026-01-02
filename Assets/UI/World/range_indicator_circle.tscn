@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=3 uid="uid://cuyvqkp5ydlom"]
+
+[ext_resource type="Script" uid="uid://rwyevbaewcfh" path="res://Assets/Levels/RangeIndicatorContainer.cs" id="1_uj2fd"]
+[ext_resource type="PackedScene" uid="uid://bm6hrle7fh6xr" path="res://Assets/UI/World/indicator.tscn" id="2_ctneg"]
+
+[node name="RangeIndicatorCircle" type="Node" node_paths=PackedStringArray("RangeIndices")]
+script = ExtResource("1_uj2fd")
+RangeIndices = [NodePath("Indicator"), NodePath("Indicator2"), NodePath("Indicator3"), NodePath("Indicator4"), NodePath("Indicator5"), NodePath("Indicator6"), NodePath("Indicator7"), NodePath("Indicator8")]
+
+[node name="Indicator" parent="." instance=ExtResource("2_ctneg")]
+
+[node name="Indicator2" parent="." instance=ExtResource("2_ctneg")]
+
+[node name="Indicator3" parent="." instance=ExtResource("2_ctneg")]
+
+[node name="Indicator4" parent="." instance=ExtResource("2_ctneg")]
+
+[node name="Indicator5" parent="." instance=ExtResource("2_ctneg")]
+
+[node name="Indicator6" parent="." instance=ExtResource("2_ctneg")]
+
+[node name="Indicator7" parent="." instance=ExtResource("2_ctneg")]
+
+[node name="Indicator8" parent="." instance=ExtResource("2_ctneg")]

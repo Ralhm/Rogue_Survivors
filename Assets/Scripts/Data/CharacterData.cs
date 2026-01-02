@@ -15,7 +15,10 @@ public partial class CharacterData : Resource
     private int MaxHealth = 100;
 
     [Export]
-    private float MoveRange = 500.0f;
+    private float MoveRange = 400.0f;
+
+    [Export]
+    public float AttackRange = 150;
 
     [Export]
     private int Attack = 20;
@@ -29,6 +32,9 @@ public partial class CharacterData : Resource
     [Export]
     private int MagDefense = 10;
 
+    [Export]
+    private Ability[] AbilityList;
+
     public int GetMaxHealth()
     {
         return MaxHealth;
@@ -38,6 +44,12 @@ public partial class CharacterData : Resource
     {
         return MoveRange;
     }
+
+    public float GetAttackRange()
+    {
+        return AttackRange;
+    }
+
 
     public int GetAttack()
     {

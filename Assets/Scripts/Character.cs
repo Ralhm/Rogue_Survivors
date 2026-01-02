@@ -5,13 +5,24 @@ using System;
 public enum CurrentState
 {
     Idling,
-    Moving,
-    Dashing,
-    Attacking,
-    Acted,
+    Moving, //Selected and moving to a new position
+    Navigating, //Character is executing move towards projected position
+    SelectingAction, //Player has selected where they want the character to be, now they must select an action
+    SelectingTarget, //Aiming for a target
+    SelectingDirection, //Aiming For a directional ability
+    SelectingDirectionPos, //Aiming for an AOE
+    ActionSet, //If their actions has been selected, and are waiting for the player to execute
     Dead
 }
 
+public enum StoredAction
+{
+    Attack,
+    Ability,
+    Defend,
+    Wait,
+    None
+}
 
 public partial class Character : CharacterBody2D
 {
@@ -19,7 +30,27 @@ public partial class Character : CharacterBody2D
     public AnimatedSprite2D Sprite;
 
     [Export]
-    public CurrentState CurrentState;
+    private AnimatedSprite2D Projection;
+
+    public NavigationAgent2D NavAgent;
+
+    //Create a number icon that shows the order in which the characters will act
+    [Export]
+    AnimatedSprite2D OrderIcon;
+
+    [Export]
+    public CurrentState CharacterState;
+
+    [Export]
+    StoredAction Action;
+
+    [Export]
+    Ability StoredAbility;
+
+    //If targeting a specific character
+    [Export]
+    Character StoredTarget;
+
 
     [Export]
     public int CurrentHealth;
@@ -33,10 +64,28 @@ public partial class Character : CharacterBody2D
     [Export]
     public CharacterUpgradeContainer UpgradeData;
 
+
+    //If our attack is an AOE aimed at a position
+    [Export]
+    public Vector2 StoredTargetPos;
+
+    //If our attack is aimed at a certain direction
+    [Export]
+    public Vector2 StoredTargetDir;
+
     //The position this Character has started their movement from
     //Use to compare distance travelled and prevent from moving out of range
     [Export]
-    private Vector2 StartingLocation;
+    public Vector2 StartingLocation;
+
+    [Export]
+    public Vector2 EndLocation;
+
+
+    [Export]
+    public Vector2 MoveDir;
+
+
 
     [Export]
     private float DistanceTraveled;
@@ -45,15 +94,30 @@ public partial class Character : CharacterBody2D
     public bool IsMoving;
 
     [Export]
-    public Vector2 MoveDir;
+    private bool IsDashing;
+
+    public int CharacterIndex;
+
+    [Export]
+    public bool Dashed;
+
+    [Export]
+    public bool IsTired;
+
+
 
     private string StoredAnimDir = "Front";
+
+
 
     public override void _Ready()
     {
         base._Ready();
         StartingLocation = Position;
         Sprite = GetNode<Godot.AnimatedSprite2D>("Sprite");
+        NavAgent = GetNode<Godot.NavigationAgent2D>("NavAgent");
+        Projection.Hide();
+
     }
 
 
@@ -64,6 +128,14 @@ public partial class Character : CharacterBody2D
 
     }
 
+
+
+    public void Navigate()
+    {
+        NavAgent.TargetPosition = EndLocation;
+        CharacterState = CurrentState.Navigating;
+    }
+
     public override void _PhysicsProcess(double delta)
     {
         base._PhysicsProcess(delta);
@@ -72,10 +144,7 @@ public partial class Character : CharacterBody2D
         float Dot = MoveDir.Dot(Vector2.Up);
 
 
-
-
-
-        if (MoveDir != Vector2.Zero)
+        if (MoveDir != Vector2.Zero && CharacterState == CurrentState.Moving)
         {
             Velocity = MoveDir * Speed;
             if (DistanceTraveled >= BaseData.GetMoveRange())
@@ -122,7 +191,18 @@ public partial class Character : CharacterBody2D
     public void OnNewTurn()
     {
         StartingLocation = Position;
-        CurrentState = CurrentState.Idling;
+        CharacterState = CurrentState.Idling;
+        HideProjection();
+        if (IsTired)
+        {
+            IsTired = false;
+        }
+        if (Dashed)
+        {
+            IsTired = true;
+            Dashed = false;
+            
+        }
     }
 
     public void SetMoveDir(Vector2 dir)
@@ -137,32 +217,66 @@ public partial class Character : CharacterBody2D
 
     public void OnPossession()
     {
-        CurrentState = CurrentState.Moving;
+        CharacterState = CurrentState.Moving;
     }
 
 
-    public void CancelPossession()
-    {
-        CurrentState = CurrentState.Idling;
-        Position = StartingLocation;
-    }
 
-    public void FinishAction()
+
+    public void SetCurrentState(CurrentState state)
     {
-        CurrentState = CurrentState.Acted;
+        CharacterState = state;
     }
 
     //Forgo doing an action in exchange for doubling movement range
     public void Dash()
     {
-
+        IsDashing = true;
     }
+
+    public void CancelPossession()
+    {
+        CharacterState = CurrentState.Idling;
+        Position = StartingLocation;
+    }
+
 
     //Reset position to starting position
     public void CancelDash()
     {
-        CurrentState = CurrentState.Moving;
+        CharacterState = CurrentState.Moving;
+        Position = StartingLocation;
     }
+
+    public void CancelAction() //If action has been set, compelete reset
+    {
+        Position = StartingLocation;
+        CharacterState = CurrentState.Moving;
+        StoredAbility = null;
+        Action = StoredAction.None;
+        HideProjection();
+
+    }
+
+    public void CancelTargeting() //If we're selecting a target
+    {
+        Action = StoredAction.None;
+        CharacterState = CurrentState.SelectingAction;
+        StoredAbility = null;
+    }
+    public void HideProjection()
+    {
+        Projection.Hide();
+        Projection.Position = Vector2.Zero;
+    }
+
+
+    public void CancelMenu() //If we're selecting an action to take
+    {
+
+        CharacterState = CurrentState.Moving;
+    }
+
 
     public void Aim()
     {
@@ -179,6 +293,15 @@ public partial class Character : CharacterBody2D
         CurrentHealth += Amount;
     }
 
+    public void Attack()
+    {
+
+    }
+
+    public void ActivateAbility()
+    {
+        StoredAbility.OnActivate();
+    }
 
     //Get sent in a direction
     public void Shoved(Vector2 Direction)
@@ -192,4 +315,90 @@ public partial class Character : CharacterBody2D
 
     }
 
+    public void SetStoredAction(StoredAction action)
+    {
+        Action = action;
+    }
+
+    public void SetActionSet()
+    {
+        CharacterState = CurrentState.ActionSet;
+        EndLocation = Position;
+        Position = StartingLocation;
+        //Sprite.
+        //Projection.Play
+        Projection.Show();
+        Projection.GlobalPosition = EndLocation;
+        //Play Animation and set Order Icon Here
+    }
+
+    public void SetStoredAbility(Ability ability)
+    {
+        StoredAbility = ability;
+    }
+
+    public void SetStoredDir(Vector2 Direction)
+    {
+        StoredTargetDir = Direction;
+    }
+
+    public void SetStoredTarget(Character target)
+    {
+        StoredTarget = target;
+    }
+
+    public void SetStoredTargetPos(Vector2 pos)
+    {
+        StoredTargetPos = pos;
+    }
+
+
+    public float GetMoveRange()
+    {
+        return BaseData.GetMoveRange() * UpgradeData.GetMoveRangeMult();
+    }
+
+    public float GetDashRange()
+    {
+        return BaseData.GetMoveRange() * UpgradeData.GetMoveRangeMult() * 2;
+    }
+
+    public float GetOffensiveRange()
+    {
+        if (Action == StoredAction.Attack)
+        {
+            return BaseData.GetAttackRange() * UpgradeData.GetAttackRangeMult();
+        }
+        else if (Action == StoredAction.Ability)
+        {
+            return BaseData.GetAttackRange() * UpgradeData.GetAttackRangeMult() * StoredAbility.GetAbilityRange();
+        }
+        return 0f;
+        
+    }
+
+    //This takes the projection into account as well. 
+    public bool GetProjectionIsInRange(float Range, Vector2 Position)
+    {
+        if ((EndLocation - Position).Length() <= Range)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public CurrentState GetCurrentState()
+    {
+        return CharacterState;
+    }
+
+    public StoredAction GetStoredActionType()
+    {
+        return Action;
+    }
+
+    public bool GetIsDashing()
+    {
+        return IsDashing;
+    }
 }
