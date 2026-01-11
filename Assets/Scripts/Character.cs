@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 
 public enum CurrentState
@@ -7,6 +8,7 @@ public enum CurrentState
     Idling,
     Moving, //Selected and moving to a new position
     Navigating, //Character is executing move towards projected position
+    Acting, //Character is executing their stored action
     SelectingAction, //Player has selected where they want the character to be, now they must select an action
     SelectingTarget, //Aiming for a target
     SelectingDirection, //Aiming For a directional ability
@@ -30,27 +32,29 @@ public partial class Character : CharacterBody2D
     public AnimatedSprite2D Sprite;
 
     [Export]
-    private AnimatedSprite2D Projection;
+    protected AnimatedSprite2D Projection;
+
+    [Export]
+    Node2D TargetIndicator;
+
+
 
     public NavigationAgent2D NavAgent;
 
-    //Create a number icon that shows the order in which the characters will act
-    [Export]
-    AnimatedSprite2D OrderIcon;
+
 
     [Export]
     public CurrentState CharacterState;
 
     [Export]
-    StoredAction Action;
+    protected StoredAction CharacterAction;
 
-    [Export]
-    Ability StoredAbility;
+    protected Ability StoredAbility;
 
     //If targeting a specific character
-    [Export]
-    Character StoredTarget;
+    protected Character StoredTarget;
 
+    
 
     [Export]
     public int CurrentHealth;
@@ -62,7 +66,8 @@ public partial class Character : CharacterBody2D
     public CharacterData BaseData;
 
     [Export]
-    public CharacterUpgradeContainer UpgradeData;
+    public DamageModifiers DamageData;
+
 
 
     //If our attack is an AOE aimed at a position
@@ -88,13 +93,13 @@ public partial class Character : CharacterBody2D
 
 
     [Export]
-    private float DistanceTraveled;
+    protected float DistanceTraveled;
 
     [Export]
     public bool IsMoving;
 
     [Export]
-    private bool IsDashing;
+    protected bool IsDashing;
 
     public int CharacterIndex;
 
@@ -104,11 +109,9 @@ public partial class Character : CharacterBody2D
     [Export]
     public bool IsTired;
 
+    protected bool IsEnemy = false;
 
-
-    private string StoredAnimDir = "Front";
-
-
+    protected string StoredAnimDir = "Front";
 
     public override void _Ready()
     {
@@ -116,24 +119,18 @@ public partial class Character : CharacterBody2D
         StartingLocation = Position;
         Sprite = GetNode<Godot.AnimatedSprite2D>("Sprite");
         NavAgent = GetNode<Godot.NavigationAgent2D>("NavAgent");
-        Projection.Hide();
-
+        HideProjection();
+        NavAgent.VelocityComputed += OnVelocityComputed;
+        CurrentHealth = BaseData.GetMaxHealth();
+        GD.Print("Max Health: " + BaseData.GetMaxHealth());
+        GD.Print("Current Health: " + CurrentHealth);
     }
-
 
     public override void _Process(double delta)
     {
         base._Process(delta);
 
 
-    }
-
-
-
-    public void Navigate()
-    {
-        NavAgent.TargetPosition = EndLocation;
-        CharacterState = CurrentState.Navigating;
     }
 
     public override void _PhysicsProcess(double delta)
@@ -144,10 +141,12 @@ public partial class Character : CharacterBody2D
         float Dot = MoveDir.Dot(Vector2.Up);
 
 
+ 
         if (MoveDir != Vector2.Zero && CharacterState == CurrentState.Moving)
         {
             Velocity = MoveDir * Speed;
-            if (DistanceTraveled >= BaseData.GetMoveRange())
+
+            if (DistanceTraveled >= GetMoveRange())
             {
                 Velocity += (Velocity.Length() * (StartingLocation - Position).Normalized());
             }
@@ -182,9 +181,16 @@ public partial class Character : CharacterBody2D
             //Sprite.FlipH = true;
         }
 
-        
-
-        MoveAndSlide();
+        if (CharacterState == CurrentState.Navigating)
+        {
+            //GD.Print("Navigating...");
+            Navigate();
+        }
+        else
+        {
+            MoveAndSlide();
+        }
+            
 
     }
 
@@ -205,14 +211,63 @@ public partial class Character : CharacterBody2D
         }
     }
 
-    public void SetMoveDir(Vector2 dir)
+    public void BeginNavigation()
     {
-        MoveDir = dir;
+        GD.Print("Beginning Navigation...");
+        if (IsDashing)
+        {
+            Dashed = true;
+            IsDashing = false;
+        }
+        
+        NavAgent.TargetPosition = EndLocation;
+        CharacterState = CurrentState.Navigating;
+
+
+        //NavAgent.Velocity = Speed;
     }
 
-    public void SetIsMoving(bool isMoving)
+    public void Navigate()
     {
-        IsMoving = isMoving;
+        if (NavAgent.IsNavigationFinished())
+        {
+            FinishNavigation();
+            return;
+        }
+        NavAgent.Velocity = GlobalPosition.DirectionTo(NavAgent.GetNextPathPosition()) * Speed * 1.5f;
+
+    }
+
+    public void OnVelocityComputed(Vector2 vel)
+    {
+        Position += vel * (float)GetPhysicsProcessDeltaTime();
+    }
+
+    public void FinishNavigation()
+    {
+        CharacterState = CurrentState.Acting;
+        switch (CharacterAction)
+        {
+            case StoredAction.Attack:
+                GD.Print("Attacking...");
+                NormalAttack();
+                //Sprite.Play("Attack");
+                break;
+            case StoredAction.Ability:
+                GD.Print("Using Ability...");
+                ActivateAbility();
+                break;
+            case StoredAction.Defend:
+                GD.Print("Defending...");
+                break;
+            case StoredAction.Wait:
+                GD.Print("Waiting...");
+                break;
+
+        }
+
+        PlayerController.Instance.ExecuteNextAction();
+        
     }
 
     public void OnPossession()
@@ -222,61 +277,21 @@ public partial class Character : CharacterBody2D
 
 
 
-
-    public void SetCurrentState(CurrentState state)
-    {
-        CharacterState = state;
-    }
-
     //Forgo doing an action in exchange for doubling movement range
     public void Dash()
     {
+        GD.Print("Player Beginning Dash!");
         IsDashing = true;
     }
 
-    public void CancelPossession()
-    {
-        CharacterState = CurrentState.Idling;
-        Position = StartingLocation;
-    }
 
 
-    //Reset position to starting position
-    public void CancelDash()
-    {
-        CharacterState = CurrentState.Moving;
-        Position = StartingLocation;
-    }
-
-    public void CancelAction() //If action has been set, compelete reset
-    {
-        Position = StartingLocation;
-        CharacterState = CurrentState.Moving;
-        StoredAbility = null;
-        Action = StoredAction.None;
-        HideProjection();
-
-    }
-
-    public void CancelTargeting() //If we're selecting a target
-    {
-        Action = StoredAction.None;
-        CharacterState = CurrentState.SelectingAction;
-        StoredAbility = null;
-    }
     public void HideProjection()
     {
+        
         Projection.Hide();
         Projection.Position = Vector2.Zero;
     }
-
-
-    public void CancelMenu() //If we're selecting an action to take
-    {
-
-        CharacterState = CurrentState.Moving;
-    }
-
 
     public void Aim()
     {
@@ -285,7 +300,14 @@ public partial class Character : CharacterBody2D
 
     public void TakeDamage(int Damage)
     {
+        
+        if (IsTired)
+        {
+            Damage = (int)(Damage * 2.0f);
+        }
+        GD.Print(Name + " Taking Damage: " + Damage);
         CurrentHealth -= Damage;
+        GD.Print(Name + " Current Health: " + CurrentHealth);
     }
 
     public void Heal(int Amount) 
@@ -293,14 +315,96 @@ public partial class Character : CharacterBody2D
         CurrentHealth += Amount;
     }
 
-    public void Attack()
+    public virtual int CalculateNormalAttackDamage()
     {
-
+        return BaseData.GetAttack();
     }
 
+    public virtual int CalculateDamageTaken(int Power, DamageType type, ElementType element, PhysicalType physical)
+    {
+        if (type == DamageType.Physical)
+        {
+            Power -= BaseData.GetPhysDefense();
+        }
+        else if (type == DamageType.Magic)
+        {
+            Power -= BaseData.GetMagDefense();
+        }
+
+        if (element != ElementType.None)
+        {
+            if (BaseData.GetElemResistance() == element)
+            {
+                Power = (int)(Power * DamageData.GetResistance());
+            }
+
+            if (BaseData.GetElemWeakness() == element)
+            {
+                Power = (int)(Power * DamageData.GetWeakness());
+            }
+        }
+        if (physical != PhysicalType.None) {
+            if (BaseData.GetPhysResistance() == physical)
+            {
+                Power = (int)(Power * DamageData.GetResistance());
+            }
+
+            if (BaseData.GetPhysWeakness() == physical)
+            {
+                Power = (int)(Power * DamageData.GetWeakness());
+            }
+        }
+
+
+        if (CharacterAction == StoredAction.Defend)
+        {
+            Power = (int)(Power * DamageData.GetDefend());
+        }
+
+        return Power;
+    }
+
+    public virtual int CalculateAbilityDamage(DamageType type)
+    {
+        int Damage = 0;
+        switch (type)
+        {
+            case DamageType.Physical:
+                Damage = BaseData.GetAttack();
+                break;
+            case DamageType.Magic:
+                Damage = BaseData.GetMagic();
+                break;
+
+        }
+        return Damage;
+    }
+
+    public virtual void NormalAttack()
+    {
+        int Damage = CalculateNormalAttackDamage();
+        GD.Print("Calculated Normal Attack Damage:" + Damage);
+        Damage = StoredTarget.CalculateDamageTaken(Damage, DamageType.Physical, ElementType.None, PhysicalType.Cut);
+        GD.Print("Calculated Final Attack Damage:" + Damage);
+        StoredTarget.TakeDamage(Damage);
+    }
+
+    //The user must be the one to decide this, so that they can distinguish between friend and foe when necessary
+    //And so they can pass in the desired position, since the ability doesn't know what that is
     public void ActivateAbility()
     {
-        StoredAbility.OnActivate();
+        if (StoredAbility.GetAimingType() == SelectionType.Target)
+        {
+            StoredAbility.OnActivate_Single(StoredTarget, this);
+        }
+        else if (StoredAbility.GetAimingType() == SelectionType.Position)
+        {
+            StoredAbility.OnActivate_Multiple(
+                CombatManager.Instance.GetCharactersInRange(StoredTargetPos, GetAbilityRange(), GetAbilityTargetType(), IsEnemy), 
+                this);
+            //StoredAbility.OnActivate_Range(CombatManager.Instance.GetEnemiesWithinRange(StoredTargetPos, StoredAbility.GetAbilityRange()), this);
+        }
+        
     }
 
     //Get sent in a direction
@@ -315,9 +419,32 @@ public partial class Character : CharacterBody2D
 
     }
 
+
+
+
+    #region Setters
+
+    public void SetTargetArrowVisibility(bool vis)
+    {  
+        if (vis)
+        {
+            TargetIndicator.Show();
+        }
+        else
+        {
+            TargetIndicator.Hide();
+        }
+
+    }
+
+    public void SetCurrentState(CurrentState state)
+    {
+        CharacterState = state;
+    }
+
     public void SetStoredAction(StoredAction action)
     {
-        Action = action;
+        CharacterAction = action;
     }
 
     public void SetActionSet()
@@ -329,7 +456,7 @@ public partial class Character : CharacterBody2D
         //Projection.Play
         Projection.Show();
         Projection.GlobalPosition = EndLocation;
-        //Play Animation and set Order Icon Here
+        //Play Animation
     }
 
     public void SetStoredAbility(Ability ability)
@@ -352,29 +479,98 @@ public partial class Character : CharacterBody2D
         StoredTargetPos = pos;
     }
 
-
-    public float GetMoveRange()
+    public void SetMoveDir(Vector2 dir)
     {
-        return BaseData.GetMoveRange() * UpgradeData.GetMoveRangeMult();
+        MoveDir = dir;
     }
 
-    public float GetDashRange()
+    public void SetIsMoving(bool isMoving)
     {
-        return BaseData.GetMoveRange() * UpgradeData.GetMoveRangeMult() * 2;
+        IsMoving = isMoving;
     }
 
-    public float GetOffensiveRange()
+
+    #endregion
+
+    #region Undoers
+    public void CancelPossession()
     {
-        if (Action == StoredAction.Attack)
+        CharacterState = CurrentState.Idling;
+        Position = StartingLocation;
+    }
+
+
+    //Reset position to starting position
+    public void CancelDash()
+    {
+        IsDashing = false;
+        Position = StartingLocation;
+    }
+
+
+
+    public void CancelTargeting() //If we're selecting a target
+    {
+        CharacterAction = StoredAction.None;
+        CharacterState = CurrentState.SelectingAction;
+        StoredAbility = null;
+    }
+
+
+    public void CancelMenu() //If we're selecting an action to take
+    {
+
+        CharacterState = CurrentState.Moving;
+    }
+
+    #endregion
+
+    #region Getters
+
+
+    public virtual float GetMoveRange()
+    {
+        float range = BaseData.GetMoveRange();
+
+
+        if (IsDashing)
         {
-            return BaseData.GetAttackRange() * UpgradeData.GetAttackRangeMult();
+            range *= 2.0f;
         }
-        else if (Action == StoredAction.Ability)
+        if (IsTired)
         {
-            return BaseData.GetAttackRange() * UpgradeData.GetAttackRangeMult() * StoredAbility.GetAbilityRange();
+            range *= 0.5f;
+        }
+        return range;
+
+    }
+
+
+
+    public virtual float GetOffensiveRange()
+    {
+        GD.Print("Getting Default Range!");
+        if (CharacterAction == StoredAction.Attack)
+        {
+            return BaseData.GetAttackRange();
+        }
+        else if (CharacterAction == StoredAction.Ability)
+        {
+            if (StoredAbility == null)
+            {
+                GD.Print("NO ABILITY SET");
+                return 0;
+            }
+
+            return BaseData.GetAttackRange() * StoredAbility.GetAbilityRange();
         }
         return 0f;
         
+    }
+
+    public virtual float GetAbilityRange()
+    {
+        return StoredAbility.GetAbilityRange();
     }
 
     //This takes the projection into account as well. 
@@ -394,11 +590,25 @@ public partial class Character : CharacterBody2D
 
     public StoredAction GetStoredActionType()
     {
-        return Action;
+        return CharacterAction;
     }
 
     public bool GetIsDashing()
     {
         return IsDashing;
     }
+
+    public Ability[] GetAbilities() { 
+        return BaseData.GetAbilities();
+    }
+
+    public TargetType GetAbilityTargetType()
+    {
+        return StoredAbility.GetTargetingType();
+    }
+
+
+
+    #endregion
+
 }

@@ -181,6 +181,7 @@ animations = [{
 }]
 
 [node name="Sprite" type="AnimatedSprite2D"]
+y_sort_enabled = true
 sprite_frames = SubResource("SpriteFrames_jqx48")
 animation = &"Attack"
 frame = 4

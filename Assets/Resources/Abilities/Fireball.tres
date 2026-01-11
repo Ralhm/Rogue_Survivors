@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="Ability" load_steps=2 format=3 uid="uid://gnv8wde0qu6y"]
+
+[ext_resource type="Script" uid="uid://cqipoqgybe2r5" path="res://Assets/Scripts/Data/Ability.cs" id="1_8dr2u"]
+
+[resource]
+script = ExtResource("1_8dr2u")
+Name = "Fireball"
+Description = "Shoot with fireball"
+Range = 1.5
+Power = 1.2
+TargetingType = 0
+AimingType = 0
+Damage = 2
+Element = 1
+Physical = 0
+Ailment = 0
+Buff = 0
+Restore = 0
+metadata/_custom_type_script = "uid://cqipoqgybe2r5"

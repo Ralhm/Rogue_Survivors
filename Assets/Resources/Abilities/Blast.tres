@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="Ability" load_steps=2 format=3 uid="uid://djvgyadcppclk"]
+
+[ext_resource type="Script" uid="uid://cqipoqgybe2r5" path="res://Assets/Scripts/Data/Ability.cs" id="1_5xybw"]
+
+[resource]
+script = ExtResource("1_5xybw")
+Name = "Blast"
+Description = "Blast in a range"
+Range = 500.0
+Power = 1.0
+TargetingType = 3
+AimingType = 1
+Damage = 2
+Element = 1
+Physical = 0
+Ailment = 0
+Buff = 0
+Restore = 0
+metadata/_custom_type_script = "uid://cqipoqgybe2r5"

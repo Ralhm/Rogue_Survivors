@@ -35,6 +35,18 @@ public partial class CharacterData : Resource
     [Export]
     private Ability[] AbilityList;
 
+    [Export]
+    private ElementType ElementalWeakness;
+
+    [Export]
+    private ElementType ElementalResistance;
+
+    [Export]
+    private PhysicalType PhysicalWeakness;
+
+    [Export]
+    private PhysicalType PhysicalResistance;
+
     public int GetMaxHealth()
     {
         return MaxHealth;
@@ -62,12 +74,12 @@ public partial class CharacterData : Resource
     }
 
 
-    public float GetPhysDefense()
+    public int GetPhysDefense()
     {
         return PhysDefense;
     }
 
-    public float GetMagDefense()
+    public int GetMagDefense()
     {
         return MagDefense;
     }
@@ -76,6 +88,30 @@ public partial class CharacterData : Resource
     public String GetCharacterName()
     {
         return Name;
+    }
+
+    public ElementType GetElemWeakness()
+    {
+        return ElementalWeakness;
+    }
+
+    public ElementType GetElemResistance()
+    {
+        return ElementalResistance;
+    }
+
+    public PhysicalType GetPhysWeakness()
+    {
+        return PhysicalWeakness;
+    }
+
+    public PhysicalType GetPhysResistance()
+    {
+        return PhysicalResistance;
+    }
+
+    public Ability[] GetAbilities() {
+        return AbilityList;
     }
 
 }

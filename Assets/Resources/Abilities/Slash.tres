@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="Ability" load_steps=2 format=3 uid="uid://dhu8erv25itlg"]
+
+[ext_resource type="Script" uid="uid://cqipoqgybe2r5" path="res://Assets/Scripts/Data/Ability.cs" id="1_gq343"]
+
+[resource]
+script = ExtResource("1_gq343")
+Name = "Slash"
+Description = "Slash Enemy with Sword"
+Range = 0.9
+Power = 1.5
+TargetingType = 0
+AimingType = 0
+Damage = 1
+Element = 0
+Physical = 1
+Ailment = 0
+Buff = 0
+Restore = 0
+metadata/_custom_type_script = "uid://cqipoqgybe2r5"

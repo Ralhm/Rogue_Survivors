@@ -1,30 +1,104 @@
-[gd_scene load_steps=6 format=3 uid="uid://cl80nmrn4b3cx"]
+[gd_scene load_steps=10 format=3 uid="uid://cl80nmrn4b3cx"]
 
-[ext_resource type="Script" uid="uid://058ky1jc5hky" path="res://Assets/Scripts/Character.cs" id="1_xn0le"]
+[ext_resource type="Script" uid="uid://b2s1ppdcxdc5x" path="res://Assets/Scripts/Ally.cs" id="1_xn0le"]
 [ext_resource type="Resource" uid="uid://cbc708j4lsyu8" path="res://Assets/Resources/Base_Data.tres" id="2_3xuki"]
 [ext_resource type="Resource" uid="uid://bmeq78tmr4fkj" path="res://Assets/Resources/Base_Upgrade_Container.tres" id="3_nmc61"]
+[ext_resource type="Resource" uid="uid://cjgfrsmcvof63" path="res://Assets/Resources/Damage_Modifier_Data.tres" id="4_3xuki"]
 [ext_resource type="PackedScene" uid="uid://c615icsa45yhb" path="res://Assets/Characters/Sprites/sprite.tscn" id="4_xn0le"]
+[ext_resource type="PackedScene" uid="uid://cyg58xfb1swdp" path="res://Assets/UI/target_arrow.tscn" id="6_nmc61"]
+[ext_resource type="FontFile" uid="uid://brwe5ydicky4n" path="res://Assets/Fonts/PixelOperator8-Bold.ttf" id="7_woks1"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_kv0qp"]
 radius = 42.0
 height = 114.0
 
-[node name="Character_Base" type="CharacterBody2D" node_paths=PackedStringArray("Projection")]
-script = ExtResource("1_xn0le")
-Projection = NodePath("Projection")
-BaseData = ExtResource("2_3xuki")
-UpgradeData = ExtResource("3_nmc61")
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_nmc61"]
+radius = 42.0
+height = 114.0
 
-[node name="Sprite" parent="." instance=ExtResource("4_xn0le")]
-animation = &"Back_Walk"
-frame = 3
-frame_progress = 0.837853
+[node name="Character_Base" type="CharacterBody2D" node_paths=PackedStringArray("OrderIcon", "OrderNum", "ProjectionTargetIndicator", "Projection", "TargetIndicator")]
+y_sort_enabled = true
+collision_mask = 20
+script = ExtResource("1_xn0le")
+UpgradeData = ExtResource("3_nmc61")
+OrderIcon = NodePath("OrderIcon")
+OrderNum = NodePath("OrderIcon/Panel/OrderNum")
+ProjectionTargetIndicator = NodePath("Projection/ProjectionTargetArrow")
+Projection = NodePath("Projection")
+TargetIndicator = NodePath("TargetArrow")
+Speed = 600
+BaseData = ExtResource("2_3xuki")
+DamageData = ExtResource("4_3xuki")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-1, 49)
+position = Vector2(0, 46.865)
 shape = SubResource("CapsuleShape2D_kv0qp")
 
+[node name="Sprite" parent="." instance=ExtResource("4_xn0le")]
+animation = &"Front_Walk"
+frame = 0
+frame_progress = 0.0
+
 [node name="NavAgent" type="NavigationAgent2D" parent="."]
+path_desired_distance = 30.0
+target_desired_distance = 30.0
+path_max_distance = 150.0
+simplify_path = true
+avoidance_enabled = true
+radius = 25.0
+max_speed = 2000.0
+avoidance_mask = 2
 
 [node name="Projection" parent="." instance=ExtResource("4_xn0le")]
 modulate = Color(1, 1, 1, 0.141176)
+
+[node name="ProjectionTargetArrow" parent="Projection" instance=ExtResource("6_nmc61")]
+position = Vector2(0, 103.29)
+
+[node name="Area2D" type="Area2D" parent="Projection"]
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Projection/Area2D"]
+position = Vector2(0, 46.865)
+shape = SubResource("CapsuleShape2D_nmc61")
+
+[node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="."]
+position = Vector2(0, 43.445)
+radius = 64.6
+
+[node name="TargetArrow" parent="." instance=ExtResource("6_nmc61")]
+position = Vector2(0, 103.29)
+
+[node name="OrderIcon" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Panel" type="Panel" parent="OrderIcon"]
+custom_minimum_size = Vector2(100, 90)
+layout_mode = 0
+offset_left = -135.0
+offset_top = -154.0
+offset_right = -35.0
+offset_bottom = -64.0
+
+[node name="OrderNum" type="RichTextLabel" parent="OrderIcon/Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -50.0
+offset_right = 50.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/normal_font = ExtResource("7_woks1")
+theme_override_font_sizes/normal_font_size = 64
+text = "1"
+horizontal_alignment = 1
+vertical_alignment = 1

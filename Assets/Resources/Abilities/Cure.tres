@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="Ability" load_steps=2 format=3 uid="uid://d1ssplv42oa2h"]
+
+[ext_resource type="Script" uid="uid://cqipoqgybe2r5" path="res://Assets/Scripts/Data/Ability.cs" id="1_1b2cf"]
+
+[resource]
+script = ExtResource("1_1b2cf")
+Name = "Cure"
+Description = "Heal Ally"
+Range = 1.0
+Power = 1.5
+TargetingType = 1
+AimingType = 0
+Damage = 0
+Element = 0
+Physical = 0
+Ailment = 0
+Buff = 0
+Restore = 1
+metadata/_custom_type_script = "uid://cqipoqgybe2r5"

@@ -14,15 +14,15 @@ public partial class AbilityButton : Button
         base._Ready();
 
         Pressed += OnButtonPressed;
-
+        
         //GetParent<>
         VisibilityChanged += OnEnabled;
 
-        AbilityMenu Menu = GetParent<AbilityMenu>();
     }
 
     public void OnButtonPressed()
     {
+        GD.Print("Ability Button Pressed!");
         PlayerController.Instance.OnAbilityButtonPressed(StoredAbility);
     }
 
@@ -43,7 +43,14 @@ public partial class AbilityButton : Button
 
     public void SetNameText()
     {
-        Text = StoredAbility.GetName();
+        if (StoredAbility != null)
+        {
+            Text = StoredAbility.GetAbilityName();
+        }
+        else
+        {
+            GD.Print("ABILTY NOT SET");
+        }
     }
 
     public void SetDescriptionText()

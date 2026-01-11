@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class RangeIndicatorContainer : Node
+public partial class RangeIndicatorContainer : Node2D
 {
     [Export]
     public Node2D[] RangeIndices;
@@ -19,14 +19,5 @@ public partial class RangeIndicatorContainer : Node
         RangeIndices[7].Position = Position + (new Vector2(0.707f, -0.707f) * Range);
     }
 
-    public void Hide()
-    {
-        
-    }
-
-    public void Show()
-    {
-
-    }
 
 }
