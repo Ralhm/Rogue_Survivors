@@ -32,6 +32,8 @@ public partial class CharacterData : Resource
     [Export]
     private int MagDefense = 10;
 
+
+
     [Export]
     private Ability[] AbilityList;
 
@@ -114,4 +116,5 @@ public partial class CharacterData : Resource
         return AbilityList;
     }
 
+    
 }

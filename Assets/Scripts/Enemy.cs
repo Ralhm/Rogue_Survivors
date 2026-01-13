@@ -27,4 +27,6 @@ public partial class Enemy : Character
     {
         return base.CalculateDamageTaken(Power, type, element, physical);
     }
+
+
 }

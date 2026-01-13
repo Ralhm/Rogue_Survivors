@@ -3,48 +3,52 @@
   "WorkspaceRootPath": "C:\\MyStuff\\GameDev\\Godot\\GodotGames\\Rogue_Survivors\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A25394F5-4912-4388-88A4-C117E847A60A}|Rogue_Survivors.csproj|c:\\mystuff\\gamedev\\godot\\godotgames\\rogue_survivors\\assets\\scripts\\playercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A25394F5-4912-4388-88A4-C117E847A60A}|Rogue_Survivors.csproj|solutionrelative:assets\\scripts\\playercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{A25394F5-4912-4388-88A4-C117E847A60A}|Rogue_Survivors.csproj|c:\\mystuff\\gamedev\\godot\\godotgames\\rogue_survivors\\assets\\scripts\\character.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A25394F5-4912-4388-88A4-C117E847A60A}|Rogue_Survivors.csproj|solutionrelative:assets\\scripts\\character.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A25394F5-4912-4388-88A4-C117E847A60A}|Rogue_Survivors.csproj|c:\\mystuff\\gamedev\\godot\\godotgames\\rogue_survivors\\assets\\scripts\\ui\\abilitymenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A25394F5-4912-4388-88A4-C117E847A60A}|Rogue_Survivors.csproj|solutionrelative:assets\\scripts\\ui\\abilitymenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\MyStuff\\GameDev\\Godot\\GodotGames\\Rogue_Survivors\\Assets\\Characters\\CounterBox.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\Characters\\CounterBox.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A25394F5-4912-4388-88A4-C117E847A60A}|Rogue_Survivors.csproj|c:\\mystuff\\gamedev\\godot\\godotgames\\rogue_survivors\\assets\\scripts\\playercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A25394F5-4912-4388-88A4-C117E847A60A}|Rogue_Survivors.csproj|solutionrelative:assets\\scripts\\playercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A25394F5-4912-4388-88A4-C117E847A60A}|Rogue_Survivors.csproj|c:\\mystuff\\gamedev\\godot\\godotgames\\rogue_survivors\\assets\\scripts\\data\\ability.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A25394F5-4912-4388-88A4-C117E847A60A}|Rogue_Survivors.csproj|solutionrelative:assets\\scripts\\data\\ability.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A25394F5-4912-4388-88A4-C117E847A60A}|Rogue_Survivors.csproj|c:\\mystuff\\gamedev\\godot\\godotgames\\rogue_survivors\\assets\\scripts\\ally.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A25394F5-4912-4388-88A4-C117E847A60A}|Rogue_Survivors.csproj|solutionrelative:assets\\scripts\\ally.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A25394F5-4912-4388-88A4-C117E847A60A}|Rogue_Survivors.csproj|c:\\mystuff\\gamedev\\godot\\godotgames\\rogue_survivors\\assets\\scripts\\combatmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A25394F5-4912-4388-88A4-C117E847A60A}|Rogue_Survivors.csproj|solutionrelative:assets\\scripts\\combatmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A25394F5-4912-4388-88A4-C117E847A60A}|Rogue_Survivors.csproj|c:\\mystuff\\gamedev\\godot\\godotgames\\rogue_survivors\\assets\\scripts\\ui\\abilitybutton.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A25394F5-4912-4388-88A4-C117E847A60A}|Rogue_Survivors.csproj|solutionrelative:assets\\scripts\\ui\\abilitybutton.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{A25394F5-4912-4388-88A4-C117E847A60A}|Rogue_Survivors.csproj|c:\\mystuff\\gamedev\\godot\\godotgames\\rogue_survivors\\assets\\levels\\rangecollider.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A25394F5-4912-4388-88A4-C117E847A60A}|Rogue_Survivors.csproj|solutionrelative:assets\\levels\\rangecollider.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A25394F5-4912-4388-88A4-C117E847A60A}|Rogue_Survivors.csproj|c:\\mystuff\\gamedev\\godot\\godotgames\\rogue_survivors\\assets\\scripts\\data\\ability_directional.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A25394F5-4912-4388-88A4-C117E847A60A}|Rogue_Survivors.csproj|solutionrelative:assets\\scripts\\data\\ability_directional.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A25394F5-4912-4388-88A4-C117E847A60A}|Rogue_Survivors.csproj|c:\\mystuff\\gamedev\\godot\\godotgames\\rogue_survivors\\assets\\scripts\\enemy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A25394F5-4912-4388-88A4-C117E847A60A}|Rogue_Survivors.csproj|solutionrelative:assets\\scripts\\enemy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A25394F5-4912-4388-88A4-C117E847A60A}|Rogue_Survivors.csproj|c:\\mystuff\\gamedev\\godot\\godotgames\\rogue_survivors\\assets\\scripts\\damagemodifiers.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A25394F5-4912-4388-88A4-C117E847A60A}|Rogue_Survivors.csproj|solutionrelative:assets\\scripts\\damagemodifiers.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A25394F5-4912-4388-88A4-C117E847A60A}|Rogue_Survivors.csproj|c:\\mystuff\\gamedev\\godot\\godotgames\\rogue_survivors\\assets\\scripts\\combatmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A25394F5-4912-4388-88A4-C117E847A60A}|Rogue_Survivors.csproj|solutionrelative:assets\\scripts\\combatmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A25394F5-4912-4388-88A4-C117E847A60A}|Rogue_Survivors.csproj|c:\\mystuff\\gamedev\\godot\\godotgames\\rogue_survivors\\assets\\scripts\\data\\characterdata.cs||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{A25394F5-4912-4388-88A4-C117E847A60A}|Rogue_Survivors.csproj|solutionrelative:assets\\scripts\\data\\characterdata.cs||{8B382828-6202-11D1-8870-0000F87579D2}"
+      "AbsoluteMoniker": "D:0:0:{A25394F5-4912-4388-88A4-C117E847A60A}|Rogue_Survivors.csproj|c:\\mystuff\\gamedev\\godot\\godotgames\\rogue_survivors\\assets\\scripts\\data\\ability_aim.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A25394F5-4912-4388-88A4-C117E847A60A}|Rogue_Survivors.csproj|solutionrelative:assets\\scripts\\data\\ability_aim.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A25394F5-4912-4388-88A4-C117E847A60A}|Rogue_Survivors.csproj|c:\\mystuff\\gamedev\\godot\\godotgames\\rogue_survivors\\assets\\scripts\\ally.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A25394F5-4912-4388-88A4-C117E847A60A}|Rogue_Survivors.csproj|solutionrelative:assets\\scripts\\ally.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A25394F5-4912-4388-88A4-C117E847A60A}|Rogue_Survivors.csproj|c:\\mystuff\\gamedev\\godot\\godotgames\\rogue_survivors\\assets\\scripts\\ui\\abilitymenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A25394F5-4912-4388-88A4-C117E847A60A}|Rogue_Survivors.csproj|solutionrelative:assets\\scripts\\ui\\abilitymenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A25394F5-4912-4388-88A4-C117E847A60A}|Rogue_Survivors.csproj|c:\\mystuff\\gamedev\\godot\\godotgames\\rogue_survivors\\assets\\scripts\\ui\\abilitybutton.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A25394F5-4912-4388-88A4-C117E847A60A}|Rogue_Survivors.csproj|solutionrelative:assets\\scripts\\ui\\abilitybutton.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -54,7 +58,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 9,
+          "SelectedChildIndex": 10,
           "Children": [
             {
               "$type": "Bookmark",
@@ -62,20 +66,72 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 1,
+              "Title": "CounterBox.cs",
+              "DocumentMoniker": "C:\\MyStuff\\GameDev\\Godot\\GodotGames\\Rogue_Survivors\\Assets\\Characters\\CounterBox.cs",
+              "RelativeDocumentMoniker": "Assets\\Characters\\CounterBox.cs",
+              "ToolTip": "C:\\MyStuff\\GameDev\\Godot\\GodotGames\\Rogue_Survivors\\Assets\\Characters\\CounterBox.cs",
+              "RelativeToolTip": "Assets\\Characters\\CounterBox.cs",
+              "ViewState": "AgIAABMAAAAAAAAAAAAQwB4AAAAtAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-13T03:42:07.216Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Ability_Aim.cs",
+              "DocumentMoniker": "C:\\MyStuff\\GameDev\\Godot\\GodotGames\\Rogue_Survivors\\Assets\\Scripts\\Data\\Ability_Aim.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Data\\Ability_Aim.cs",
+              "ToolTip": "C:\\MyStuff\\GameDev\\Godot\\GodotGames\\Rogue_Survivors\\Assets\\Scripts\\Data\\Ability_Aim.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Data\\Ability_Aim.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-12T21:36:34.234Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Ability_Directional.cs",
+              "DocumentMoniker": "C:\\MyStuff\\GameDev\\Godot\\GodotGames\\Rogue_Survivors\\Assets\\Scripts\\Data\\Ability_Directional.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Data\\Ability_Directional.cs",
+              "ToolTip": "C:\\MyStuff\\GameDev\\Godot\\GodotGames\\Rogue_Survivors\\Assets\\Scripts\\Data\\Ability_Directional.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Data\\Ability_Directional.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-12T20:04:13.825Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Ability.cs",
+              "DocumentMoniker": "C:\\MyStuff\\GameDev\\Godot\\GodotGames\\Rogue_Survivors\\Assets\\Scripts\\Data\\Ability.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Data\\Ability.cs",
+              "ToolTip": "C:\\MyStuff\\GameDev\\Godot\\GodotGames\\Rogue_Survivors\\Assets\\Scripts\\Data\\Ability.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Data\\Ability.cs",
+              "ViewState": "AgIAADEAAAAAAAAAAAAkwOcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-30T03:30:29.43Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "RangeCollider.cs",
               "DocumentMoniker": "C:\\MyStuff\\GameDev\\Godot\\GodotGames\\Rogue_Survivors\\Assets\\Levels\\RangeCollider.cs",
               "RelativeDocumentMoniker": "Assets\\Levels\\RangeCollider.cs",
               "ToolTip": "C:\\MyStuff\\GameDev\\Godot\\GodotGames\\Rogue_Survivors\\Assets\\Levels\\RangeCollider.cs",
               "RelativeToolTip": "Assets\\Levels\\RangeCollider.cs",
-              "ViewState": "AgIAABoAAAAAAAAAAAA3wC4AAAA0AAAAAAAAAA==",
+              "ViewState": "AgIAABUAAAAAAAAAAAA1wCMAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-01-05T22:35:36.985Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 10,
               "Title": "AbilityMenu.cs",
               "DocumentMoniker": "C:\\MyStuff\\GameDev\\Godot\\GodotGames\\Rogue_Survivors\\Assets\\Scripts\\UI\\AbilityMenu.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\UI\\AbilityMenu.cs",
@@ -88,31 +144,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "DamageModifiers.cs",
-              "DocumentMoniker": "C:\\MyStuff\\GameDev\\Godot\\GodotGames\\Rogue_Survivors\\Assets\\Scripts\\DamageModifiers.cs",
-              "RelativeDocumentMoniker": "Assets\\Scripts\\DamageModifiers.cs",
-              "ToolTip": "C:\\MyStuff\\GameDev\\Godot\\GodotGames\\Rogue_Survivors\\Assets\\Scripts\\DamageModifiers.cs",
-              "RelativeToolTip": "Assets\\Scripts\\DamageModifiers.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-03T23:29:54.305Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "CharacterData.cs",
-              "DocumentMoniker": "C:\\MyStuff\\GameDev\\Godot\\GodotGames\\Rogue_Survivors\\Assets\\Scripts\\Data\\CharacterData.cs",
-              "RelativeDocumentMoniker": "Assets\\Scripts\\Data\\CharacterData.cs",
-              "ToolTip": "C:\\MyStuff\\GameDev\\Godot\\GodotGames\\Rogue_Survivors\\Assets\\Scripts\\Data\\CharacterData.cs",
-              "RelativeToolTip": "Assets\\Scripts\\Data\\CharacterData.cs",
-              "ViewState": "AgIAAGcAAAAAAAAAAAAAAHEAAAAaAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-01T01:32:18.237Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 11,
               "Title": "AbilityButton.cs",
               "DocumentMoniker": "C:\\MyStuff\\GameDev\\Godot\\GodotGames\\Rogue_Survivors\\Assets\\Scripts\\UI\\AbilityButton.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\UI\\AbilityButton.cs",
@@ -125,80 +157,67 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 9,
               "Title": "Ally.cs",
               "DocumentMoniker": "C:\\MyStuff\\GameDev\\Godot\\GodotGames\\Rogue_Survivors\\Assets\\Scripts\\Ally.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Ally.cs",
               "ToolTip": "C:\\MyStuff\\GameDev\\Godot\\GodotGames\\Rogue_Survivors\\Assets\\Scripts\\Ally.cs",
               "RelativeToolTip": "Assets\\Scripts\\Ally.cs",
-              "ViewState": "AgIAAIwAAAAAAAAAAAAQwJcAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-01-02T22:17:35.984Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 6,
               "Title": "Enemy.cs",
               "DocumentMoniker": "C:\\MyStuff\\GameDev\\Godot\\GodotGames\\Rogue_Survivors\\Assets\\Scripts\\Enemy.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Enemy.cs",
               "ToolTip": "C:\\MyStuff\\GameDev\\Godot\\GodotGames\\Rogue_Survivors\\Assets\\Scripts\\Enemy.cs",
               "RelativeToolTip": "Assets\\Scripts\\Enemy.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAWAAAAAAAAAA==",
+              "ViewState": "AgIAABIAAAAAAAAAAAAYwB4AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-01-03T03:27:07.047Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "Character.cs",
               "DocumentMoniker": "C:\\MyStuff\\GameDev\\Godot\\GodotGames\\Rogue_Survivors\\Assets\\Scripts\\Character.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Character.cs",
               "ToolTip": "C:\\MyStuff\\GameDev\\Godot\\GodotGames\\Rogue_Survivors\\Assets\\Scripts\\Character.cs",
               "RelativeToolTip": "Assets\\Scripts\\Character.cs",
-              "ViewState": "AgIAAP0AAAAAAAAAAAAAwAwBAAAwAAAAAAAAAA==",
+              "ViewState": "AgIAAMYBAAAAAAAAAAAQwNYBAAAvAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-12-30T01:51:19.986Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "PlayerController.cs",
               "DocumentMoniker": "C:\\MyStuff\\GameDev\\Godot\\GodotGames\\Rogue_Survivors\\Assets\\Scripts\\PlayerController.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\PlayerController.cs",
               "ToolTip": "C:\\MyStuff\\GameDev\\Godot\\GodotGames\\Rogue_Survivors\\Assets\\Scripts\\PlayerController.cs",
               "RelativeToolTip": "Assets\\Scripts\\PlayerController.cs",
-              "ViewState": "AgIAAKsAAAAAAAAAAAAuwMIAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAA+AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-12-30T01:51:26.608Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 7,
               "Title": "CombatManager.cs",
               "DocumentMoniker": "C:\\MyStuff\\GameDev\\Godot\\GodotGames\\Rogue_Survivors\\Assets\\Scripts\\CombatManager.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\CombatManager.cs",
               "ToolTip": "C:\\MyStuff\\GameDev\\Godot\\GodotGames\\Rogue_Survivors\\Assets\\Scripts\\CombatManager.cs",
               "RelativeToolTip": "Assets\\Scripts\\CombatManager.cs",
-              "ViewState": "AgIAAGcAAAAAAAAAAADwvwcAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAKgAAAAAAAAAAAAiwLAAAAAwAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-12-30T01:48:32.388Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Ability.cs",
-              "DocumentMoniker": "C:\\MyStuff\\GameDev\\Godot\\GodotGames\\Rogue_Survivors\\Assets\\Scripts\\Data\\Ability.cs",
-              "RelativeDocumentMoniker": "Assets\\Scripts\\Data\\Ability.cs",
-              "ToolTip": "C:\\MyStuff\\GameDev\\Godot\\GodotGames\\Rogue_Survivors\\Assets\\Scripts\\Data\\Ability.cs",
-              "RelativeToolTip": "Assets\\Scripts\\Data\\Ability.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEUAAAASAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-30T03:30:29.43Z",
               "EditorCaption": ""
             }
           ]

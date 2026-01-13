@@ -113,7 +113,6 @@ y_sort_enabled = true
 y_sort_enabled = true
 
 [node name="Character_Base" parent="Characters/Allies" instance=ExtResource("3_jpshy")]
-Speed = 500
 
 [node name="Character_Base2" parent="Characters/Allies" instance=ExtResource("3_jpshy")]
 position = Vector2(611, 0)
@@ -125,7 +124,7 @@ position = Vector2(-793, -6)
 y_sort_enabled = true
 
 [node name="Enemy_Base" parent="Characters/Enemies" instance=ExtResource("4_qtxkn")]
-position = Vector2(-414, -244)
+position = Vector2(-399, 56)
 
 [node name="Enemy_Base2" parent="Characters/Enemies" instance=ExtResource("4_qtxkn")]
 position = Vector2(149, -181)

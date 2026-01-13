@@ -28,19 +28,19 @@ public enum StoredAction
 
 public partial class Character : CharacterBody2D
 {
-
+    [Export]
     public AnimatedSprite2D Sprite;
 
     [Export]
-    protected AnimatedSprite2D Projection;
+    protected Node2D Projection;
+
 
     [Export]
     Node2D TargetIndicator;
 
 
-
+    [Export]
     public NavigationAgent2D NavAgent;
-
 
 
     [Export]
@@ -54,13 +54,17 @@ public partial class Character : CharacterBody2D
     //If targeting a specific character
     protected Character StoredTarget;
 
-    
+    //If targeting a specific character
+    protected List<Character> StoredTargetList;
 
     [Export]
     public int CurrentHealth;
 
     [Export]
-    public int Speed = 450;
+    public int Speed = 550;
+
+    [Export]
+    private float DragForce = 6000.0f;
 
     [Export]
     public CharacterData BaseData;
@@ -90,7 +94,8 @@ public partial class Character : CharacterBody2D
     [Export]
     public Vector2 MoveDir;
 
-
+    //Store the Move Direction so that the player can animate/shove accordingly
+    protected Vector2 FacingDir;
 
     [Export]
     protected float DistanceTraveled;
@@ -111,19 +116,21 @@ public partial class Character : CharacterBody2D
 
     protected bool IsEnemy = false;
 
+    bool GettingShoved;
+
     protected string StoredAnimDir = "Front";
 
     public override void _Ready()
     {
         base._Ready();
         StartingLocation = Position;
-        Sprite = GetNode<Godot.AnimatedSprite2D>("Sprite");
-        NavAgent = GetNode<Godot.NavigationAgent2D>("NavAgent");
         HideProjection();
         NavAgent.VelocityComputed += OnVelocityComputed;
         CurrentHealth = BaseData.GetMaxHealth();
         GD.Print("Max Health: " + BaseData.GetMaxHealth());
         GD.Print("Current Health: " + CurrentHealth);
+        
+        
     }
 
     public override void _Process(double delta)
@@ -140,14 +147,13 @@ public partial class Character : CharacterBody2D
 
         float Dot = MoveDir.Dot(Vector2.Up);
 
-
- 
         if (MoveDir != Vector2.Zero && CharacterState == CurrentState.Moving)
         {
             Velocity = MoveDir * Speed;
-
+            FacingDir = MoveDir;
             if (DistanceTraveled >= GetMoveRange())
             {
+                GD.Print("ATTEMPTING TO MOVE OUT OF RANGE");
                 Velocity += (Velocity.Length() * (StartingLocation - Position).Normalized());
             }
             if (Dot > 0.5) //Up
@@ -176,9 +182,12 @@ public partial class Character : CharacterBody2D
         }
         else
         {
-            Velocity = new Vector2(Mathf.MoveToward(Velocity.X, 0, Speed), Mathf.MoveToward(Velocity.Y, 0, Speed));
-            Sprite.Play(StoredAnimDir + "_Idle");
-            //Sprite.FlipH = true;
+
+            if (!GettingShoved)
+            {
+                Velocity = new Vector2(Mathf.MoveToward(Velocity.X, 0, Speed), Mathf.MoveToward(Velocity.Y, 0, Speed));
+                Sprite.Play(StoredAnimDir + "_Idle");
+            }
         }
 
         if (CharacterState == CurrentState.Navigating)
@@ -188,17 +197,37 @@ public partial class Character : CharacterBody2D
         }
         else
         {
-            MoveAndSlide();
+            if (GettingShoved)
+            {
+                Velocity -= Velocity.Normalized() * (float)(DragForce * delta);
+                if (Velocity.Length() <= 100) {
+                    GD.Print("FINISHED BEING SHOVED");
+                    OnFinishShoved();
+                }
+            }
+
+            if (CharacterState == CurrentState.Moving || GettingShoved)
+            {
+                MoveAndSlide();
+                
+            }
+            else
+            {
+                MoveAndCollide(Vector2.Zero);
+            }
+            
         }
             
 
     }
 
+    //Turn this into a delegate call
     public void OnNewTurn()
     {
         StartingLocation = Position;
         CharacterState = CurrentState.Idling;
         HideProjection();
+        StoredAbility = null;
         if (IsTired)
         {
             IsTired = false;
@@ -211,7 +240,7 @@ public partial class Character : CharacterBody2D
         }
     }
 
-    public void BeginNavigation()
+    public virtual void BeginNavigation()
     {
         GD.Print("Beginning Navigation...");
         if (IsDashing)
@@ -219,7 +248,8 @@ public partial class Character : CharacterBody2D
             Dashed = true;
             IsDashing = false;
         }
-        
+
+        NavAgent.AvoidanceEnabled = true;
         NavAgent.TargetPosition = EndLocation;
         CharacterState = CurrentState.Navigating;
 
@@ -265,13 +295,15 @@ public partial class Character : CharacterBody2D
                 break;
 
         }
-
+        CharacterState = CurrentState.Idling;
+        NavAgent.AvoidanceEnabled = false;
         PlayerController.Instance.ExecuteNextAction();
         
     }
 
     public void OnPossession()
     {
+        //NavAgent.AvoidanceEnabled = true;
         CharacterState = CurrentState.Moving;
     }
 
@@ -393,32 +425,54 @@ public partial class Character : CharacterBody2D
     //And so they can pass in the desired position, since the ability doesn't know what that is
     public void ActivateAbility()
     {
-        if (StoredAbility.GetAimingType() == SelectionType.Target)
+
+        if (StoredAbility.GetAimingType() == SelectionType.Position)
         {
-            StoredAbility.OnActivate_Single(StoredTarget, this);
-        }
-        else if (StoredAbility.GetAimingType() == SelectionType.Position)
-        {
-            StoredAbility.OnActivate_Multiple(
-                CombatManager.Instance.GetCharactersInRange(StoredTargetPos, GetAbilityRange(), GetAbilityTargetType(), IsEnemy), 
-                this);
+            StoredTargetList = CombatManager.Instance.GetCharactersInRange(StoredTargetPos, GetAbilityRange(), GetAbilityTargetType(), IsEnemy);
             //StoredAbility.OnActivate_Range(CombatManager.Instance.GetEnemiesWithinRange(StoredTargetPos, StoredAbility.GetAbilityRange()), this);
         }
+
+        StoredAbility.OnActivate(this);
         
+
+
     }
 
     //Get sent in a direction
-    public void Shoved(Vector2 Direction)
+    public void Shoved(Vector2 Force)
     {
-
+        GD.Print("Getting Shoved!");
+        CombatManager.Instance.AdjustShoveCount(1);
+        GettingShoved = true;
+        Velocity = Force;
     }
+
+    public void OnFinishShoved()
+    {
+        CombatManager.Instance.AdjustShoveCount(-1);
+        GettingShoved = false;
+        //Velocity = Vector2.Zero;
+    }
+
 
     //Strike and enemy that's been sent your way
     public void Counter(Character Enemy)
     {
 
+        GD.Print("Countering Enemy!");
+        int Damage = CalculateNormalAttackDamage();
+        Damage = Enemy.CalculateDamageTaken(Damage, DamageType.Physical, ElementType.None, PhysicalType.Cut);
+        Enemy.TakeDamage(Damage);
+        Enemy.Velocity = Vector2.Zero;
     }
 
+    public void OnShovedInto()
+    {
+        GD.Print("SHOVED INTO, TAKING DAMAGE");
+        TakeDamage(3);
+        Velocity = Vector2.Zero;
+        OnFinishShoved();
+    }
 
 
 
@@ -447,11 +501,12 @@ public partial class Character : CharacterBody2D
         CharacterAction = action;
     }
 
-    public void SetActionSet()
+    public virtual void SetActionSet()
     {
         CharacterState = CurrentState.ActionSet;
         EndLocation = Position;
         Position = StartingLocation;
+        //Projection.AddChild(Collider);
         //Sprite.
         //Projection.Play
         Projection.Show();
@@ -583,6 +638,16 @@ public partial class Character : CharacterBody2D
         return false;
     }
 
+    public Vector2 GetMoveDir()
+    {
+        return MoveDir;
+    }
+
+    public Vector2 GetFaceDir()
+    {
+        return FacingDir;
+    }
+
     public CurrentState GetCurrentState()
     {
         return CharacterState;
@@ -598,6 +663,16 @@ public partial class Character : CharacterBody2D
         return IsDashing;
     }
 
+    public bool GetIsEnemy()
+    {
+        return IsEnemy;
+    }
+
+    public bool GetIsShoved()
+    {
+        return GettingShoved;
+    }
+
     public Ability[] GetAbilities() { 
         return BaseData.GetAbilities();
     }
@@ -605,6 +680,21 @@ public partial class Character : CharacterBody2D
     public TargetType GetAbilityTargetType()
     {
         return StoredAbility.GetTargetingType();
+    }
+
+    public ShoveType GetShoveType()
+    {
+        return StoredAbility.GetShoveType();
+    }
+
+    public Character GetStoredTarget()
+    {
+        return StoredTarget;
+    }
+
+    public List<Character> GetStoredTargetList()
+    {
+        return StoredTargetList;
     }
 
 

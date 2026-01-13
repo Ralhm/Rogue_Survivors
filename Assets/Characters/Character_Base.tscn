@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://cl80nmrn4b3cx"]
+[gd_scene load_steps=13 format=3 uid="uid://cl80nmrn4b3cx"]
 
 [ext_resource type="Script" uid="uid://b2s1ppdcxdc5x" path="res://Assets/Scripts/Ally.cs" id="1_xn0le"]
 [ext_resource type="Resource" uid="uid://cbc708j4lsyu8" path="res://Assets/Resources/Base_Data.tres" id="2_3xuki"]
@@ -7,31 +7,43 @@
 [ext_resource type="PackedScene" uid="uid://c615icsa45yhb" path="res://Assets/Characters/Sprites/sprite.tscn" id="4_xn0le"]
 [ext_resource type="PackedScene" uid="uid://cyg58xfb1swdp" path="res://Assets/UI/target_arrow.tscn" id="6_nmc61"]
 [ext_resource type="FontFile" uid="uid://brwe5ydicky4n" path="res://Assets/Fonts/PixelOperator8-Bold.ttf" id="7_woks1"]
+[ext_resource type="Script" uid="uid://divlop3v6ty52" path="res://Assets/Characters/CounterBox.cs" id="8_ung7o"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_kv0qp"]
 radius = 42.0
-height = 114.0
+height = 172.23
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_nmc61"]
 radius = 42.0
 height = 114.0
 
-[node name="Character_Base" type="CharacterBody2D" node_paths=PackedStringArray("OrderIcon", "OrderNum", "ProjectionTargetIndicator", "Projection", "TargetIndicator")]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_woks1"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ung7o"]
+radius = 88.0
+height = 180.0
+
+[node name="Character_Base" type="CharacterBody2D" node_paths=PackedStringArray("OrderIcon", "OrderNum", "ProjectionTargetIndicator", "Collider", "ProjectionSprite", "Sprite", "Projection", "TargetIndicator", "NavAgent")]
 y_sort_enabled = true
-collision_mask = 20
+collision_mask = 23
+slide_on_ceiling = false
 script = ExtResource("1_xn0le")
 UpgradeData = ExtResource("3_nmc61")
 OrderIcon = NodePath("OrderIcon")
 OrderNum = NodePath("OrderIcon/Panel/OrderNum")
 ProjectionTargetIndicator = NodePath("Projection/ProjectionTargetArrow")
+Collider = NodePath("CollisionShape2D")
+ProjectionSprite = NodePath("Projection/ProjectionSprite")
+Sprite = NodePath("Sprite")
 Projection = NodePath("Projection")
 TargetIndicator = NodePath("TargetArrow")
-Speed = 600
+NavAgent = NodePath("NavAgent")
 BaseData = ExtResource("2_3xuki")
 DamageData = ExtResource("4_3xuki")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 46.865)
+z_index = 1
+position = Vector2(0, 22.885)
 shape = SubResource("CapsuleShape2D_kv0qp")
 
 [node name="Sprite" parent="." instance=ExtResource("4_xn0le")]
@@ -44,27 +56,10 @@ path_desired_distance = 30.0
 target_desired_distance = 30.0
 path_max_distance = 150.0
 simplify_path = true
-avoidance_enabled = true
-radius = 25.0
+radius = 20.0
 max_speed = 2000.0
-avoidance_mask = 2
-
-[node name="Projection" parent="." instance=ExtResource("4_xn0le")]
-modulate = Color(1, 1, 1, 0.141176)
-
-[node name="ProjectionTargetArrow" parent="Projection" instance=ExtResource("6_nmc61")]
-position = Vector2(0, 103.29)
-
-[node name="Area2D" type="Area2D" parent="Projection"]
-collision_mask = 4
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Projection/Area2D"]
-position = Vector2(0, 46.865)
-shape = SubResource("CapsuleShape2D_nmc61")
-
-[node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="."]
-position = Vector2(0, 43.445)
-radius = 64.6
+avoidance_mask = 259
+debug_path_custom_color = Color(1, 0, 1, 1)
 
 [node name="TargetArrow" parent="." instance=ExtResource("6_nmc61")]
 position = Vector2(0, 103.29)
@@ -102,3 +97,34 @@ theme_override_font_sizes/normal_font_size = 64
 text = "1"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="Projection" type="Node2D" parent="."]
+visible = false
+
+[node name="ProjectionSprite" parent="Projection" instance=ExtResource("4_xn0le")]
+modulate = Color(1, 1, 1, 0.141176)
+
+[node name="ProjectionArea" type="Area2D" parent="Projection/ProjectionSprite"]
+collision_mask = 5
+
+[node name="ProjectionCollision" type="CollisionShape2D" parent="Projection/ProjectionSprite/ProjectionArea"]
+position = Vector2(0, 47)
+shape = SubResource("CapsuleShape2D_nmc61")
+
+[node name="ProjectionTargetArrow" parent="Projection" instance=ExtResource("6_nmc61")]
+position = Vector2(0, 103.29)
+
+[node name="ShapeCast2D" type="ShapeCast2D" parent="."]
+visible = false
+shape = SubResource("RectangleShape2D_woks1")
+target_position = Vector2(663, 0)
+collision_mask = 0
+
+[node name="Counter" type="Area2D" parent="."]
+collision_layer = 65536
+collision_mask = 196608
+script = ExtResource("8_ung7o")
+
+[node name="CounterShape" type="CollisionShape2D" parent="Counter"]
+position = Vector2(1, 18)
+shape = SubResource("CapsuleShape2D_ung7o")

@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://dbukyd3fh5u7n"]
+
+[ext_resource type="Texture2D" uid="uid://cojygptjq1jx6" path="res://Assets/Sprites/RightArrow.png" id="1_lbklq"]
+
+[node name="Arrow" type="Node2D"]
+
+[node name="RightArrow" type="Sprite2D" parent="."]
+z_index = 20
+scale = Vector2(0.145556, 0.145556)
+texture = ExtResource("1_lbklq")

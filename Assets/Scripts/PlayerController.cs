@@ -7,14 +7,21 @@ using System.Collections.Generic;
 //Cooler UI
 //Ability Descriptions
 //Enemy Behavior
+//Go for a more complex decision making process
+//Perhaps make a decision class that keeps track of the target/targets and ability/action
+//And give that decision class a heuristic
+//Cycle through all potential decisions and pick one with the best heuristic
+//And each enemy class should have its own heuristic bias, like supports should prioritize using support abilities
 //Shoving
 //Countering when shoved into
-//If you act right after dashing, become tired
-//When tired, movement range is halved, damage and defense are slightly reduced. Can still defend
-//Don't remove the projection for enemis, consider using it differently for them
+//Add an area2D to characters specifically for detecting when someone being shoved is headed your way
+//Make this area2D have its own script
+//Don't bother with having the main colliders block each other, just cancel movement in the counter box
+//Remove Projection for enemies
 //Replace the range indices with a proper range circle
-//Replace the target cursor with a dedicated highlight/arrow node on each character
-
+//Check if enemy is still in range upon finishing movement and attempting to execute
+//Preview arrow for directional shove abilities
+//Move Projection stuff out of character and into ally
 
 public enum CurrentPlayerState
 {
@@ -26,12 +33,6 @@ public enum CurrentPlayerState
     Inactive //Set Inactive during Enemy Turn
 }
 
-public enum SelectionType
-{
-    Target,
-    Position,
-    Direction
-}
 
 //Script for handling various non-entity related things
 //Will contain a reference to the currently possessed character for the player to control/move
@@ -176,6 +177,16 @@ public partial class PlayerController : Node2D
         else if (CurrentTargetType == TargetType.Friendly)
         {
             CombatManager.Instance.SelectAllyInRange(increment, CurrentAlly.GetOffensiveRange(), CurrentAlly.Position);
+        }
+
+        //If we find enough stuff gets added here, we'll move it to an allies 'OnSwitchTarget' function or some such
+        if (CurrentAlly.GetStoredActionType() == StoredAction.Ability)
+        {
+            if (CurrentAlly.GetShoveType() != ShoveType.None)
+            {
+                CombatManager.Instance.DisplayPreviewArrow(CurrentAlly.GetShoveType(), CombatManager.Instance.GetCurrentTarget().Position, CurrentAlly.Position);
+
+            }
         }
     }
 
@@ -445,6 +456,7 @@ public partial class PlayerController : Node2D
         {
 
         }
+        CombatManager.Instance.HidePreviewArrow();
     }
 
     public void Undo_AbilitySelect()
@@ -475,6 +487,7 @@ public partial class PlayerController : Node2D
         CurrentAlly.SetActionSet();
         AllyActionOrder.Add(CurrentAlly);
         CurrentAlly.SetOrderIcon(AllyActionOrder.Count);
+        CombatManager.Instance.HidePreviewArrow();
         if (AllyActionOrder.Count < 3)
         {
             PlayerState = CurrentPlayerState.Moving;
@@ -507,7 +520,7 @@ public partial class PlayerController : Node2D
                 CurrentAlly.SetStoredTargetPos(GetGlobalMousePosition());
                 CombatManager.Instance.HideTargets();
                 break;
-            case SelectionType.Direction:
+            case SelectionType.Aim:
                 //CurrentAlly.SetStoredDir(Vector2.Zero);
                 break;
         }

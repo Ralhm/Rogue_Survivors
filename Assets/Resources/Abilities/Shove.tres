@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="Ability_Directional" load_steps=2 format=3 uid="uid://cmlutjy65agdc"]
+
+[ext_resource type="Script" uid="uid://bldi1jpm1fqp3" path="res://Assets/Scripts/Data/Ability_Directional.cs" id="1_nhbku"]
+
+[resource]
+script = ExtResource("1_nhbku")
+ShoveDirection = 1
+ShoveForce = 3200.0
+Point = false
+Name = "Shove"
+Description = ""
+Range = 1.0
+Power = 2.0
+TargetingType = 0
+AimingType = 0
+Damage = 1
+Element = 0
+Physical = 3
+Ailment = 0
+Buff = 0
+Restore = 0
+metadata/_custom_type_script = "uid://bldi1jpm1fqp3"

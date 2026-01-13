@@ -14,12 +14,6 @@ public partial class CombatManager : Node2D
 
     public static CombatManager Instance { get { return _instance; } }
 
-    [Export]
-    public Ally[] AllyList;
-
-    [Export]
-    public Enemy[] EnemyList;
-
     //Let this contain a list of characters that are within range of an action
     //Strictly for player previewing purposes
     private List<Character> TargetList = new List<Character>();
@@ -27,10 +21,16 @@ public partial class CombatManager : Node2D
     //Let this contain a list of projections
     private List<Ally> ProjectionList = new List<Ally>();
 
-    [Export]
-    public int CurrentlySelectedTargetIndex = 0;
-
     public Character CurrentlyTargetedCharacter;
+
+    [Export]
+    public Ally[] AllyList;
+
+    [Export]
+    public Enemy[] EnemyList;
+
+    [Export]
+    public Node2D PreviewArrow;
 
     [Export]
     RangeIndicatorContainer Indices;
@@ -38,7 +38,14 @@ public partial class CombatManager : Node2D
     [Export]
     RangeCollider RangeArea;
 
+    //Hold a number of characters that are currently experiencing a force.
+    //As long as this number is greater than 0, do NOT progress to the next action
+    //In other words, wait until all characters have stopped moving to begin next action
+    [Export]
+    public int ShovedCount;
 
+    [Export]
+    public int CurrentlySelectedTargetIndex = 0;
 
     public override void _Ready()
     {
@@ -60,6 +67,15 @@ public partial class CombatManager : Node2D
         Indices.Position = Vector2.Zero;
     }
 
+
+    public void AdjustShoveCount(int increment)
+    {
+        ShovedCount += increment;
+        if (ShovedCount == 0)
+        {
+            //NEXT ACTION HERE
+        }
+    }
 
 
     public void HideCurrentTarget()
@@ -150,6 +166,52 @@ public partial class CombatManager : Node2D
             return false;
         }
         return true;
+    }
+
+    public void DisplayPreviewArrow(ShoveType type, Vector2 Target, Vector2 Origin)
+    {
+
+        Vector2 Dir = CalculateDirection(type, Target, Origin);
+        PreviewArrow.Show();
+        PreviewArrow.Rotation = Dir.Angle();
+        PreviewArrow.GlobalPosition = Target + (Dir * 100);
+
+    }
+
+    public void HidePreviewArrow()
+    {
+        PreviewArrow.Hide();
+    }
+
+    public static Vector2 CalculateDirection(ShoveType type, Vector2 Target, Vector2 Origin)
+    {
+        
+        Vector2 Dir = Vector2.Zero;
+
+        switch (type)
+        {
+            case ShoveType.Back:
+                Dir = (Target - Origin).Normalized();
+                break;
+            case ShoveType.Right:
+                Dir = (Target - Origin).Normalized();
+                Vector3 FaceDirRight = new Vector3(Dir.X, Dir.Y, 0);
+                Vector3 CrossRight = FaceDirRight.Cross(Vector3.Forward).Normalized();
+                Dir = (new Vector2(CrossRight.X, CrossRight.Y));
+                break;
+            case ShoveType.Left:
+                Dir = (Target - Origin).Normalized();
+                Vector3 FaceDirLeft = new Vector3(Dir.X, Dir.Y, 0);
+                Vector3 CrossLeft = FaceDirLeft.Cross(Vector3.Back).Normalized();
+                Dir = (new Vector2(CrossLeft.X, CrossLeft.Y));
+                break;
+            case ShoveType.Pull:
+                Dir = (Origin - Target).Normalized();
+                break;
+
+        }
+
+        return Dir;
     }
 
     //RANGE CHECKING
@@ -300,7 +362,7 @@ public partial class CombatManager : Node2D
 
     #endregion
 
-    //SINGLE TARGET SELECTION
+    //SINGLE TARGET SELECTION SPECIFICALLY FOR PLAYER UI PURPOSES
     #region SingleTargetSelection
 
     public void SelectEnemyInRange(int increment, float Range, Vector2 Position)

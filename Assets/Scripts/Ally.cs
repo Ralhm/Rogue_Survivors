@@ -19,6 +19,20 @@ public partial class Ally : Character
     [Export]
     Node2D ProjectionTargetIndicator;
 
+    [Export]
+    CollisionShape2D Collider;
+
+
+    [Export]
+    protected AnimatedSprite2D ProjectionSprite;
+
+    private Vector2 ColliderOrigin;
+
+    public override void _Ready()
+    {
+        base._Ready();
+        ColliderOrigin = Collider.Position;
+    }
 
     public void SetOrderIcon(int num)
     {
@@ -134,6 +148,17 @@ public partial class Ally : Character
         }
     }
 
+    public override void BeginNavigation()
+    {
+        base.BeginNavigation();
+        Collider.Position = ColliderOrigin;
+    }
+
+    public override void SetActionSet()
+    {
+        base.SetActionSet();
+        Collider.GlobalPosition = EndLocation + ColliderOrigin;
+    }
 
     public void CancelAction() //If action has been set, compelete reset
     {
@@ -143,8 +168,10 @@ public partial class Ally : Character
         CharacterAction = StoredAction.None;
         OrderIcon.Hide();
         HideProjection();
+        Collider.Position = ColliderOrigin;
 
     }
+
 
 
     public override float GetMoveRange()

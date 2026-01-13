@@ -3,6 +3,13 @@ using System;
 using System.Collections.Generic;
 
 
+public enum SelectionType
+{
+    Target,
+    Position,
+    Aim //Reserve Direction specifically for Ability_Aim subclass
+}
+
 
 public enum DamageType
 {
@@ -18,7 +25,7 @@ public enum PhysicalType
     None,
     Cut,
     Stab,
-    Bash //Untyped ignores defenses
+    Bash 
 
 }
 
@@ -70,6 +77,9 @@ public enum TargetType
     Indiscriminate
 }
 
+
+
+
 //Split this up into active and passive abilities?
 [GlobalClass]
 public partial class Ability : Resource
@@ -116,7 +126,7 @@ public partial class Ability : Resource
     RestorativeType Restore;
 
 
-    public void AbilityEffect(Character Target, Character User)
+    public virtual void AbilityEffect(Character Target, Character User)
     {
         if (Damage != DamageType.None)
         {
@@ -144,13 +154,6 @@ public partial class Ability : Resource
         }
     }
 
-    //Consider abstracting abilities based on aiming type
-    public void OnActivate_Single(Character Target, Character User)
-    {
-        AbilityEffect(Target, User);
-    }
-
-
     public void OnActivate_Multiple(List<Character> targets, Character User)
     {
         for (int i = 0; i < targets.Count; i++)
@@ -160,8 +163,16 @@ public partial class Ability : Resource
         //
     }
 
-    public void OnActivate()
+    public void OnActivate(Character User)
     {
+        if (AimingType == SelectionType.Target)
+        {
+            AbilityEffect(User.GetStoredTarget(), User);
+        }
+        else
+        {
+            OnActivate_Multiple(User.GetStoredTargetList(), User);
+        }
 
     }
 
@@ -218,6 +229,9 @@ public partial class Ability : Resource
         return AimingType;
     }
 
-
+    public virtual ShoveType GetShoveType()
+    {
+        return ShoveType.None;
+    }
 
 }
