@@ -2,6 +2,11 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
+//While rather monolithic in structure, this Abilty class allows abilities to have multiple factors to them
+//Sure, some many things will go unused for most abilities
+//But it gives the designer (me) the power to mix and match ability possibilities
+//I could make a skill that buffs AND heals, or does damage and applies an ailment
+
 
 public enum SelectionType
 {
@@ -40,23 +45,8 @@ public enum ElementType
 }
 
 
-public enum AilmentType
-{
-    None,
-    Poison,
-    Sleep,
-    Stun,
-    Bleed
-}
 
-public enum BuffType
-{
-    None,
-    PhysAttack,
-    PhysDefense,
-    MagAttack,
-    MagDefense
-}
+
 
 public enum RestorativeType
 {
@@ -93,7 +83,7 @@ public partial class Ability : Resource
     string Description;
 
 
-    //If this is a single target ability, let it be a multiplier
+    //If this is a single target ability, let it be a multiplier 
     //If this is a rangetype ability, let it be AOE
     [Export]
     float Range = 1.0f;
@@ -116,41 +106,60 @@ public partial class Ability : Resource
     [Export]
     PhysicalType Physical;
 
-    [Export]
-    AilmentType Ailment;
 
     [Export]
-    BuffType Buff;
+    Ailment AbilityAilment;
+
+    [Export]
+    Buff AbilityBuff;
 
     [Export]
     RestorativeType Restore;
 
+    [Export]
+    AI_Priority DecisionType;
 
     public virtual void AbilityEffect(Character Target, Character User)
     {
         if (Damage != DamageType.None)
         {
-            int TotalDamage = ApplyDamage(Target, User);
+            int TotalDamage = CalculateAbilityDamage(Target, User);
             if (Restore == RestorativeType.Drain)
             {
                 //Drain here
             }
             Target.TakeDamage(TotalDamage);
+            if (Restore == RestorativeType.Drain)
+            {
+                User.Heal(TotalDamage / 2);
+            }
         }
 
-        if (Ailment != AilmentType.None)
+        if (AbilityAilment != null)
         {
 
         }
 
-        if (Buff != BuffType.None) 
-        { 
-        
+        if (AbilityBuff != null) { 
+            if (AbilityBuff.IsSelf())
+            {
+                User.AddBuff(AbilityBuff);
+            }
+            else
+            {
+                Target.AddBuff(AbilityBuff);
+            }
+            
         }
 
-        if (Restore != RestorativeType.None)
-        {
+        //if (AbilityBuff != BuffType.None) 
+        //{ 
+        //    Target
+        //}
 
+        if (Restore != RestorativeType.None && Restore != RestorativeType.Drain)
+        {
+            RestorationEffect(Target, User);
         }
     }
 
@@ -176,19 +185,26 @@ public partial class Ability : Resource
 
     }
 
-    public int ApplyDamage(Character Target, Character User)
+    public int GetHealthRestored(Character User)
     {
-        int TotalDamage = User.CalculateAbilityDamage(Damage);
-        TotalDamage = Target.CalculateDamageTaken(TotalDamage, Damage, Element, Physical);
+        return (int)(Power * User.BaseData.GetMagic());
+    }
+
+    public int CalculateAbilityDamage(Character Target, Character User)
+    {
+        int TotalDamage = User.GetAbilityDamage(Damage);
+        TotalDamage = Target.GetDamageTaken(TotalDamage, Damage, Element, Physical);
 
         return TotalDamage;
     }
 
-    public void Restoration()
+
+    public void RestorationEffect(Character User, Character Target)
     {
         switch (Restore)
         {
             case RestorativeType.Health: //Heal
+                Target.Heal(GetHealthRestored(User));
                 break;
             case RestorativeType.Life: //Revive
                 break;
@@ -232,6 +248,21 @@ public partial class Ability : Resource
     public virtual ShoveType GetShoveType()
     {
         return ShoveType.None;
+    }
+
+    public DamageType GetDamageType()
+    {
+        return Damage;
+    }
+
+    public RestorativeType GetRestorativeType()
+    {
+        return Restore;
+    }
+
+    public AI_Priority GetAIType()
+    {
+        return DecisionType;
     }
 
 }

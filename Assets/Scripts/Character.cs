@@ -14,7 +14,9 @@ public enum CurrentState
     SelectingDirection, //Aiming For a directional ability
     SelectingDirectionPos, //Aiming for an AOE
     ActionSet, //If their actions has been selected, and are waiting for the player to execute
-    Dead
+    Dead,
+    Stunned,
+    Asleep//
 }
 
 public enum StoredAction
@@ -61,7 +63,7 @@ public partial class Character : CharacterBody2D
     public int CurrentHealth;
 
     [Export]
-    public int Speed = 550;
+    public int MoveSpeed = 550;
 
     [Export]
     private float DragForce = 6000.0f;
@@ -72,7 +74,8 @@ public partial class Character : CharacterBody2D
     [Export]
     public DamageModifiers DamageData;
 
-
+    public BuffContainer BuffContainer = new BuffContainer();
+    public AilmentContainer AilmentContainer = new AilmentContainer();
 
     //If our attack is an AOE aimed at a position
     [Export]
@@ -114,6 +117,8 @@ public partial class Character : CharacterBody2D
     [Export]
     public bool IsTired;
 
+    bool SkippingTurn;
+
     protected bool IsEnemy = false;
 
     bool GettingShoved;
@@ -145,48 +150,18 @@ public partial class Character : CharacterBody2D
         base._PhysicsProcess(delta);
         DistanceTraveled = (StartingLocation - Position).Length();
 
-        float Dot = MoveDir.Dot(Vector2.Up);
-
+        
+        //NOTE TO SELF
         if (MoveDir != Vector2.Zero && CharacterState == CurrentState.Moving)
         {
-            Velocity = MoveDir * Speed;
-            FacingDir = MoveDir;
-            if (DistanceTraveled >= GetMoveRange())
-            {
-                GD.Print("ATTEMPTING TO MOVE OUT OF RANGE");
-                Velocity += (Velocity.Length() * (StartingLocation - Position).Normalized());
-            }
-            if (Dot > 0.5) //Up
-            {
-                StoredAnimDir = "Back";
-                Sprite.Play("Back_Walk");
-            }
-            else if (Dot < 0.5 && Dot > -0.5) //Side
-            {
-                if (MoveDir.X < 0)
-                {
-                    Sprite.FlipH = false;
-                }
-                else
-                {
-                    Sprite.FlipH = true;
-                }
-                StoredAnimDir = "Side";
-                Sprite.Play("Side_Walk");
-            }
-            else
-            {
-                StoredAnimDir = "Front";
-                Sprite.Play("Front_Walk");
-            }
+            Walk_Input();
         }
         else
         {
 
             if (!GettingShoved)
             {
-                Velocity = new Vector2(Mathf.MoveToward(Velocity.X, 0, Speed), Mathf.MoveToward(Velocity.Y, 0, Speed));
-                Sprite.Play(StoredAnimDir + "_Idle");
+                SlowDown();
             }
         }
 
@@ -197,32 +172,82 @@ public partial class Character : CharacterBody2D
         }
         else
         {
-            if (GettingShoved)
-            {
-                Velocity -= Velocity.Normalized() * (float)(DragForce * delta);
-                if (Velocity.Length() <= 100) {
-                    GD.Print("FINISHED BEING SHOVED");
-                    OnFinishShoved();
-                }
-            }
+            Move(delta);
 
-            if (CharacterState == CurrentState.Moving || GettingShoved)
-            {
-                MoveAndSlide();
-                
-            }
-            else
-            {
-                MoveAndCollide(Vector2.Zero);
-            }
-            
+
         }
             
 
     }
 
+    //Re-Name This
+    public void SlowDown()
+    {
+        Velocity = new Vector2(Mathf.MoveToward(Velocity.X, 0, MoveSpeed), Mathf.MoveToward(Velocity.Y, 0, MoveSpeed));
+        Sprite.Play(StoredAnimDir + "_Idle");
+    }
+
+    //Re-Name This
+    public void Move(double delta)
+    {
+        if (GettingShoved)
+        {
+            Velocity -= Velocity.Normalized() * (float)(DragForce * delta);
+            if (Velocity.Length() <= 100)
+            {
+                GD.Print("FINISHED BEING SHOVED");
+                OnFinishShoved();
+            }
+        }
+
+        if (CharacterState == CurrentState.Moving || GettingShoved)
+        {
+            MoveAndSlide();
+
+        }
+        else
+        {
+            MoveAndCollide(Vector2.Zero);
+        }
+    }
+
+    public void Walk_Input()
+    {
+        float Dot = MoveDir.Dot(Vector2.Up);
+        Velocity = MoveDir * MoveSpeed;
+        FacingDir = MoveDir;
+        if (DistanceTraveled >= GetMoveRange())
+        {
+            GD.Print("ATTEMPTING TO MOVE OUT OF RANGE");
+            Velocity += (Velocity.Length() * (StartingLocation - Position).Normalized());
+        }
+        if (Dot > 0.5) //Up
+        {
+            StoredAnimDir = "Back";
+            Sprite.Play("Back_Walk");
+        }
+        else if (Dot < 0.5 && Dot > -0.5) //Side
+        {
+            if (MoveDir.X < 0)
+            {
+                Sprite.FlipH = false;
+            }
+            else
+            {
+                Sprite.FlipH = true;
+            }
+            StoredAnimDir = "Side";
+            Sprite.Play("Side_Walk");
+        }
+        else
+        {
+            StoredAnimDir = "Front";
+            Sprite.Play("Front_Walk");
+        }
+    }
+
     //Turn this into a delegate call
-    public void OnNewTurn()
+    public virtual void OnBeginningOfPhase()
     {
         StartingLocation = Position;
         CharacterState = CurrentState.Idling;
@@ -238,6 +263,23 @@ public partial class Character : CharacterBody2D
             Dashed = false;
             
         }
+    }
+
+    public virtual void OnEndOfPhase()
+    {
+
+    }
+
+    public virtual void BeginAction()
+    {
+        AilmentContainer.AilmentEffects();
+        if (SkippingTurn)
+        {
+            SkippingTurn = false;
+            CombatManager.Instance.ExecuteNextAction();
+        }
+
+        BeginNavigation();
     }
 
     public virtual void BeginNavigation()
@@ -264,7 +306,7 @@ public partial class Character : CharacterBody2D
             FinishNavigation();
             return;
         }
-        NavAgent.Velocity = GlobalPosition.DirectionTo(NavAgent.GetNextPathPosition()) * Speed * 1.5f;
+        NavAgent.Velocity = GlobalPosition.DirectionTo(NavAgent.GetNextPathPosition()) * MoveSpeed * 1.5f;
 
     }
 
@@ -273,9 +315,19 @@ public partial class Character : CharacterBody2D
         Position += vel * (float)GetPhysicsProcessDeltaTime();
     }
 
-    public void FinishNavigation()
+    public virtual void FinishNavigation()
     {
         CharacterState = CurrentState.Acting;
+        ExecuteAction();
+        CharacterState = CurrentState.Idling;
+        NavAgent.AvoidanceEnabled = false;
+
+        
+    }
+
+    public virtual void ExecuteAction()
+    {
+
         switch (CharacterAction)
         {
             case StoredAction.Attack:
@@ -295,11 +347,8 @@ public partial class Character : CharacterBody2D
                 break;
 
         }
-        CharacterState = CurrentState.Idling;
-        NavAgent.AvoidanceEnabled = false;
-        PlayerController.Instance.ExecuteNextAction();
-        
     }
+
 
     public void OnPossession()
     {
@@ -349,18 +398,21 @@ public partial class Character : CharacterBody2D
 
     public virtual int CalculateNormalAttackDamage()
     {
-        return BaseData.GetAttack();
+        return (int)(BaseData.GetAttack() * (BuffContainer.GetPhysAttack()));
     }
 
-    public virtual int CalculateDamageTaken(int Power, DamageType type, ElementType element, PhysicalType physical)
+    public virtual int GetDamageTaken(int Power, DamageType type, ElementType element, PhysicalType physical)
     {
         if (type == DamageType.Physical)
         {
             Power -= BaseData.GetPhysDefense();
+            Power = (int)(Power / BuffContainer.GetPhysDefense());
         }
         else if (type == DamageType.Magic)
         {
             Power -= BaseData.GetMagDefense();
+            Power = (int)(Power / BuffContainer.GetMagDefense());
+
         }
 
         if (element != ElementType.None)
@@ -396,16 +448,18 @@ public partial class Character : CharacterBody2D
         return Power;
     }
 
-    public virtual int CalculateAbilityDamage(DamageType type)
+    public virtual int GetAbilityDamage(DamageType type)
     {
         int Damage = 0;
         switch (type)
         {
             case DamageType.Physical:
                 Damage = BaseData.GetAttack();
+                Damage = (int)(Damage * BuffContainer.GetPhysAttack());
                 break;
             case DamageType.Magic:
                 Damage = BaseData.GetMagic();
+                Damage = (int)(Damage * BuffContainer.GetMagAttack());
                 break;
 
         }
@@ -414,11 +468,12 @@ public partial class Character : CharacterBody2D
 
     public virtual void NormalAttack()
     {
-        int Damage = CalculateNormalAttackDamage();
-        GD.Print("Calculated Normal Attack Damage:" + Damage);
-        Damage = StoredTarget.CalculateDamageTaken(Damage, DamageType.Physical, ElementType.None, PhysicalType.Cut);
-        GD.Print("Calculated Final Attack Damage:" + Damage);
-        StoredTarget.TakeDamage(Damage);
+        StoredTarget.TakeDamage(GetTotalNormalAttackDamage(StoredTarget));
+    }
+
+    public virtual int GetTotalNormalAttackDamage(Character target)
+    {
+        return target.GetDamageTaken(CalculateNormalAttackDamage(), DamageType.Physical, ElementType.None, PhysicalType.Cut);
     }
 
     //The user must be the one to decide this, so that they can distinguish between friend and foe when necessary
@@ -428,7 +483,7 @@ public partial class Character : CharacterBody2D
 
         if (StoredAbility.GetAimingType() == SelectionType.Position)
         {
-            StoredTargetList = CombatManager.Instance.GetCharactersInRange(StoredTargetPos, GetAbilityRange(), GetAbilityTargetType(), IsEnemy);
+            StoredTargetList = CombatManager.Instance.GetCharactersInRange(StoredTargetPos, GetStoredAbilityRange(), GetAbilityTargetType(), IsEnemy);
             //StoredAbility.OnActivate_Range(CombatManager.Instance.GetEnemiesWithinRange(StoredTargetPos, StoredAbility.GetAbilityRange()), this);
         }
 
@@ -455,14 +510,12 @@ public partial class Character : CharacterBody2D
     }
 
 
-    //Strike and enemy that's been sent your way
+    //Strike an enemy that's been sent your way
     public void Counter(Character Enemy)
     {
 
         GD.Print("Countering Enemy!");
-        int Damage = CalculateNormalAttackDamage();
-        Damage = Enemy.CalculateDamageTaken(Damage, DamageType.Physical, ElementType.None, PhysicalType.Cut);
-        Enemy.TakeDamage(Damage);
+        Enemy.TakeDamage(GetTotalNormalAttackDamage(Enemy));
         Enemy.Velocity = Vector2.Zero;
     }
 
@@ -544,6 +597,32 @@ public partial class Character : CharacterBody2D
         IsMoving = isMoving;
     }
 
+    public void AddBuff(Buff buff)
+    {
+        BuffContainer.AddBuff(buff);
+    }
+
+    public void AddAilment(Ailment ail)
+    {
+        AilmentContainer.AddAilment(ail);
+    }
+
+    public void HealDeBuffs()
+    {
+
+    }
+
+    public void HealAilments()
+    {
+
+    }
+
+    public void SetSkipTurn()
+    {
+        SkippingTurn = true;
+    }
+
+
 
     #endregion
 
@@ -600,9 +679,12 @@ public partial class Character : CharacterBody2D
 
     }
 
+    public float GetHealthPercent()
+    {
+        return CurrentHealth / BaseData.GetMaxHealth();
+    }
 
-
-    public virtual float GetOffensiveRange()
+    public virtual float GetStoredOffensiveRange()
     {
         GD.Print("Getting Default Range!");
         if (CharacterAction == StoredAction.Attack)
@@ -623,9 +705,29 @@ public partial class Character : CharacterBody2D
         
     }
 
-    public virtual float GetAbilityRange()
+    public virtual float GetStoredAbilityRange()
     {
         return StoredAbility.GetAbilityRange();
+    }
+
+    public float GetAbilityRange(Ability ability)
+    {
+        return BaseData.GetAttackRange() * ability.GetAbilityRange();
+    }
+
+    public float GetTotalAbilityRange(Ability ability)
+    {
+        return BaseData.GetMoveRange() + BaseData.GetAttackRange() * ability.GetAbilityRange();
+    }
+
+    public float GetTotalAttackRange()
+    {
+        return BaseData.GetMoveRange() + BaseData.GetAttackRange();
+    }
+
+    public float GetAttackRange()
+    {
+        return BaseData.GetAttackRange();
     }
 
     //This takes the projection into account as well. 
@@ -697,6 +799,10 @@ public partial class Character : CharacterBody2D
         return StoredTargetList;
     }
 
+    public bool GetIsBuffed()
+    {
+        return BuffContainer.GetIsBuffed();
+    }
 
 
     #endregion

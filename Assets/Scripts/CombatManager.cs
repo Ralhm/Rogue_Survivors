@@ -23,6 +23,12 @@ public partial class CombatManager : Node2D
 
     public Character CurrentlyTargetedCharacter;
 
+    public delegate void BeginPhase();
+
+    public BeginPhase BeginAllyPhaseCall;
+
+    public BeginPhase BeginEnemyPhaseCall;
+
     [Export]
     public Ally[] AllyList;
 
@@ -47,6 +53,10 @@ public partial class CombatManager : Node2D
     [Export]
     public int CurrentlySelectedTargetIndex = 0;
 
+    int CurrentActionIndex;
+
+    bool AllyPhase = true;
+
     public override void _Ready()
     {
         base._Ready();
@@ -59,13 +69,68 @@ public partial class CombatManager : Node2D
         {
             _instance = this;
         }
-        //Cursor.Hide();
+
+
+        for (int i = 0; i < EnemyList.Length; i++)
+        {
+            BeginEnemyPhaseCall += EnemyList[i].OnEndOfPhase;
+            BeginEnemyPhaseCall += EnemyList[i].OnBeginningOfPhase;
+        }
+
+        for (int i = 0; i < AllyList.Length; i++)
+        {
+            BeginAllyPhaseCall += AllyList[i].OnEndOfPhase;
+            BeginAllyPhaseCall += AllyList[i].OnBeginningOfPhase;
+        }
+    }
+
+
+
+    public void ExecuteNextAction()
+    {
+        if (AllyPhase)
+        {
+            CurrentActionIndex++;
+            if (CurrentActionIndex >= PlayerController.Instance.AllyActionOrder.Count)
+            {
+                BeginEnemyPhase();
+                return;
+            }
+            PlayerController.Instance.AllyActionOrder[CurrentActionIndex].BeginAction();
+        }      
+        else
+        {
+            CurrentActionIndex++;
+            if (CurrentActionIndex >= EnemyList.Length)
+            {
+                PlayerController.Instance.BeginAllyPhase();
+            }
+        }
+
     }
 
     public void OnNewTurn()
     {
         Indices.Position = Vector2.Zero;
     }
+
+    public void BeginEnemyPhase()
+    {
+        GD.Print("Beginning Enemy Phase!");
+        CurrentActionIndex = 0;
+        AllyPhase = false;
+        BeginEnemyPhaseCall?.Invoke();
+    }
+
+    public void BeginAllyPhase()
+    {
+        CurrentActionIndex = 0;
+        AllyPhase = true;
+        BeginAllyPhaseCall?.Invoke();
+        CombatManager.Instance.SetRangeVisible(true);
+        CombatManager.Instance.OnNewTurn();
+    }
+
 
 
     public void AdjustShoveCount(int increment)
@@ -151,6 +216,17 @@ public partial class CombatManager : Node2D
         }
 
         
+    }
+
+    public Ally[] GetAllies()
+    {
+        return AllyList;
+    }
+
+
+    public Enemy[] GetEnemies()
+    {
+        return EnemyList;
     }
 
     public void SetRangePos()
@@ -297,7 +373,7 @@ public partial class CombatManager : Node2D
     //RANGE INDICATION
     #region RangeIndication
 
-
+    //Specifically for Positional type abilities
     public void DisplayTargetRange(TargetType type, float Range)
     {
         RangeArea.Monitoring = true;

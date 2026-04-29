@@ -10,18 +10,18 @@ using System.Collections.Generic;
 //Go for a more complex decision making process
 //Perhaps make a decision class that keeps track of the target/targets and ability/action
 //And give that decision class a heuristic
+//Don't go nuts, we don't need the enemies to be too crazy smart
 //Cycle through all potential decisions and pick one with the best heuristic
 //And each enemy class should have its own heuristic bias, like supports should prioritize using support abilities
-//Shoving
-//Countering when shoved into
-//Add an area2D to characters specifically for detecting when someone being shoved is headed your way
-//Make this area2D have its own script
-//Don't bother with having the main colliders block each other, just cancel movement in the counter box
 //Remove Projection for enemies
 //Replace the range indices with a proper range circle
 //Check if enemy is still in range upon finishing movement and attempting to execute
 //Preview arrow for directional shove abilities
 //Move Projection stuff out of character and into ally
+//Damage indicators, like number particles and character shaking 
+//DOn't forget to wait on when a character is shoved to stop moving for the next action to activate
+//Ailments
+//Consider making normal attacks a form of ability
 
 public enum CurrentPlayerState
 {
@@ -43,6 +43,9 @@ public partial class PlayerController : Node2D
     private static PlayerController _instance;
 
     public static PlayerController Instance { get { return _instance; } }
+
+
+
 
     [Export]
     CurrentPlayerState PlayerState;
@@ -73,10 +76,12 @@ public partial class PlayerController : Node2D
 
     private bool AskingForExecution = false;
 
+
+
     public override void _Ready()
     {
         base._Ready();
-        
+        GD.Randomize();
         if (_instance != null && _instance != this)
         {
             QueueFree();
@@ -90,7 +95,11 @@ public partial class PlayerController : Node2D
 
         for (int i = 0; i < Allies.Length; i++) {
             Allies[i].CharacterIndex = i;
+            
+
+
         }
+
 
     }
 
@@ -171,12 +180,12 @@ public partial class PlayerController : Node2D
     {
         if (CurrentTargetType == TargetType.NotFriendly)
         {
-            CombatManager.Instance.SelectEnemyInRange(increment, CurrentAlly.GetOffensiveRange(), CurrentAlly.Position);
+            CombatManager.Instance.SelectEnemyInRange(increment, CurrentAlly.GetStoredOffensiveRange(), CurrentAlly.Position);
 
         }
         else if (CurrentTargetType == TargetType.Friendly)
         {
-            CombatManager.Instance.SelectAllyInRange(increment, CurrentAlly.GetOffensiveRange(), CurrentAlly.Position);
+            CombatManager.Instance.SelectAllyInRange(increment, CurrentAlly.GetStoredOffensiveRange(), CurrentAlly.Position);
         }
 
         //If we find enough stuff gets added here, we'll move it to an allies 'OnSwitchTarget' function or some such
@@ -212,39 +221,26 @@ public partial class PlayerController : Node2D
             Allies[i].HideProjection();
             Allies[i].HideOrderIcon();
         }
-        AllyActionOrder[CurrentActionIndex].BeginNavigation();
+        AllyActionOrder[0].BeginNavigation();
     }
 
-    public void ExecuteNextAction()
-    {
-        CurrentActionIndex++;
-        if (CurrentActionIndex >= AllyActionOrder.Count)
-        {
-            BeginNewTurn();
-            return;
-        }
-        AllyActionOrder[CurrentActionIndex].BeginNavigation();
-    }
 
     public void SetPlayerState(CurrentPlayerState state)
     {
         PlayerState = state;
     }
 
-    public void BeginNewTurn()
+    public void BeginAllyPhase()
     {
         AllyActionOrder.Clear();
         AskingForExecution = false;
-        CurrentActionIndex = 0;
-        for (int i = 0; i < Allies.Length; i++) {
-            Allies[i].OnNewTurn();
-        }
         CurrentCharacterIndex = 0;
         PlayerState = CurrentPlayerState.Moving;
-        CombatManager.Instance.SetRangeVisible(true);
-        CombatManager.Instance.OnNewTurn();
+        CombatManager.Instance.BeginAllyPhase();
         PossessCharacter();
     }
+
+    
 
     public void PossessCharacter()
     {
@@ -308,11 +304,11 @@ public partial class PlayerController : Node2D
         if (CurrentSelectionType == SelectionType.Target)
         {
             GD.Print("Setting Target Selection!");
-            CombatManager.Instance.SetRangeIndices(CurrentAlly.GetOffensiveRange(), CurrentAlly.Position);
+            CombatManager.Instance.SetRangeIndices(CurrentAlly.GetStoredOffensiveRange(), CurrentAlly.Position);
             ChangeSelectedTarget(1);
         }
         else if (CurrentSelectionType == SelectionType.Position) {
-            CombatManager.Instance.DisplayTargetRange(CurrentAlly.GetAbilityTargetType(), CurrentAlly.GetAbilityRange());
+            CombatManager.Instance.DisplayTargetRange(CurrentAlly.GetAbilityTargetType(), CurrentAlly.GetStoredAbilityRange());
         }
     }
 

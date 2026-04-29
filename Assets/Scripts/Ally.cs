@@ -46,7 +46,29 @@ public partial class Ally : Character
     }
 
 
-    public override float GetOffensiveRange()
+    public override void OnBeginningOfPhase()
+    {
+        base.OnBeginningOfPhase();
+    }
+
+    public override void FinishNavigation()
+    {
+        base.FinishNavigation();
+        
+    }
+
+    public override void ExecuteAction()
+    {
+        base.ExecuteAction();
+        CombatManager.Instance.ExecuteNextAction();
+    }
+
+    public override void BeginAction()
+    {
+        base.BeginAction();
+    }
+
+    public override float GetStoredOffensiveRange()
     {
         if (CharacterAction == StoredAction.Attack)
         {
@@ -72,7 +94,7 @@ public partial class Ally : Character
         return (int)(BaseData.GetAttack() * UpgradeData.GetAttackMult());
     }
 
-    public override int CalculateAbilityDamage(DamageType type)
+    public override int GetAbilityDamage(DamageType type)
     {
         int Damage = 0;
         switch (type) {
@@ -87,45 +109,9 @@ public partial class Ally : Character
         return Damage;
     }
 
-    public override int CalculateDamageTaken(int Power, DamageType type, ElementType element, PhysicalType physical)
+    public override int GetDamageTaken(int Power, DamageType type, ElementType element, PhysicalType physical)
     {
-        if (type == DamageType.Physical)
-        {
-            Power -= (int)(BaseData.GetPhysDefense() * UpgradeData.GetPhysDefenseMult());
-        }
-        else if (type == DamageType.Magic)
-        {
-            Power -= (int)(BaseData.GetMagDefense() * UpgradeData.GetMagDefenseMult());
-        }
-
-
-        if (BaseData.GetElemResistance() == element)
-        {
-            Power = (int)(Power * DamageData.GetResistance());
-        }
-
-        if (BaseData.GetElemWeakness() == element)
-        {
-            Power = (int)(Power * DamageData.GetWeakness());
-        }
-
-        if (BaseData.GetPhysResistance() == physical)
-        {
-            Power = (int)(Power * DamageData.GetResistance());
-        }
-
-        if (BaseData.GetPhysWeakness() == physical)
-        {
-            Power = (int)(Power * DamageData.GetWeakness());
-        }
-
-        if (CharacterAction == StoredAction.Defend)
-        {
-            Power = (int)(Power * DamageData.GetDefend());
-        }
-
-
-        return Power;
+        return base.GetDamageTaken(Power, type, element, physical);
     }
 
     public void SetProjectionArrowVisibility(bool visible) {
