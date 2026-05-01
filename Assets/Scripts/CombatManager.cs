@@ -104,7 +104,9 @@ public partial class CombatManager : Node2D
             if (CurrentActionIndex >= EnemyList.Length)
             {
                 PlayerController.Instance.BeginAllyPhase();
+                return;
             }
+            EnemyList[CurrentActionIndex].BeginAction();
         }
 
     }
@@ -120,6 +122,8 @@ public partial class CombatManager : Node2D
         CurrentActionIndex = 0;
         AllyPhase = false;
         BeginEnemyPhaseCall?.Invoke();
+        EnemyList[0].BeginAction();
+
     }
 
     public void BeginAllyPhase()
@@ -127,8 +131,8 @@ public partial class CombatManager : Node2D
         CurrentActionIndex = 0;
         AllyPhase = true;
         BeginAllyPhaseCall?.Invoke();
-        CombatManager.Instance.SetRangeVisible(true);
-        CombatManager.Instance.OnNewTurn();
+        SetRangeVisible(true);
+        OnNewTurn();
     }
 
 
@@ -335,7 +339,7 @@ public partial class CombatManager : Node2D
         List<Character> result = new List<Character>();
         for (int i = 0; i < EnemyList.Length; i++)
         {
-            if (CheckTargetInRange(EnemyList[i], Range, Pos))
+            if (CheckTargetInRange(EnemyList[i].Position, Range, Pos))
             {
                 result.Add(EnemyList[i]);
             }
@@ -349,7 +353,7 @@ public partial class CombatManager : Node2D
         List<Character> result = new List<Character>();
         for (int i = 0; i < AllyList.Length; i++)
         {
-            if (CheckTargetInRange(AllyList[i], Range, Pos))
+            if (CheckTargetInRange(AllyList[i].Position, Range, Pos))
             {
                 result.Add(AllyList[i]);
             }
@@ -358,13 +362,16 @@ public partial class CombatManager : Node2D
         return result;
     }
 
-    public bool CheckTargetInRange(Character character, float Range, Vector2 Position)
+    public bool CheckTargetInRange(Vector2 targetPos, float Range, Vector2 Position)
     {
-        if ((character.Position - Position).Length() <= Range)
+        //float dist = (character.Position - Position).Length();
+        //GD.Print("Distance: " + dist + " Range: " + Range);
+        if ((targetPos - Position).Length() <= Range)
         {
             return true;
 
         }
+
         return false;
     }
 
@@ -463,7 +470,7 @@ public partial class CombatManager : Node2D
             if (EnemyList[CurrentlySelectedTargetIndex] != null)
             {
 
-                if (CheckTargetInRange(EnemyList[CurrentlySelectedTargetIndex], Range, Position))
+                if (CheckTargetInRange(EnemyList[CurrentlySelectedTargetIndex].Position, Range, Position))
                 {
                     GD.Print("Found Target!");
                     CurrentlyTargetedCharacter = EnemyList[CurrentlySelectedTargetIndex];
@@ -501,14 +508,15 @@ public partial class CombatManager : Node2D
 
             if (AllyList[CurrentlySelectedTargetIndex] != null)
             {
-                if (CheckTargetInRange(AllyList[CurrentlySelectedTargetIndex], Range, Position)) //Check if their default position is in range
+                if (CheckTargetInRange(AllyList[CurrentlySelectedTargetIndex].Position, Range, Position)) //Check if their default position is in range
                 {
                     CurrentlyTargetedCharacter = AllyList[CurrentlySelectedTargetIndex];
                     AllyList[CurrentlySelectedTargetIndex].SetTargetArrowVisibility(true);
                     return;
                 }
-                if (AllyList[CurrentlySelectedTargetIndex].GetProjectionIsInRange(Range, Position)) //Check if their projection is in range
+                if (CheckTargetInRange(AllyList[CurrentlySelectedTargetIndex].GetProjectionPos(), Range, Position)) //Check if their projection is in range
                 {
+                    GD.Print("Projection is within range!");
                     CurrentlyTargetedCharacter = AllyList[CurrentlySelectedTargetIndex];
                     AllyList[CurrentlySelectedTargetIndex].SetTargetArrowVisibility(true);
                     return;

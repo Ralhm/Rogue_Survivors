@@ -98,13 +98,13 @@ public partial class Ability : Resource
     SelectionType AimingType;
 
     [Export]
-    DamageType Damage;
+    DamageType Damage_Type;
 
     [Export]
-    ElementType Element;
+    ElementType Element_Type;
 
     [Export]
-    PhysicalType Physical;
+    PhysicalType Physical_Type;
 
 
     [Export]
@@ -121,7 +121,7 @@ public partial class Ability : Resource
 
     public virtual void AbilityEffect(Character Target, Character User)
     {
-        if (Damage != DamageType.None)
+        if (Damage_Type != DamageType.None)
         {
             int TotalDamage = CalculateAbilityDamage(Target, User);
             if (Restore == RestorativeType.Drain)
@@ -192,9 +192,10 @@ public partial class Ability : Resource
 
     public int CalculateAbilityDamage(Character Target, Character User)
     {
-        int TotalDamage = User.GetAbilityDamage(Damage);
-        TotalDamage = Target.GetDamageTaken(TotalDamage, Damage, Element, Physical);
-
+        int TotalDamage = User.GetAbilityDamage(Damage_Type);
+        //GD.Print("Total Base Damage: " + TotalDamage);
+        TotalDamage = Target.GetDamageTaken(TotalDamage, Damage_Type, Element_Type, Physical_Type);
+        //GD.Print("Final Ability Damage: " + TotalDamage);
         return TotalDamage;
     }
 
@@ -252,7 +253,7 @@ public partial class Ability : Resource
 
     public DamageType GetDamageType()
     {
-        return Damage;
+        return Damage_Type;
     }
 
     public RestorativeType GetRestorativeType()

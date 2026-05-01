@@ -44,6 +44,8 @@ public partial class Character : CharacterBody2D
     [Export]
     public NavigationAgent2D NavAgent;
 
+    [Export]
+    public NavigationObstacle2D Obstacle;
 
     [Export]
     public CurrentState CharacterState;
@@ -62,11 +64,12 @@ public partial class Character : CharacterBody2D
     [Export]
     public int CurrentHealth;
 
+    //Consider putting these 2 in a resource
     [Export]
     public int MoveSpeed = 550;
 
     [Export]
-    private float DragForce = 6000.0f;
+    protected float DragForce = 6000.0f;
 
     [Export]
     public CharacterData BaseData;
@@ -117,11 +120,11 @@ public partial class Character : CharacterBody2D
     [Export]
     public bool IsTired;
 
-    bool SkippingTurn;
+    protected bool SkippingTurn;
 
     protected bool IsEnemy = false;
 
-    bool GettingShoved;
+    protected bool GettingShoved;
 
     protected string StoredAnimDir = "Front";
 
@@ -138,30 +141,54 @@ public partial class Character : CharacterBody2D
         
     }
 
-    public override void _Process(double delta)
-    {
-        base._Process(delta);
-
-
-    }
-
     public override void _PhysicsProcess(double delta)
     {
         base._PhysicsProcess(delta);
         DistanceTraveled = (StartingLocation - Position).Length();
 
-        
-        //NOTE TO SELF
+
+        //Check for Movement Input
         if (MoveDir != Vector2.Zero && CharacterState == CurrentState.Moving)
         {
-            Walk_Input();
+            float Dot = MoveDir.Dot(Vector2.Up);
+            Velocity = MoveDir * MoveSpeed;
+            FacingDir = MoveDir;
+            if (DistanceTraveled >= GetMoveRange())
+            {
+                GD.Print("ATTEMPTING TO MOVE OUT OF RANGE");
+                Velocity += (Velocity.Length() * (StartingLocation - Position).Normalized());
+            }
+            if (Dot > 0.5) //Up
+            {
+                StoredAnimDir = "Back";
+                Sprite.Play("Back_Walk");
+            }
+            else if (Dot < 0.5 && Dot > -0.5) //Side
+            {
+                if (MoveDir.X < 0)
+                {
+                    Sprite.FlipH = false;
+                }
+                else
+                {
+                    Sprite.FlipH = true;
+                }
+                StoredAnimDir = "Side";
+                Sprite.Play("Side_Walk");
+            }
+            else
+            {
+                StoredAnimDir = "Front";
+                Sprite.Play("Front_Walk");
+            }
         }
         else
         {
 
             if (!GettingShoved)
             {
-                SlowDown();
+                Velocity = new Vector2(Mathf.MoveToward(Velocity.X, 0, MoveSpeed), Mathf.MoveToward(Velocity.Y, 0, MoveSpeed));
+                Sprite.Play(StoredAnimDir + "_Idle");
             }
         }
 
@@ -172,79 +199,28 @@ public partial class Character : CharacterBody2D
         }
         else
         {
-            Move(delta);
-
-
-        }
-            
-
-    }
-
-    //Re-Name This
-    public void SlowDown()
-    {
-        Velocity = new Vector2(Mathf.MoveToward(Velocity.X, 0, MoveSpeed), Mathf.MoveToward(Velocity.Y, 0, MoveSpeed));
-        Sprite.Play(StoredAnimDir + "_Idle");
-    }
-
-    //Re-Name This
-    public void Move(double delta)
-    {
-        if (GettingShoved)
-        {
-            Velocity -= Velocity.Normalized() * (float)(DragForce * delta);
-            if (Velocity.Length() <= 100)
+            if (GettingShoved)
             {
-                GD.Print("FINISHED BEING SHOVED");
-                OnFinishShoved();
+                //Shoved Movement Behaviour
+                Velocity -= Velocity.Normalized() * (float)(DragForce * delta);
+                if (Velocity.Length() <= 100)
+                {
+                    GD.Print("FINISHED BEING SHOVED");
+                    OnFinishShoved();
+                }
             }
-        }
-
-        if (CharacterState == CurrentState.Moving || GettingShoved)
-        {
-            MoveAndSlide();
-
-        }
-        else
-        {
-            MoveAndCollide(Vector2.Zero);
-        }
-    }
-
-    public void Walk_Input()
-    {
-        float Dot = MoveDir.Dot(Vector2.Up);
-        Velocity = MoveDir * MoveSpeed;
-        FacingDir = MoveDir;
-        if (DistanceTraveled >= GetMoveRange())
-        {
-            GD.Print("ATTEMPTING TO MOVE OUT OF RANGE");
-            Velocity += (Velocity.Length() * (StartingLocation - Position).Normalized());
-        }
-        if (Dot > 0.5) //Up
-        {
-            StoredAnimDir = "Back";
-            Sprite.Play("Back_Walk");
-        }
-        else if (Dot < 0.5 && Dot > -0.5) //Side
-        {
-            if (MoveDir.X < 0)
+            if (CharacterState == CurrentState.Moving || GettingShoved)
             {
-                Sprite.FlipH = false;
+                MoveAndSlide();
+
             }
             else
             {
-                Sprite.FlipH = true;
+                //MoveAndCollide(Vector2.Zero);
             }
-            StoredAnimDir = "Side";
-            Sprite.Play("Side_Walk");
-        }
-        else
-        {
-            StoredAnimDir = "Front";
-            Sprite.Play("Front_Walk");
         }
     }
+
 
     //Turn this into a delegate call
     public virtual void OnBeginningOfPhase()
@@ -278,8 +254,9 @@ public partial class Character : CharacterBody2D
             SkippingTurn = false;
             CombatManager.Instance.ExecuteNextAction();
         }
-
+        
         BeginNavigation();
+        
     }
 
     public virtual void BeginNavigation()
@@ -290,7 +267,7 @@ public partial class Character : CharacterBody2D
             Dashed = true;
             IsDashing = false;
         }
-
+        Obstacle.AvoidanceEnabled = false;
         NavAgent.AvoidanceEnabled = true;
         NavAgent.TargetPosition = EndLocation;
         CharacterState = CurrentState.Navigating;
@@ -299,7 +276,7 @@ public partial class Character : CharacterBody2D
         //NavAgent.Velocity = Speed;
     }
 
-    public void Navigate()
+    public virtual void Navigate()
     {
         if (NavAgent.IsNavigationFinished())
         {
@@ -317,12 +294,13 @@ public partial class Character : CharacterBody2D
 
     public virtual void FinishNavigation()
     {
+        //Obstacle.SetProcess(true);
         CharacterState = CurrentState.Acting;
         ExecuteAction();
         CharacterState = CurrentState.Idling;
         NavAgent.AvoidanceEnabled = false;
+        Obstacle.AvoidanceEnabled = true;
 
-        
     }
 
     public virtual void ExecuteAction()
@@ -371,7 +349,7 @@ public partial class Character : CharacterBody2D
     {
         
         Projection.Hide();
-        Projection.Position = Vector2.Zero;
+        Projection.GlobalPosition = GlobalPosition;
     }
 
     public void Aim()
@@ -473,6 +451,16 @@ public partial class Character : CharacterBody2D
 
     public virtual int GetTotalNormalAttackDamage(Character target)
     {
+        if (target == null)
+        {
+            GD.Print("ATTACK TARGET IS NULL");
+            return 0;
+        }
+        //int BaseDamage = CalculateNormalAttackDamage();
+        //GD.Print("Base Attack Damage: " + BaseDamage);
+        //BaseDamage = target.GetDamageTaken(BaseDamage, DamageType.Physical, ElementType.None, PhysicalType.Cut);
+        //GD.Print("Final Attack Damage: " + BaseDamage);
+        //return BaseDamage;
         return target.GetDamageTaken(CalculateNormalAttackDamage(), DamageType.Physical, ElementType.None, PhysicalType.Cut);
     }
 
@@ -514,14 +502,14 @@ public partial class Character : CharacterBody2D
     public void Counter(Character Enemy)
     {
 
-        GD.Print("Countering Enemy!");
+        GD.Print(Name + ": Countering Enemy: " + Enemy.Name);
         Enemy.TakeDamage(GetTotalNormalAttackDamage(Enemy));
         Enemy.Velocity = Vector2.Zero;
     }
 
     public void OnShovedInto()
     {
-        GD.Print("SHOVED INTO, TAKING DAMAGE");
+        GD.Print(Name + ": SHOVED INTO, TAKING DAMAGE");
         TakeDamage(3);
         Velocity = Vector2.Zero;
         OnFinishShoved();
@@ -738,6 +726,11 @@ public partial class Character : CharacterBody2D
             return true;
         }
         return false;
+    }
+
+    public Vector2 GetProjectionPos()
+    {
+        return Projection.GlobalPosition;
     }
 
     public Vector2 GetMoveDir()

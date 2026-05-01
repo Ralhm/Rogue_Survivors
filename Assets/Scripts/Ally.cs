@@ -26,6 +26,8 @@ public partial class Ally : Character
     [Export]
     protected AnimatedSprite2D ProjectionSprite;
 
+    //This Exists so we can set the Collider to the projection location,
+    //so players can't move characters onto the same position
     private Vector2 ColliderOrigin;
 
     public override void _Ready()
@@ -33,6 +35,8 @@ public partial class Ally : Character
         base._Ready();
         ColliderOrigin = Collider.Position;
     }
+
+
 
     public void SetOrderIcon(int num)
     {
@@ -77,7 +81,7 @@ public partial class Ally : Character
         }
         else if (CharacterAction == StoredAction.Ability)
         {
-            GD.Print("Getting Ability Range!");
+            //GD.Print("Getting Ability Range!");
             if (StoredAbility == null)
             {
                 GD.Print("NO STORED ABILITY SET!)");

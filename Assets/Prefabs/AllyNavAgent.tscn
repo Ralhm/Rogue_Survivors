@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://ba0a11vug0c6c"]
+
+[node name="NavAgent" type="NavigationAgent2D"]
+path_desired_distance = 30.0
+target_desired_distance = 30.0
+path_max_distance = 150.0
+simplify_path = true
+radius = 20.0
+max_speed = 2000.0
+avoidance_mask = 259
+debug_path_custom_color = Color(1, 0, 1, 1)

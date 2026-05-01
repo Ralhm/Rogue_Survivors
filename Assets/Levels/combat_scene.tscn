@@ -124,7 +124,7 @@ position = Vector2(-793, -6)
 y_sort_enabled = true
 
 [node name="Enemy_Base" parent="Characters/Enemies" instance=ExtResource("4_qtxkn")]
-position = Vector2(-399, 56)
+position = Vector2(-451, 51)
 
 [node name="Enemy_Base2" parent="Characters/Enemies" instance=ExtResource("4_qtxkn")]
-position = Vector2(149, -181)
+position = Vector2(-87, -276)

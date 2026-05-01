@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://n7i0rx6wvwsw"]
+[gd_scene load_steps=14 format=3 uid="uid://n7i0rx6wvwsw"]
 
 [ext_resource type="Texture2D" uid="uid://vmm4pb6m67gs" path="res://Assets/Sprites/Knight_Sheet.png" id="1_gs2pf"]
 [ext_resource type="Script" uid="uid://c68r6c57vpdcw" path="res://Assets/Scripts/Enemy.cs" id="1_ylwg3"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://c615icsa45yhb" path="res://Assets/Characters/Sprites/sprite.tscn" id="5_gid5l"]
 [ext_resource type="PackedScene" uid="uid://cyg58xfb1swdp" path="res://Assets/UI/target_arrow.tscn" id="6_xud2f"]
 [ext_resource type="Script" uid="uid://divlop3v6ty52" path="res://Assets/Characters/CounterBox.cs" id="7_pntf7"]
+[ext_resource type="PackedScene" uid="uid://ba0a11vug0c6c" path="res://Assets/Prefabs/AllyNavAgent.tscn" id="8_tr442"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_kjprv"]
 atlas = ExtResource("1_gs2pf")
@@ -76,15 +77,15 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_gs2pf"]
-radius = 62.0
-height = 217.54
-
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_tr442"]
 radius = 104.0
 height = 216.0
 
-[node name="Enemy_Base" type="CharacterBody2D" node_paths=PackedStringArray("Sprite", "Projection", "TargetIndicator", "NavAgent")]
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_nktb1"]
+radius = 50.0
+height = 212.36
+
+[node name="Enemy_Base" type="CharacterBody2D" node_paths=PackedStringArray("Sprite", "Projection", "TargetIndicator", "NavAgent", "Obstacle")]
 physics_interpolation_mode = 2
 y_sort_enabled = true
 collision_layer = 2
@@ -94,6 +95,7 @@ Sprite = NodePath("Sprite")
 Projection = NodePath("Projection")
 TargetIndicator = NodePath("TargetArrow")
 NavAgent = NodePath("NavAgent")
+Obstacle = NodePath("NavigationObstacle2D")
 BaseData = ExtResource("2_ylwg3")
 DamageData = ExtResource("3_gid5l")
 
@@ -104,19 +106,10 @@ scale = Vector2(0.8, 0.8)
 sprite_frames = SubResource("SpriteFrames_ips7h")
 animation = &"Side_Idle"
 
-[node name="HitBox" type="CollisionShape2D" parent="."]
-position = Vector2(0, 43.27)
-shape = SubResource("CapsuleShape2D_gs2pf")
-
-[node name="NavAgent" type="NavigationAgent2D" parent="."]
-avoidance_enabled = true
-avoidance_layers = 2
-avoidance_mask = 0
-
 [node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="."]
-position = Vector2(0, 86.64)
-radius = 65.0
-avoidance_layers = 256
+position = Vector2(0, 78)
+radius = 80.0
+avoidance_layers = 259
 
 [node name="Projection" parent="." instance=ExtResource("5_gid5l")]
 visible = false
@@ -132,3 +125,15 @@ script = ExtResource("7_pntf7")
 [node name="CounterShape" type="CollisionShape2D" parent="Counter"]
 position = Vector2(4, 49)
 shape = SubResource("CapsuleShape2D_tr442")
+
+[node name="NavAgent" parent="." instance=ExtResource("8_tr442")]
+path_desired_distance = 40.0
+target_desired_distance = 60.0
+path_max_distance = 200.0
+radius = 40.0
+neighbor_distance = 800.0
+
+[node name="HitBox" type="CollisionShape2D" parent="."]
+z_index = 1
+position = Vector2(0, 49.83)
+shape = SubResource("CapsuleShape2D_nktb1")

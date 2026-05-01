@@ -3,7 +3,8 @@ using System;
 using System.Collections.Generic;
 
 
-
+//NOTE TO SELF FOR TOUHOU FIGHTER
+//HAVE THE AI'S SUBSCRIBE TO ACTION EVENTS SO THEY CAN RESPOND ACCORDINGLY????
 public enum AI_Priority
 {
     Offensive,
@@ -27,8 +28,9 @@ public partial class DecisionMaker
         Owner = owner;
     }
 
-    void MakeDecision()
+    public void MakeDecision()
     {
+        GD.Print("Making a Decision...");
         Ability[] abilities = Owner.GetAbilities();
         for (int i = 0; i < abilities.Length; i++) {
             CalculateAbilityHeuristic(abilities[i]);
@@ -36,7 +38,14 @@ public partial class DecisionMaker
         //Then, check the normal attack
         CalculateAttackHeuristic();
 
-
+        if (BestDecision.GetAbility() != null)
+        {
+            GD.Print("Selected an Ability: " + BestDecision.GetAbility().GetAbilityName());
+        }
+        else
+        {
+            GD.Print("Selected an Attack!");
+        }
 
     }
 
@@ -45,12 +54,13 @@ public partial class DecisionMaker
         int H = 0, G = 0;
         if (Owner.GetPriority() == AI_Priority.Offensive)
         {
-            H = 75; //Magic Number, replace later
+            H = 5; //Magic Number, replace later
         }
         float AttackRange = Owner.GetTotalAttackRange();
         List<Character> PotentialTargets = CombatManager.Instance.GetCharactersInRange(Owner.Position, AttackRange, TargetType.NotFriendly, true);
         for (int i = 0; i < PotentialTargets.Count; i++)
         {
+            //GD.Print("Checking Target: " + PotentialTargets[i].Name);
             G = Owner.GetTotalNormalAttackDamage(PotentialTargets[i]);
             CheckDecision_Attack(G + H, PotentialTargets[i]);
         }
@@ -75,13 +85,26 @@ public partial class DecisionMaker
         {
             PotentialTargets = CombatManager.Instance.GetCharactersInRange(Owner.Position, 100000, ability.GetTargetingType(), true);
         }
-
+        //GD.Print("Found Potential Targets...");
+        
         //Then, for each target, calculate potential damage done/healing 
         if (ability.GetAIType() == AI_Priority.Offensive)
         {
             for (int i = 0; i < PotentialTargets.Count; i++)
             {
+                if (PotentialTargets[i] == null)
+                {
+                    GD.Print("TARGET IS NULL");
+                    continue;
+                }
+                //Don't bother checking enemies for indiscriminate attacks
+                if (PotentialTargets[i].GetIsEnemy())
+                {
+                    GD.Print("Skipping enemy!");
+                    continue;
+                }
                 G = ability.CalculateAbilityDamage(PotentialTargets[i], Owner);
+                //GD.Print("Checking Target: " + PotentialTargets[i].Name);
 
                 CheckDecision_Ability(G + H, PotentialTargets[i], ability);
             }
@@ -138,11 +161,14 @@ public partial class DecisionMaker
     {
         //Let 50 represent an element of randomness
         //Perhaps we could remove the randomness entirely if we wanted to make the game harder or for higher difficulty options
+        //GD.Print("Checking Ability: " + ability.GetAbilityName() + " = " + f);
+
         f += (int)(GD.Randi() % 50);
         if (f > F)
         {
             F = f;
             BestDecision.SetValues(F, target, StoredAction.Ability, Owner.GetAbilityRange(ability), ability);
+            GD.Print("Found a better ability: " + ability.GetAbilityName() + " = " + F);
         }
 
     }
@@ -151,6 +177,9 @@ public partial class DecisionMaker
     {
         //Let 50 represent an element of randomness
         //Perhaps we could remove the randomness entirely if we wanted to make the game harder or for higher difficulty options
+
+        //GD.Print("Checking Attack: " + " = " + f);
+
         f += (int)(GD.Randi() % 50);
         if (f > F)
         {
@@ -163,7 +192,7 @@ public partial class DecisionMaker
     public void ClearDecision()
     {
         F = 0;
-
+        BestDecision.ClearDecision();
     }
 
     public Decision GetBestDecision()

@@ -16,12 +16,12 @@ public partial class Decision
     Ability Ability;
     float MinDistanceToTarget;
 
-
     public void SetValues(int f, Character target, StoredAction action, float minDist, Ability ability = null)
     {
         F = f;
         Target = target;
         Action = action;
+        MinDistanceToTarget = minDist;
         Ability = ability;
     }
 
@@ -43,6 +43,15 @@ public partial class Decision
         return MinDistanceToTarget;
     }
 
+
+    public void ClearDecision()
+    {
+        F = 0;
+        Target = null;
+        Action = StoredAction.None;
+        Ability = null;
+        MinDistanceToTarget = 0;
+    }
 
 
 }

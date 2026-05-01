@@ -4,24 +4,18 @@ using System.Collections.Generic;
 
 
 //TO DO LIST
-//Cooler UI
-//Ability Descriptions
-//Enemy Behavior
-//Go for a more complex decision making process
-//Perhaps make a decision class that keeps track of the target/targets and ability/action
-//And give that decision class a heuristic
-//Don't go nuts, we don't need the enemies to be too crazy smart
-//Cycle through all potential decisions and pick one with the best heuristic
-//And each enemy class should have its own heuristic bias, like supports should prioritize using support abilities
-//Remove Projection for enemies
-//Replace the range indices with a proper range circle
-//Check if enemy is still in range upon finishing movement and attempting to execute
-//Preview arrow for directional shove abilities
-//Move Projection stuff out of character and into ally
-//Damage indicators, like number particles and character shaking 
-//DOn't forget to wait on when a character is shoved to stop moving for the next action to activate
-//Ailments
+//---Damage indicators, like number particles and character shaking 
+//---Move CombatController.ExecuteNextAction Calls to after animations finish
+//---Animation Functionality
+//--Cooler UI
+//--Ability Descriptions
+//-Replace the range indices with a proper range circle
+//-Check if Target is still in range upon finishing movement and attempting to execute
+//-Ailments
 //Consider making normal attacks a form of ability
+//Fine-Tune Enemy Behavior
+//Remove Projection for enemies
+//Move Projection stuff out of character and into ally
 
 public enum CurrentPlayerState
 {
@@ -185,6 +179,7 @@ public partial class PlayerController : Node2D
         }
         else if (CurrentTargetType == TargetType.Friendly)
         {
+            //GD.Print("Current Ability Range: " + CurrentAlly.GetStoredOffensiveRange());
             CombatManager.Instance.SelectAllyInRange(increment, CurrentAlly.GetStoredOffensiveRange(), CurrentAlly.Position);
         }
 
@@ -221,7 +216,7 @@ public partial class PlayerController : Node2D
             Allies[i].HideProjection();
             Allies[i].HideOrderIcon();
         }
-        AllyActionOrder[0].BeginNavigation();
+        AllyActionOrder[0].BeginAction();
     }
 
 

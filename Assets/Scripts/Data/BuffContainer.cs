@@ -8,10 +8,10 @@ public partial class BuffContainer
     //But there will only ever be so many buffs, so maybe later
     List<Buff> Buffs = new List<Buff>(); 
 
-    float MagDefense;
-    float MagAttack;
-    float PhysAttack;
-    float PhysDefense;
+    float MagDefense = 1.0f;
+    float MagAttack = 1.0f;
+    float PhysAttack = 1.0f;
+    float PhysDefense = 1.0f;
 
 
     public void AddBuff(Buff buff)
