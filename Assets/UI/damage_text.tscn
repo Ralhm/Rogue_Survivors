@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://debmh6p7chbm4"]
+
+[ext_resource type="FontFile" uid="uid://brwe5ydicky4n" path="res://Assets/Fonts/PixelOperator8-Bold.ttf" id="1_lnt2i"]
+[ext_resource type="Script" uid="uid://dm22pe5h6bpf7" path="res://Assets/Scripts/UI/DamageText.cs" id="1_my6ne"]
+
+[node name="DamageText" type="RichTextLabel" node_paths=PackedStringArray("Timer")]
+offset_right = 429.0
+offset_bottom = 153.0
+theme_override_fonts/normal_font = ExtResource("1_lnt2i")
+theme_override_font_sizes/normal_font_size = 64
+text = "-1"
+script = ExtResource("1_my6ne")
+Timer = NodePath("Timer")
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
+autostart = true

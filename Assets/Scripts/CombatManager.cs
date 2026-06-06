@@ -14,6 +14,10 @@ public partial class CombatManager : Node2D
 
     public static CombatManager Instance { get { return _instance; } }
 
+    public List<DamageText> PooledDamageText = new List<DamageText>();
+
+    private PackedScene DamageText = GD.Load<PackedScene>("res://Assets/UI/damage_text.tscn");
+
     //Let this contain a list of characters that are within range of an action
     //Strictly for player previewing purposes
     private List<Character> TargetList = new List<Character>();
@@ -55,7 +59,7 @@ public partial class CombatManager : Node2D
 
     int CurrentActionIndex;
 
-    bool AllyPhase = true;
+    public bool AllyPhase = true;
 
     public override void _Ready()
     {
@@ -82,6 +86,7 @@ public partial class CombatManager : Node2D
             BeginAllyPhaseCall += AllyList[i].OnEndOfPhase;
             BeginAllyPhaseCall += AllyList[i].OnBeginningOfPhase;
         }
+
     }
 
 
@@ -293,6 +298,41 @@ public partial class CombatManager : Node2D
 
         return Dir;
     }
+
+    public DamageText GetDamageInPool(Vector2 transform, int damage)
+    {
+        if (PooledDamageText.Count == 0)
+        {
+            return SpawnDamageToPool(transform, damage);
+        }
+        GD.Print("Pooled Damage Count: " + PooledDamageText.Count);
+        for (int i = 0; i < PooledDamageText.Count; i++)
+        {
+
+            if (!PooledDamageText[i].Visible)
+            {
+                GD.Print("Getting Pre-Existing Damage!");
+                PooledDamageText[i].SetText(transform, damage);
+                PooledDamageText[i].ReAppear();
+                return PooledDamageText[i];
+            }
+        }
+        return SpawnDamageToPool(transform, damage);
+    }
+
+
+    DamageText SpawnDamageToPool(Vector2 transform, int damage)
+    {
+        DamageText instance = DamageText.Instantiate() as DamageText;
+        //DamageText instance = Instantiate(ParticleRef, transform.position, new Quaternion(0, 0, 0, 0));
+        PooledDamageText.Add(instance);
+        GetTree().Root.AddChild(instance);
+        instance.SetText(transform, damage);
+        GD.Print("Spawning new Damage!");
+        return instance;
+
+    }
+
 
     //RANGE CHECKING
     #region RangeChecking

@@ -8,6 +8,7 @@ public partial class AbilityButton : Button
     [Export]
     Ability StoredAbility;
 
+    AbilityMenu Menu;
 
     public override void _Ready()
     {
@@ -18,12 +19,24 @@ public partial class AbilityButton : Button
         //GetParent<>
         VisibilityChanged += OnEnabled;
 
+        //Select
+        FocusEntered += OnButtonHovered;
+        MouseEntered += OnButtonHovered;
+        //AddThemeStyleboxOverride(GetThemeStylebox("focus", "Button"));
+
+
     }
 
     public void OnButtonPressed()
     {
-        GD.Print("Ability Button Pressed!");
+        //GD.Print("Ability Button Pressed!");
         PlayerController.Instance.OnAbilityButtonPressed(StoredAbility);
+    }
+
+    public void OnButtonHovered()
+    {
+        //GD.Print("Focused Button!");
+        Menu.SetDescriptionText(StoredAbility.GetDescription());
     }
 
     public void OnEnabled()
@@ -38,7 +51,6 @@ public partial class AbilityButton : Button
     {
         StoredAbility = NewAbility;
         SetNameText();
-        SetDescriptionText();
     }
 
     public void SetNameText()
@@ -53,8 +65,9 @@ public partial class AbilityButton : Button
         }
     }
 
-    public void SetDescriptionText()
-    {
 
+    public void SetMenu(AbilityMenu NewMenu)
+    {
+        Menu = NewMenu;
     }
 }

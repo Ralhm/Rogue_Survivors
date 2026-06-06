@@ -4,11 +4,9 @@ using System.Collections.Generic;
 
 
 //TO DO LIST
-//---Damage indicators, like number particles and character shaking 
 //---Move CombatController.ExecuteNextAction Calls to after animations finish
 //---Animation Functionality
 //--Cooler UI
-//--Ability Descriptions
 //-Replace the range indices with a proper range circle
 //-Check if Target is still in range upon finishing movement and attempting to execute
 //-Ailments
@@ -16,6 +14,7 @@ using System.Collections.Generic;
 //Fine-Tune Enemy Behavior
 //Remove Projection for enemies
 //Move Projection stuff out of character and into ally
+//UI Scaling with aspect ratio
 
 public enum CurrentPlayerState
 {
@@ -70,7 +69,7 @@ public partial class PlayerController : Node2D
 
     private bool AskingForExecution = false;
 
-
+    bool DisablePlayerInput = false;
 
     public override void _Ready()
     {
@@ -101,73 +100,79 @@ public partial class PlayerController : Node2D
     {
         base._Process(delta);
 
-        if (PlayerState == CurrentPlayerState.Moving)
+        if (!DisablePlayerInput)
         {
-            CurrentAlly.SetMoveDir(new Vector2(Input.GetAxis("MoveLeft", "MoveRight"), Input.GetAxis("MoveUp", "MoveDown")));
-        }
+            if (PlayerState == CurrentPlayerState.Moving)
+            {
+                CurrentAlly.SetMoveDir(new Vector2(Input.GetAxis("MoveLeft", "MoveRight"), Input.GetAxis("MoveUp", "MoveDown")));
+            }
 
-        if (PlayerState == CurrentPlayerState.SelectingTarget && CurrentSelectionType == SelectionType.Position)
-        {
-            CombatManager.Instance.SetRangePos();
-        }
+            if (PlayerState == CurrentPlayerState.SelectingTarget && CurrentSelectionType == SelectionType.Position)
+            {
+                CombatManager.Instance.SetRangePos();
+            }
 
-        
-        if (Input.IsActionJustPressed("SelectUp"))
-        {
-            if (PlayerState == CurrentPlayerState.SelectingTarget && CurrentSelectionType == SelectionType.Target)
-            {
-                ChangeSelectedTarget(1);
-            }
-            else
-            {
-                UnPossessCharacter();
-                SwapCurrentCharacter(1);
-            }
-                
-        }
 
-        if (Input.IsActionJustPressed("SelectDown"))
-        {
-            if (PlayerState == CurrentPlayerState.SelectingTarget && CurrentSelectionType == SelectionType.Target)
+            if (Input.IsActionJustPressed("SelectUp") && CurrentAlly.GetCurrentState() == CurrentState.Moving)
             {
-                ChangeSelectedTarget(-1);
-            }
-            else
-            {
-                UnPossessCharacter();
-                SwapCurrentCharacter(-1);
-            }
-        }
-
-        if (Input.IsActionJustPressed("Confirm"))
-        {
-            if (AskingForExecution)
-            {
-                BeginExecuteTurn();
-            }
-            else if (PlayerState == CurrentPlayerState.Moving)
-            {
-                BeginSelectAction();
-            }
-            else if (PlayerState == CurrentPlayerState.SelectingAction)
-            {
+                if (PlayerState == CurrentPlayerState.SelectingTarget && CurrentSelectionType == SelectionType.Target)
+                {
+                    ChangeSelectedTarget(1);
+                }
+                else
+                {
+                    UnPossessCharacter();
+                    SwapCurrentCharacter(1);
+                }
 
             }
-            else if (PlayerState == CurrentPlayerState.SelectingTarget)
-            {              
-                ConfirmTarget();
-            }          
+
+            if (Input.IsActionJustPressed("SelectDown") && CurrentAlly.GetCurrentState() == CurrentState.Moving)
+            {
+                if (PlayerState == CurrentPlayerState.SelectingTarget && CurrentSelectionType == SelectionType.Target)
+                {
+                    ChangeSelectedTarget(-1);
+                }
+                else
+                {
+                    UnPossessCharacter();
+                    SwapCurrentCharacter(-1);
+                }
+            }
+
+            if (Input.IsActionJustPressed("Confirm"))
+            {
+                if (AskingForExecution)
+                {
+                    BeginExecuteTurn();
+                }
+                else if (PlayerState == CurrentPlayerState.Moving)
+                {
+                    BeginSelectAction();
+                }
+                else if (PlayerState == CurrentPlayerState.SelectingAction)
+                {
+
+                }
+                else if (PlayerState == CurrentPlayerState.SelectingTarget)
+                {
+                    ConfirmTarget();
+                }
+            }
+
+            if (Input.IsActionJustPressed("Dash"))
+            {
+                BeginDash();
+            }
+
+            if (Input.IsActionJustPressed("Undo"))
+            {
+                UndoCommand();
+            }
         }
 
-        if (Input.IsActionJustPressed("Dash"))
-        {
-            BeginDash();
-        }
 
-        if (Input.IsActionJustPressed("Undo"))
-        {
-            UndoCommand();
-        }
+
     }
 
     public void ChangeSelectedTarget(int increment)
@@ -196,20 +201,28 @@ public partial class PlayerController : Node2D
 
     public void ConfirmTarget()
     {
-        GD.Print("Confirming Target!");
+        
         if (CurrentSelectionType == SelectionType.Target && CombatManager.Instance.HasViableTarget())
         {
+            GD.Print("Confirming Target!");
             RegisterTarget();
 
         }
-        else
+        else if (CurrentSelectionType == SelectionType.Position)
         {
             RegisterTarget();
+        }
+        else
+        {
+            GD.Print("Failed to confirm Target!");
+            //RegisterTarget();
         }
     }
 
     public void BeginExecuteTurn()
     {
+        DisablePlayerInput = true;
+        GD.Print("----Beginning turn!---");
         ExecutionMenu.Hide();
         PlayerState = CurrentPlayerState.Inactive;
         for (int i = 0; i < AllyActionOrder.Count; i++) {
@@ -227,6 +240,7 @@ public partial class PlayerController : Node2D
 
     public void BeginAllyPhase()
     {
+        DisablePlayerInput = false;
         AllyActionOrder.Clear();
         AskingForExecution = false;
         CurrentCharacterIndex = 0;
@@ -303,6 +317,7 @@ public partial class PlayerController : Node2D
             ChangeSelectedTarget(1);
         }
         else if (CurrentSelectionType == SelectionType.Position) {
+            GD.Print("Setting Positional Selection!");
             CombatManager.Instance.DisplayTargetRange(CurrentAlly.GetAbilityTargetType(), CurrentAlly.GetStoredAbilityRange());
         }
     }

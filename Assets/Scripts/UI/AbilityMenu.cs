@@ -13,7 +13,8 @@ public partial class AbilityMenu : Control
     [Export]
     VBoxContainer Box;
 
-
+    [Export]
+    RichTextLabel DescriptionText;
 
     public void SetAbilities(Ability[] abilities)
     {
@@ -50,8 +51,14 @@ public partial class AbilityMenu : Control
         Box.AddChild(inst);
         ButtonList.Add(inst);
         inst.SetAbility(ability);
+        inst.SetMenu(this);
 
         return inst;
+    }
+
+    public void SetDescriptionText(string text)
+    {
+        DescriptionText.Text = text;
     }
 
 

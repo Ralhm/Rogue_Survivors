@@ -1,25 +1,49 @@
-[gd_scene load_steps=2 format=3 uid="uid://q20gjgt05uu4"]
+[gd_scene load_steps=3 format=3 uid="uid://q20gjgt05uu4"]
 
 [ext_resource type="Script" uid="uid://b4wck6ufpvjnp" path="res://Assets/Scripts/UI/AbilityMenu.cs" id="1_hovla"]
+[ext_resource type="FontFile" uid="uid://brwe5ydicky4n" path="res://Assets/Fonts/PixelOperator8-Bold.ttf" id="2_qaude"]
 
-[node name="AbilitiesMenu" type="Control" node_paths=PackedStringArray("Box")]
+[node name="AbilitiesMenu" type="Control" node_paths=PackedStringArray("Box", "DescriptionText")]
 layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 122.0
-offset_top = -785.0
-offset_right = 1682.0
-offset_bottom = 334.0
+anchor_right = 2.354
+anchor_bottom = 2.727
+offset_right = 231.192
+offset_bottom = -0.0961914
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_hovla")
 Box = NodePath("PanelContainer/VBoxContainer")
+DescriptionText = NodePath("Panel/Description")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
-layout_mode = 0
-offset_right = 674.0
-offset_bottom = 1247.0
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.249
+anchor_bottom = 0.706
+offset_right = -1.28802
+offset_bottom = -0.502319
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
 layout_mode = 2
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.053
+anchor_top = 0.822
+anchor_right = 0.875
+anchor_bottom = 1.0
+offset_left = 0.263992
+offset_top = 0.526001
+offset_right = -0.000244141
+offset_bottom = 14.0
+
+[node name="Description" type="RichTextLabel" parent="Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.001
+anchor_bottom = 1.0
+offset_right = -0.819092
+theme_override_fonts/normal_font = ExtResource("2_qaude")
+theme_override_font_sizes/normal_font_size = 64
+text = "Description Description Description Description Description Description Description Description"

@@ -128,6 +128,7 @@ public partial class Ability : Resource
             {
                 //Drain here
             }
+
             Target.TakeDamage(TotalDamage);
             if (Restore == RestorativeType.Drain)
             {

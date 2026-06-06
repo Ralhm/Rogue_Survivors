@@ -98,7 +98,10 @@ public partial class Enemy : Character
         }
         AIEngine.ClearDecision();
 
-        base.FinishNavigation();
+        CharacterState = CurrentState.Acting;
+        CharacterState = CurrentState.Idling;
+        NavAgent.AvoidanceEnabled = false;
+        Obstacle.AvoidanceEnabled = true;
 
         CombatManager.Instance.ExecuteNextAction();
     }

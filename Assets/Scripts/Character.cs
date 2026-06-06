@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 
 
@@ -128,6 +129,11 @@ public partial class Character : CharacterBody2D
 
     protected string StoredAnimDir = "Front";
 
+    protected bool Shaking = false;
+    protected double shakeTime = 0;
+    protected Vector2 spritePos;
+    protected float shakeMag = 10.3f;
+
     public override void _Ready()
     {
         base._Ready();
@@ -137,15 +143,29 @@ public partial class Character : CharacterBody2D
         CurrentHealth = BaseData.GetMaxHealth();
         GD.Print("Max Health: " + BaseData.GetMaxHealth());
         GD.Print("Current Health: " + CurrentHealth);
-        
-        
+        spritePos = Sprite.Position;
+
+
     }
 
     public override void _PhysicsProcess(double delta)
     {
         base._PhysicsProcess(delta);
         DistanceTraveled = (StartingLocation - Position).Length();
+        if (Shaking)
+        {
+            shakeTime += delta;
+            Sprite.Position = new Vector2((int)(GD.Randi() % (spritePos.X - shakeMag) + (spritePos.X + shakeMag)),
+                (int)(GD.Randi() % (spritePos.Y - shakeMag) + (spritePos.Y + shakeMag)));
 
+            if (shakeTime >= 0.15f)
+            {
+                Sprite.Position = spritePos;
+                Shaking = false;
+                shakeTime = 0;
+            }
+
+        }
 
         //Check for Movement Input
         if (MoveDir != Vector2.Zero && CharacterState == CurrentState.Moving)
@@ -219,6 +239,8 @@ public partial class Character : CharacterBody2D
                 //MoveAndCollide(Vector2.Zero);
             }
         }
+
+
     }
 
 
@@ -364,6 +386,9 @@ public partial class Character : CharacterBody2D
         {
             Damage = (int)(Damage * 2.0f);
         }
+
+        CombatManager.Instance.GetDamageInPool(GlobalPosition, Damage);
+        Shaking = true;
         GD.Print(Name + " Taking Damage: " + Damage);
         CurrentHealth -= Damage;
         GD.Print(Name + " Current Health: " + CurrentHealth);
@@ -514,6 +539,7 @@ public partial class Character : CharacterBody2D
         Velocity = Vector2.Zero;
         OnFinishShoved();
     }
+
 
 
 
