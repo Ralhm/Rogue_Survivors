@@ -1,0 +1,32 @@
+[gd_resource type="Resource" script_class="Ability" load_steps=4 format=3 uid="uid://bodb5htfmdhop"]
+
+[ext_resource type="Script" uid="uid://cqipoqgybe2r5" path="res://Assets/Scripts/Data/Abilities/Ability.cs" id="1_5o4a8"]
+[ext_resource type="Script" uid="uid://vfdrf2gcmy7e" path="res://Assets/Scripts/Data/Ailment.cs" id="1_b3if6"]
+
+[sub_resource type="Resource" id="Resource_jc4p5"]
+script = ExtResource("1_b3if6")
+AilmentType = 3
+Duration = 1
+PowerLevel = PackedFloat32Array(100, 25, 30, 35)
+metadata/_custom_type_script = "uid://vfdrf2gcmy7e"
+
+[resource]
+script = ExtResource("1_5o4a8")
+Name = "Lightning Shot"
+Description = "Long ranged lightning attack. Low chance to Stun"
+Range = 200.0
+AimRange = 700.0
+PowerLevels = PackedFloat32Array(1.1, 1.2, 1.4, 1.7)
+IsUpgradeable = true
+TargetingType = 0
+AimingType = 1
+Damage_Type = 2
+Element_Type = 3
+Physical_Type = 0
+AbilityAilment = SubResource("Resource_jc4p5")
+Restore = 0
+ShoveDirection = 0
+ShoveForce = 0.0
+Point = false
+DecisionType = 0
+metadata/_custom_type_script = "uid://cqipoqgybe2r5"

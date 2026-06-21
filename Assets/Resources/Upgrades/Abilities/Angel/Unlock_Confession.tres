@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="AbilityUnlockUpgrade" load_steps=3 format=3 uid="uid://mgssqfcj1dmo"]
+
+[ext_resource type="Resource" uid="uid://c14wa7q7ertbo" path="res://Assets/Resources/Abilities/Angel/Confession.tres" id="1_hj816"]
+[ext_resource type="Script" uid="uid://codmjrsvjg6h7" path="res://Assets/Scripts/Data/Upgrade/AbilityUnlockUpgrade.cs" id="2_j7y7b"]
+
+[resource]
+script = ExtResource("2_j7y7b")
+NewAbility = ExtResource("1_hj816")
+UpgradeName = ""
+UpgradeDescription = ""
+metadata/_custom_type_script = "uid://codmjrsvjg6h7"

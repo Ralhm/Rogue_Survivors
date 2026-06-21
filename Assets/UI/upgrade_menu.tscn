@@ -1,0 +1,59 @@
+[gd_scene load_steps=7 format=3 uid="uid://4ih27eqd3iq6"]
+
+[ext_resource type="Script" uid="uid://b321doggtkph3" path="res://Assets/Scripts/UI/UpgradeManager.cs" id="1_eiw0v"]
+[ext_resource type="Resource" uid="uid://dfqy8il8dscqg" path="res://Assets/Resources/Upgrades/Pools/GenericUpgradePool.tres" id="2_nwuv0"]
+[ext_resource type="Resource" uid="uid://bajfq0e14chru" path="res://Assets/Resources/Upgrades/Pools/MageUpgradePool.tres" id="3_w7jbn"]
+[ext_resource type="Resource" uid="uid://bflt5b4gg183i" path="res://Assets/Resources/Upgrades/Pools/DevilUpgradePool.tres" id="4_wpamy"]
+[ext_resource type="Resource" uid="uid://14d18q42nb5f" path="res://Assets/Resources/Upgrades/Pools/AngelPool.tres" id="5_m0odv"]
+[ext_resource type="PackedScene" uid="uid://befefhjfb80tp" path="res://Assets/UI/upgrade_button_panel.tscn" id="6_s4r8b"]
+
+[node name="UpgradeMenu" type="Control" node_paths=PackedStringArray("UpgradeOptions")]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -1459.0
+offset_top = -838.0
+offset_right = 1478.0
+offset_bottom = 840.0
+script = ExtResource("1_eiw0v")
+UpgradeOptions = [NodePath("Panel/OptionsBox/UpgradeButtonPanel"), NodePath("Panel/OptionsBox/UpgradeButtonPanel2"), NodePath("Panel/OptionsBox/UpgradeButtonPanel3")]
+GenericUpgrades = ExtResource("2_nwuv0")
+MageUpgradePool = ExtResource("3_w7jbn")
+DevilUpgradePool = ExtResource("4_wpamy")
+AngelUpgradePool = ExtResource("5_m0odv")
+
+[node name="Panel" type="Panel" parent="."]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="OptionsBox" type="HBoxContainer" parent="Panel"]
+custom_minimum_size = Vector2(800, 700)
+layout_direction = 2
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -500.0
+offset_top = -400.0
+offset_right = 500.0
+offset_bottom = 400.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="UpgradeButtonPanel" parent="Panel/OptionsBox" node_paths=PackedStringArray("UpgradeManager") instance=ExtResource("6_s4r8b")]
+layout_mode = 2
+UpgradeManager = NodePath("../../..")
+
+[node name="UpgradeButtonPanel2" parent="Panel/OptionsBox" node_paths=PackedStringArray("UpgradeManager") instance=ExtResource("6_s4r8b")]
+layout_mode = 2
+UpgradeManager = NodePath("../../..")
+
+[node name="UpgradeButtonPanel3" parent="Panel/OptionsBox" node_paths=PackedStringArray("UpgradeManager") instance=ExtResource("6_s4r8b")]
+layout_mode = 2
+UpgradeManager = NodePath("../../..")

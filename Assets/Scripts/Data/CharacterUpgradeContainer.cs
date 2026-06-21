@@ -1,11 +1,12 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 
 //Let this class contain all of a characters upgrade related content
-[GlobalClass]
-public partial class CharacterUpgradeContainer : Resource
+public partial class CharacterUpgradeContainer
 {
+
 
     [Export]
     private int MaxHealthMod = 0;
@@ -27,6 +28,8 @@ public partial class CharacterUpgradeContainer : Resource
 
     [Export]
     private float MagDefenseMult = 1.0f;
+
+    public Dictionary<Ability, int> AbilityLevels = new Dictionary<Ability, int>();
 
     public int GetMaxHealth()
     {
@@ -50,6 +53,12 @@ public partial class CharacterUpgradeContainer : Resource
         return AttackRangeMult;
     }
 
+    public float SetAttackRangeMult(float Increment)
+    {
+        return AttackRangeMult += Increment;
+    }
+
+
     public void SetMoveRangeMult(float Increment)
     {
         MoveRangeMult += Increment;
@@ -61,16 +70,17 @@ public partial class CharacterUpgradeContainer : Resource
         return AttackMult;
     }
 
-    public void SetAttackMult(int Increment)
+    public void SetAttackMult(float Increment)
     {
         AttackMult += Increment;
     }
+
 
     public float GetMagicMult()
     {
         return MagicMult;
     }
-    public void SetMagicMult(int Increment)
+    public void SetMagicMult(float Increment)
     {
         MagicMult += Increment;
     }
@@ -80,7 +90,7 @@ public partial class CharacterUpgradeContainer : Resource
         return PhysDefenseMult;
     }
 
-    public void SetPhysDefenseMult(int Increment)
+    public void SetPhysDefenseMult(float Increment)
     {
         PhysDefenseMult += Increment;
     }
@@ -90,13 +100,16 @@ public partial class CharacterUpgradeContainer : Resource
         return MagDefenseMult;
     }
 
-    public void SetMagDefenseMult(int Increment)
+    public void SetMagDefenseMult(float Increment)
     {
         MagDefenseMult += Increment;
     }
 
 
-
+    public void UpgradeAbility(Ability ability)
+    {
+        AbilityLevels[ability] += 1;
+    }
 
 
 

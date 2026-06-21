@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="AbilityUnlockUpgrade" load_steps=3 format=3 uid="uid://d1rbly3uxo81l"]
+
+[ext_resource type="Resource" uid="uid://we6vvygllgg5" path="res://Assets/Resources/Abilities/Angel/FiresOfSodom.tres" id="1_tpdh4"]
+[ext_resource type="Script" uid="uid://codmjrsvjg6h7" path="res://Assets/Scripts/Data/Upgrade/AbilityUnlockUpgrade.cs" id="2_gv3c2"]
+
+[resource]
+script = ExtResource("2_gv3c2")
+NewAbility = ExtResource("1_tpdh4")
+UpgradeName = ""
+UpgradeDescription = ""
+metadata/_custom_type_script = "uid://codmjrsvjg6h7"

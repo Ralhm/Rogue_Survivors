@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://cyg58xfb1swdp"]
 
-[ext_resource type="Texture2D" uid="uid://ctfce45vq1pqd" path="res://Assets/Sprites/TRPGIsometricAssetPack_MapIndicators.png" id="1_ij3gs"]
+[ext_resource type="Texture2D" uid="uid://ctfce45vq1pqd" path="res://Assets/Sprites/Placeholder/TRPGIsometricAssetPack_MapIndicators.png" id="1_ij3gs"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_woks1"]
 atlas = ExtResource("1_ij3gs")

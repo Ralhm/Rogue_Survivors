@@ -31,7 +31,7 @@ public partial class CounterBox : Area2D
         Character target = node2D.GetParent() as Character;
 
         if (target == null || !target.GetIsShoved()) {
-            GD.Print(node2D.Name + ": Shoving is NOT Occurring!");
+            //GD.Print(node2D.Name + ": Shoving is NOT Occurring!");
             return;
         }
 

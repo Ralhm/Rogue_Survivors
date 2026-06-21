@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="AbilityUnlockUpgrade" load_steps=3 format=3 uid="uid://cotvja2q6wpu7"]
+
+[ext_resource type="Resource" uid="uid://bwqjtu47ug1bs" path="res://Assets/Resources/Abilities/Angel/HolyPunishment.tres" id="1_6ilh1"]
+[ext_resource type="Script" uid="uid://codmjrsvjg6h7" path="res://Assets/Scripts/Data/Upgrade/AbilityUnlockUpgrade.cs" id="2_qhd0n"]
+
+[resource]
+script = ExtResource("2_qhd0n")
+NewAbility = ExtResource("1_6ilh1")
+Type = 3
+DefaultRarity = 3
+UpgradeName = ""
+UpgradeDescription = ""
+metadata/_custom_type_script = "uid://codmjrsvjg6h7"

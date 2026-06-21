@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="Ability_BloodyRestoration" load_steps=2 format=3 uid="uid://bx1mlt5fj4pyy"]
+
+[ext_resource type="Script" uid="uid://rplsovwjvt42" path="res://Assets/Scripts/Data/Abilities/Ability_BloodyRestoration.cs" id="1_hdlhc"]
+
+[resource]
+script = ExtResource("1_hdlhc")
+SelfDamage = 0
+Name = "Bloody Restoration"
+Description = "Fully heal and restore status to all allies at the cost of half your health"
+Range = 10000.0
+AimRange = 10000.0
+PowerLevels = PackedFloat32Array(1, 1.2, 1.7, 2.4)
+IsUpgradeable = false
+TargetingType = 1
+AimingType = 1
+Damage_Type = 0
+Element_Type = 0
+Physical_Type = 0
+Restore = 1
+ShoveDirection = 0
+ShoveForce = 0.0
+Point = false
+DecisionType = 0
+metadata/_custom_type_script = "uid://rplsovwjvt42"

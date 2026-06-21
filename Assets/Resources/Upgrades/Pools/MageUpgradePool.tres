@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="UpgradePool" load_steps=11 format=3 uid="uid://bajfq0e14chru"]
+
+[ext_resource type="Script" uid="uid://dlc7ygw5ejjrm" path="res://Assets/Scripts/Data/Upgrade/UpgradePool.cs" id="1_2sr6t"]
+[ext_resource type="Resource" uid="uid://cx08e7juektgt" path="res://Assets/Resources/Upgrades/Abilities/Mage/Unlock_FireSmack.tres" id="1_648nl"]
+[ext_resource type="Resource" uid="uid://ss2mfdh2s0sx" path="res://Assets/Resources/Upgrades/Abilities/Mage/Unlock_HandWave.tres" id="2_fvcra"]
+[ext_resource type="Resource" uid="uid://h66fvug8x4ce" path="res://Assets/Resources/Upgrades/Abilities/Mage/Unlock_Fireball.tres" id="3_1c2fr"]
+[ext_resource type="Resource" uid="uid://d1fdfy37kejun" path="res://Assets/Resources/Upgrades/Abilities/Mage/Unlock_Explosion.tres" id="3_6vor8"]
+[ext_resource type="Resource" uid="uid://bqvrifmg7ms5u" path="res://Assets/Resources/Upgrades/Abilities/Mage/Unlock_BlackHole.tres" id="4_1c2fr"]
+[ext_resource type="Resource" uid="uid://bk2u0vckxwjhy" path="res://Assets/Resources/Upgrades/Abilities/Mage/Unlock_IceCrush.tres" id="4_6q0c2"]
+[ext_resource type="Resource" uid="uid://csnbrre2le27m" path="res://Assets/Resources/Upgrades/Abilities/Mage/Unlock_LightningShot.tres" id="4_cril4"]
+[ext_resource type="Resource" uid="uid://chinnri552fs7" path="res://Assets/Resources/Upgrades/Abilities/Mage/Unlock_Concentrate.tres" id="5_cril4"]
+[ext_resource type="Resource" uid="uid://j555j1eph80s" path="res://Assets/Resources/Upgrades/Abilities/Mage/Unlock_Burst.tres" id="6_6q0c2"]
+
+[resource]
+script = ExtResource("1_2sr6t")
+CommonUpgrades = Array[Object]([ExtResource("1_648nl"), ExtResource("3_1c2fr"), ExtResource("4_cril4"), ExtResource("4_6q0c2")])
+UnCommonUpgrades = Array[Object]([ExtResource("5_cril4"), ExtResource("6_6q0c2"), ExtResource("2_fvcra")])
+RareUpgrades = Array[Object]([ExtResource("4_1c2fr")])
+LegendaryUpgrades = Array[Object]([ExtResource("3_6vor8")])
+metadata/_custom_type_script = "uid://dlc7ygw5ejjrm"

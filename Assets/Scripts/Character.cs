@@ -41,6 +41,8 @@ public partial class Character : CharacterBody2D
     [Export]
     Node2D TargetIndicator;
 
+    public CharacterUpgradeContainer UpgradeContainer = new CharacterUpgradeContainer();
+
 
     [Export]
     public NavigationAgent2D NavAgent;
@@ -97,6 +99,8 @@ public partial class Character : CharacterBody2D
     [Export]
     public Vector2 EndLocation;
 
+    //A Dynamic List that will contain both default abilities
+    protected List<Ability> Abilities = new List<Ability>();
 
     [Export]
     public Vector2 MoveDir;
@@ -141,10 +145,17 @@ public partial class Character : CharacterBody2D
         HideProjection();
         NavAgent.VelocityComputed += OnVelocityComputed;
         CurrentHealth = BaseData.GetMaxHealth();
-        GD.Print("Max Health: " + BaseData.GetMaxHealth());
-        GD.Print("Current Health: " + CurrentHealth);
+        //GD.Print("Max Health: " + BaseData.GetMaxHealth());
+        //GD.Print("Current Health: " + CurrentHealth);
         spritePos = Sprite.Position;
-
+        UpgradeContainer = new CharacterUpgradeContainer();
+        AilmentContainer = new AilmentContainer();
+        AilmentContainer.Owner = this;
+        for (int i = 0; i < BaseData.GetDefaultAbilities().Length; i++)
+        {
+            Abilities.Add(BaseData.GetDefaultAbilities()[i]);
+            UpgradeContainer.AbilityLevels.Add(BaseData.GetDefaultAbilities()[i], 0);
+        }
 
     }
 
@@ -175,7 +186,7 @@ public partial class Character : CharacterBody2D
             FacingDir = MoveDir;
             if (DistanceTraveled >= GetMoveRange())
             {
-                GD.Print("ATTEMPTING TO MOVE OUT OF RANGE");
+                //GD.Print("ATTEMPTING TO MOVE OUT OF RANGE");
                 Velocity += (Velocity.Length() * (StartingLocation - Position).Normalized());
             }
             if (Dot > 0.5) //Up
@@ -270,15 +281,9 @@ public partial class Character : CharacterBody2D
 
     public virtual void BeginAction()
     {
-        AilmentContainer.AilmentEffects();
-        if (SkippingTurn)
-        {
-            SkippingTurn = false;
-            CombatManager.Instance.ExecuteNextAction();
-        }
-        
-        BeginNavigation();
-        
+
+
+
     }
 
     public virtual void BeginNavigation()
@@ -336,7 +341,7 @@ public partial class Character : CharacterBody2D
                 //Sprite.Play("Attack");
                 break;
             case StoredAction.Ability:
-                GD.Print("Using Ability...");
+                GD.Print("Using Ability: " + StoredAbility.GetAbilityName());
                 ActivateAbility();
                 break;
             case StoredAction.Defend:
@@ -384,9 +389,8 @@ public partial class Character : CharacterBody2D
         
         if (IsTired)
         {
-            Damage = (int)(Damage * 2.0f);
+            Damage = Damage * 2;
         }
-
         CombatManager.Instance.GetDamageInPool(GlobalPosition, Damage);
         Shaking = true;
         GD.Print(Name + " Taking Damage: " + Damage);
@@ -491,18 +495,13 @@ public partial class Character : CharacterBody2D
 
     //The user must be the one to decide this, so that they can distinguish between friend and foe when necessary
     //And so they can pass in the desired position, since the ability doesn't know what that is
-    public void ActivateAbility()
+    public virtual void ActivateAbility()
     {
-
         if (StoredAbility.GetAimingType() == SelectionType.Position)
         {
             StoredTargetList = CombatManager.Instance.GetCharactersInRange(StoredTargetPos, GetStoredAbilityRange(), GetAbilityTargetType(), IsEnemy);
             //StoredAbility.OnActivate_Range(CombatManager.Instance.GetEnemiesWithinRange(StoredTargetPos, StoredAbility.GetAbilityRange()), this);
         }
-
-        StoredAbility.OnActivate(this);
-        
-
 
     }
 
@@ -611,14 +610,16 @@ public partial class Character : CharacterBody2D
         IsMoving = isMoving;
     }
 
-    public void AddBuff(Buff buff)
+    public void AddBuff(BuffData buff, int PowerLevel)
     {
-        BuffContainer.AddBuff(buff);
+        GD.Print("Buff Power: " + PowerLevel + ": " + buff.GetPowerLevel(PowerLevel));
+        BuffContainer.AddBuff(buff, PowerLevel);
+
     }
 
-    public void AddAilment(Ailment ail)
+    public void AddAilment(AilmentType ail, int dur)
     {
-        AilmentContainer.AddAilment(ail);
+        AilmentContainer.AddAilment(ail, dur);
     }
 
     public void HealDeBuffs()
@@ -675,6 +676,11 @@ public partial class Character : CharacterBody2D
 
     #region Getters
 
+    public int GetUpgradeLevelPower(Ability ability)
+    {
+        return UpgradeContainer.AbilityLevels[ability];
+    }
+
 
     public virtual float GetMoveRange()
     {
@@ -700,7 +706,7 @@ public partial class Character : CharacterBody2D
 
     public virtual float GetStoredOffensiveRange()
     {
-        GD.Print("Getting Default Range!");
+        //GD.Print("Getting Default Range!");
         if (CharacterAction == StoredAction.Attack)
         {
             return BaseData.GetAttackRange();
@@ -742,6 +748,11 @@ public partial class Character : CharacterBody2D
     public float GetAttackRange()
     {
         return BaseData.GetAttackRange();
+    }
+
+    public int GetMaxHealth()
+    {
+        return BaseData.GetMaxHealth();
     }
 
     //This takes the projection into account as well. 
@@ -794,8 +805,10 @@ public partial class Character : CharacterBody2D
         return GettingShoved;
     }
 
-    public Ability[] GetAbilities() { 
-        return BaseData.GetAbilities();
+    public virtual List<Ability> GetAbilities() { 
+
+
+        return Abilities;
     }
 
     public TargetType GetAbilityTargetType()
@@ -823,6 +836,15 @@ public partial class Character : CharacterBody2D
         return BuffContainer.GetIsBuffed();
     }
 
+    public float GetStoredAimRange()
+    {
+        return StoredAbility.GetAimRange();
+    }
+
+    public Ability GetStoredAbility()
+    {
+        return StoredAbility;
+    }
 
     #endregion
 

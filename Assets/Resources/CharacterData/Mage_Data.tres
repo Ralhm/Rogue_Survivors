@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="CharacterData" load_steps=7 format=3 uid="uid://b08m82c0vxe05"]
+
+[ext_resource type="Resource" uid="uid://bodb5htfmdhop" path="res://Assets/Resources/Abilities/Mage/LightningShot.tres" id="1_yhhym"]
+[ext_resource type="Resource" uid="uid://b7j6cto44ceq8" path="res://Assets/Resources/Abilities/Mage/IceCrush.tres" id="2_bb4n5"]
+[ext_resource type="Resource" uid="uid://gnv8wde0qu6y" path="res://Assets/Resources/Abilities/Mage/Fireball.tres" id="3_cj5ge"]
+[ext_resource type="Resource" uid="uid://blpg81ovu3ayf" path="res://Assets/Resources/Abilities/Mage/Concentrate.tres" id="4_bb4n5"]
+[ext_resource type="Resource" uid="uid://ddwf8d302dc46" path="res://Assets/Resources/Abilities/Mage/FireSmack.tres" id="5_387b3"]
+[ext_resource type="Script" uid="uid://2foo8pp68rrk" path="res://Assets/Scripts/Data/CharacterData.cs" id="6_pfvmj"]
+
+[resource]
+script = ExtResource("6_pfvmj")
+Name = ""
+MaxHealth = 100
+MoveRange = 750.0
+AttackRange = 250.0
+Attack = 20
+Magic = 20
+PhysDefense = 10
+MagDefense = 10
+DefaultAbilityList = Array[Object]([ExtResource("1_yhhym"), ExtResource("2_bb4n5"), ExtResource("3_cj5ge"), ExtResource("4_bb4n5"), ExtResource("5_387b3")])
+ElementalWeakness = 0
+ElementalResistance = 0
+PhysicalWeakness = 0
+PhysicalResistance = 0
+metadata/_custom_type_script = "uid://2foo8pp68rrk"

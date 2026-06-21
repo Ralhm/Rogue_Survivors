@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="AbilityUnlockUpgrade" load_steps=3 format=3 uid="uid://xvp3ikrqigxh"]
+
+[ext_resource type="Resource" uid="uid://b7yr26e8oqgq2" path="res://Assets/Resources/Abilities/Devil/AllOrNothing.tres" id="1_5u677"]
+[ext_resource type="Script" uid="uid://codmjrsvjg6h7" path="res://Assets/Scripts/Data/Upgrade/AbilityUnlockUpgrade.cs" id="2_dsg3o"]
+
+[resource]
+script = ExtResource("2_dsg3o")
+NewAbility = ExtResource("1_5u677")
+UpgradeName = ""
+UpgradeDescription = ""
+metadata/_custom_type_script = "uid://codmjrsvjg6h7"

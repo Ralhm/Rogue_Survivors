@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="StatUpgrade" load_steps=2 format=3 uid="uid://qi7vcqwl4prr"]
+
+[ext_resource type="Script" uid="uid://fp028uljysu5" path="res://Assets/Scripts/Data/Upgrade/StatUpgrade.cs" id="1_k4k3r"]
+
+[resource]
+script = ExtResource("1_k4k3r")
+StatType = 1
+RarityUpgradeValues = PackedFloat32Array(0.1, 0.2, 0.35, 0.6)
+UpgradeName = "Move Range"
+UpgradeDescription = "Move Range +"
+metadata/_custom_type_script = "uid://fp028uljysu5"

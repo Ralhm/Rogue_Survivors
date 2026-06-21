@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="BuffData" load_steps=2 format=3 uid="uid://b6b3745lc782v"]
+
+[ext_resource type="Script" uid="uid://b6rdeg483ytv5" path="res://Assets/Scripts/Data/BuffData.cs" id="1_ajas8"]
+
+[resource]
+script = ExtResource("1_ajas8")
+BuffName = "Preach"
+BuffType = 1
+Percentage = -0.2
+BaseDuration = 3
+metadata/_custom_type_script = "uid://b6rdeg483ytv5"

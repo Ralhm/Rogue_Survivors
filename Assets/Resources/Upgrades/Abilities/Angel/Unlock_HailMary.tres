@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="AbilityUnlockUpgrade" load_steps=3 format=3 uid="uid://bkut2t3gwxnhb"]
+
+[ext_resource type="Resource" uid="uid://cae2gtrxkxn0n" path="res://Assets/Resources/Abilities/Angel/HailMary.tres" id="1_d54ai"]
+[ext_resource type="Script" uid="uid://codmjrsvjg6h7" path="res://Assets/Scripts/Data/Upgrade/AbilityUnlockUpgrade.cs" id="2_ajtnt"]
+
+[resource]
+script = ExtResource("2_ajtnt")
+NewAbility = ExtResource("1_d54ai")
+UpgradeName = ""
+UpgradeDescription = ""
+metadata/_custom_type_script = "uid://codmjrsvjg6h7"

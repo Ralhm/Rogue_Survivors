@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="StatUpgrade" load_steps=2 format=3 uid="uid://cs6unpnhlkf44"]
+
+[ext_resource type="Script" uid="uid://fp028uljysu5" path="res://Assets/Scripts/Data/Upgrade/StatUpgrade.cs" id="1_n56kp"]
+
+[resource]
+script = ExtResource("1_n56kp")
+StatType = 4
+RarityUpgradeValues = PackedFloat32Array(0.1, 0.2, 0.35, 0.6)
+UpgradeName = "Magical Attack"
+UpgradeDescription = "Magical Attack +"
+metadata/_custom_type_script = "uid://fp028uljysu5"

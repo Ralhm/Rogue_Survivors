@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="StatUpgrade" load_steps=2 format=3 uid="uid://bfagrf2m1mqng"]
+
+[ext_resource type="Script" uid="uid://fp028uljysu5" path="res://Assets/Scripts/Data/Upgrade/StatUpgrade.cs" id="1_k3ey2"]
+
+[resource]
+script = ExtResource("1_k3ey2")
+StatType = 0
+RarityUpgradeValues = PackedFloat32Array(5, 15, 30, 50)
+UpgradeName = "Max Health"
+UpgradeDescription = "Max Health +"
+metadata/_custom_type_script = "uid://fp028uljysu5"

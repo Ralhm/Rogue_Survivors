@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="UpgradePool" load_steps=10 format=3 uid="uid://bflt5b4gg183i"]
+
+[ext_resource type="Resource" uid="uid://cobgahb1wtncv" path="res://Assets/Resources/Upgrades/Abilities/Devil/Unlock_Siphon.tres" id="1_1ydtx"]
+[ext_resource type="Script" uid="uid://dlc7ygw5ejjrm" path="res://Assets/Scripts/Data/Upgrade/UpgradePool.cs" id="1_el1um"]
+[ext_resource type="Resource" uid="uid://xtqe8vf13ul8" path="res://Assets/Resources/Upgrades/Abilities/Devil/Unlock_BloodyRestoration.tres" id="2_kwyrs"]
+[ext_resource type="Resource" uid="uid://djvct5ebph7lu" path="res://Assets/Resources/Upgrades/Abilities/Devil/Unlock_IceScythe.tres" id="2_upvqi"]
+[ext_resource type="Resource" uid="uid://cb7ttirsgw4ai" path="res://Assets/Resources/Upgrades/Abilities/Devil/Unlock_BloodyBlessing.tres" id="3_kwyrs"]
+[ext_resource type="Resource" uid="uid://bcge4jcjfh67o" path="res://Assets/Resources/Upgrades/Abilities/Devil/Unlock_CutOpen.tres" id="3_nvxgw"]
+[ext_resource type="Resource" uid="uid://c3snnhaweo32c" path="res://Assets/Resources/Upgrades/Abilities/Devil/Unlock_SpinSlash.tres" id="3_upvqi"]
+[ext_resource type="Resource" uid="uid://xvp3ikrqigxh" path="res://Assets/Resources/Upgrades/Abilities/Devil/Unlock_AllOrNothing.tres" id="5_mtoup"]
+[ext_resource type="Resource" uid="uid://c6d5bfpdq4rvi" path="res://Assets/Resources/Upgrades/Abilities/Devil/Unlock_HellsBells.tres" id="7_bcowp"]
+
+[resource]
+script = ExtResource("1_el1um")
+CommonUpgrades = Array[Object]([ExtResource("1_1ydtx"), ExtResource("2_upvqi"), ExtResource("3_nvxgw")])
+UnCommonUpgrades = Array[Object]([ExtResource("3_kwyrs")])
+RareUpgrades = Array[Object]([ExtResource("3_upvqi"), ExtResource("5_mtoup"), ExtResource("7_bcowp")])
+LegendaryUpgrades = Array[Object]([ExtResource("2_kwyrs")])
+metadata/_custom_type_script = "uid://dlc7ygw5ejjrm"

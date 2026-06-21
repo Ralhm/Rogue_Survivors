@@ -1,12 +1,15 @@
-[gd_scene load_steps=10 format=3 uid="uid://b3ii7ur55tkmw"]
+[gd_scene load_steps=13 format=3 uid="uid://b3ii7ur55tkmw"]
 
 [ext_resource type="PackedScene" uid="uid://d4g38mll22831" path="res://Assets/Managers/Player_Controller.tscn" id="1_ekklr"]
 [ext_resource type="PackedScene" uid="uid://ck1o0bswmv6nb" path="res://Assets/Managers/Combat_Manager.tscn" id="2_xudph"]
 [ext_resource type="PackedScene" uid="uid://d2q7uqe82p5pu" path="res://Assets/UI/action_menu.tscn" id="3_30g5k"]
-[ext_resource type="PackedScene" uid="uid://cl80nmrn4b3cx" path="res://Assets/Characters/Character_Base.tscn" id="3_jpshy"]
 [ext_resource type="PackedScene" uid="uid://n7i0rx6wvwsw" path="res://Assets/Characters/enemy_base.tscn" id="4_qtxkn"]
 [ext_resource type="FontFile" uid="uid://brwe5ydicky4n" path="res://Assets/Fonts/PixelOperator8-Bold.ttf" id="4_xudph"]
+[ext_resource type="PackedScene" uid="uid://b2mqprycjmmcp" path="res://Assets/Characters/Mage.tscn" id="5_et78r"]
+[ext_resource type="PackedScene" uid="uid://bu88ypn03hm1r" path="res://Assets/Characters/Angel.tscn" id="6_0oq17"]
+[ext_resource type="PackedScene" uid="uid://jfrtg7nm2cef" path="res://Assets/Characters/Devil.tscn" id="7_77q6v"]
 [ext_resource type="PackedScene" uid="uid://q20gjgt05uu4" path="res://Assets/UI/abilities_menu.tscn" id="8_wbc2q"]
+[ext_resource type="PackedScene" uid="uid://4ih27eqd3iq6" path="res://Assets/UI/upgrade_menu.tscn" id="10_wbc2q"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_lgvcj"]
 
@@ -19,11 +22,11 @@ outlines = Array[PackedVector2Array]([PackedVector2Array(-1468, -842, -1476, 829
 y_sort_enabled = true
 
 [node name="CombatManager" parent="." node_paths=PackedStringArray("AllyList", "EnemyList") instance=ExtResource("2_xudph")]
-AllyList = [NodePath("../Characters/Allies/Character_Base"), NodePath("../Characters/Allies/Character_Base2"), NodePath("../Characters/Allies/Character_Base3")]
+AllyList = [NodePath("../Characters/Allies/Mage"), NodePath("../Characters/Allies/Angel"), NodePath("../Characters/Allies/Devil")]
 EnemyList = [NodePath("../Characters/Enemies/Enemy_Base"), NodePath("../Characters/Enemies/Enemy_Base2")]
 
 [node name="PlayerController" parent="." node_paths=PackedStringArray("Allies", "ActionMenu", "AbilitiesMenu", "ExecutionMenu") instance=ExtResource("1_ekklr")]
-Allies = [NodePath("../Characters/Allies/Character_Base"), NodePath("../Characters/Allies/Character_Base2"), NodePath("../Characters/Allies/Character_Base3")]
+Allies = [NodePath("../Characters/Allies/Mage"), NodePath("../Characters/Allies/Angel"), NodePath("../Characters/Allies/Devil")]
 ActionMenu = NodePath("../ActionMenu")
 AbilitiesMenu = NodePath("../AbilitiesMenu")
 ExecutionMenu = NodePath("../ExecutionMenu")
@@ -106,22 +109,23 @@ y_sort_enabled = true
 [node name="Allies" type="Node2D" parent="Characters"]
 y_sort_enabled = true
 
-[node name="Character_Base" parent="Characters/Allies" instance=ExtResource("3_jpshy")]
+[node name="Angel" parent="Characters/Allies" instance=ExtResource("6_0oq17")]
+position = Vector2(-821, 225)
 
-[node name="Character_Base2" parent="Characters/Allies" instance=ExtResource("3_jpshy")]
-position = Vector2(611, 0)
+[node name="Mage" parent="Characters/Allies" instance=ExtResource("5_et78r")]
+position = Vector2(17, 4)
 
-[node name="Character_Base3" parent="Characters/Allies" instance=ExtResource("3_jpshy")]
-position = Vector2(-793, -6)
+[node name="Devil" parent="Characters/Allies" instance=ExtResource("7_77q6v")]
+position = Vector2(-58, -337)
 
 [node name="Enemies" type="Node2D" parent="Characters"]
 y_sort_enabled = true
 
 [node name="Enemy_Base" parent="Characters/Enemies" instance=ExtResource("4_qtxkn")]
-position = Vector2(-451, 51)
+position = Vector2(-1029, -157)
 
 [node name="Enemy_Base2" parent="Characters/Enemies" instance=ExtResource("4_qtxkn")]
-position = Vector2(-87, -276)
+position = Vector2(675, -413)
 
 [node name="ActionMenu" parent="." instance=ExtResource("3_30g5k")]
 visible = false
@@ -141,3 +145,6 @@ offset_left = -1453.0
 offset_top = -849.0
 offset_right = 1477.0
 offset_bottom = 834.0
+
+[node name="UpgradeMenu" parent="." instance=ExtResource("10_wbc2q")]
+visible = false

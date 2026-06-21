@@ -3,8 +3,7 @@ using System;
 using System.Collections.Generic;
 
 
-//NOTE TO SELF FOR TOUHOU FIGHTER
-//HAVE THE AI'S SUBSCRIBE TO ACTION EVENTS SO THEY CAN RESPOND ACCORDINGLY????
+
 public enum AI_Priority
 {
     Offensive,
@@ -30,9 +29,9 @@ public partial class DecisionMaker
 
     public void MakeDecision()
     {
-        GD.Print("Making a Decision...");
-        Ability[] abilities = Owner.GetAbilities();
-        for (int i = 0; i < abilities.Length; i++) {
+        //GD.Print("Making a Decision...");
+        List<Ability> abilities = Owner.GetAbilities();
+        for (int i = 0; i < abilities.Count; i++) {
             CalculateAbilityHeuristic(abilities[i]);
         }
         //Then, check the normal attack
@@ -40,11 +39,11 @@ public partial class DecisionMaker
 
         if (BestDecision.GetAbility() != null)
         {
-            GD.Print("Selected an Ability: " + BestDecision.GetAbility().GetAbilityName());
+            //GD.Print("Selected an Ability: " + BestDecision.GetAbility().GetAbilityName());
         }
         else
         {
-            GD.Print("Selected an Attack!");
+            //GD.Print("Selected an Attack!");
         }
 
     }
@@ -94,16 +93,16 @@ public partial class DecisionMaker
             {
                 if (PotentialTargets[i] == null)
                 {
-                    GD.Print("TARGET IS NULL");
+                    GD.Print("---TARGET IS NULL-----");
                     continue;
                 }
                 //Don't bother checking enemies for indiscriminate attacks
                 if (PotentialTargets[i].GetIsEnemy())
                 {
-                    GD.Print("Skipping enemy!");
+                    //GD.Print("Skipping enemy!");
                     continue;
                 }
-                G = ability.CalculateAbilityDamage(PotentialTargets[i], Owner);
+                G = ability.CalculateAbilityDamage(PotentialTargets[i], Owner, Owner.Level);
                 //GD.Print("Checking Target: " + PotentialTargets[i].Name);
 
                 CheckDecision_Ability(G + H, PotentialTargets[i], ability);
@@ -168,7 +167,7 @@ public partial class DecisionMaker
         {
             F = f;
             BestDecision.SetValues(F, target, StoredAction.Ability, Owner.GetAbilityRange(ability), ability);
-            GD.Print("Found a better ability: " + ability.GetAbilityName() + " = " + F);
+            //GD.Print("Found a better ability: " + ability.GetAbilityName() + " = " + F);
         }
 
     }

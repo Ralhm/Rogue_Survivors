@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="AbilityUnlockUpgrade" load_steps=3 format=3 uid="uid://bqvrifmg7ms5u"]
+
+[ext_resource type="Resource" uid="uid://s2d2yc6b5evr" path="res://Assets/Resources/Abilities/Mage/BlackHole.tres" id="1_xi3gy"]
+[ext_resource type="Script" uid="uid://codmjrsvjg6h7" path="res://Assets/Scripts/Data/Upgrade/AbilityUnlockUpgrade.cs" id="2_c20ep"]
+
+[resource]
+script = ExtResource("2_c20ep")
+NewAbility = ExtResource("1_xi3gy")
+UpgradeName = ""
+UpgradeDescription = ""
+metadata/_custom_type_script = "uid://codmjrsvjg6h7"

@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="CharacterData" load_steps=5 format=3 uid="uid://bfh6nilq6pw1j"]
+
+[ext_resource type="Resource" uid="uid://co2jhhnpxfbb6" path="res://Assets/Resources/Abilities/Devil/BloodyStab.tres" id="3_68is7"]
+[ext_resource type="Resource" uid="uid://b3kbcia0t5uxf" path="res://Assets/Resources/Abilities/Devil/CutOpen.tres" id="3_b8v10"]
+[ext_resource type="Resource" uid="uid://dei5kdif6lnhw" path="res://Assets/Resources/Abilities/Devil/Bloodletting.tres" id="4_272hh"]
+[ext_resource type="Script" uid="uid://2foo8pp68rrk" path="res://Assets/Scripts/Data/CharacterData.cs" id="6_3gnkl"]
+
+[resource]
+script = ExtResource("6_3gnkl")
+Name = ""
+MaxHealth = 100
+MoveRange = 750.0
+AttackRange = 375.0
+Attack = 20
+Magic = 20
+PhysDefense = 10
+MagDefense = 10
+DefaultAbilityList = Array[Object]([ExtResource("3_68is7"), ExtResource("4_272hh"), ExtResource("3_b8v10")])
+ElementalWeakness = 0
+ElementalResistance = 0
+PhysicalWeakness = 0
+PhysicalResistance = 0
+metadata/_custom_type_script = "uid://2foo8pp68rrk"

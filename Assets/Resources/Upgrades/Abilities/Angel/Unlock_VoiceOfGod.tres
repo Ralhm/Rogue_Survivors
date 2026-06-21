@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="AbilityUnlockUpgrade" load_steps=3 format=3 uid="uid://qprxyease128"]
+
+[ext_resource type="Resource" uid="uid://ccms2s85pymmr" path="res://Assets/Resources/Abilities/Angel/VoiceOfGod.tres" id="1_37q7d"]
+[ext_resource type="Script" uid="uid://codmjrsvjg6h7" path="res://Assets/Scripts/Data/Upgrade/AbilityUnlockUpgrade.cs" id="2_146kf"]
+
+[resource]
+script = ExtResource("2_146kf")
+NewAbility = ExtResource("1_37q7d")
+UpgradeName = ""
+UpgradeDescription = ""
+metadata/_custom_type_script = "uid://codmjrsvjg6h7"

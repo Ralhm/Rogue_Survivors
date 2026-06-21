@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="AbilityUnlockUpgrade" load_steps=3 format=3 uid="uid://bqqyw1no8ihl0"]
+
+[ext_resource type="Resource" uid="uid://foeu6wf42786" path="res://Assets/Resources/Abilities/Angel/HolySlap.tres" id="1_b56tt"]
+[ext_resource type="Script" uid="uid://codmjrsvjg6h7" path="res://Assets/Scripts/Data/Upgrade/AbilityUnlockUpgrade.cs" id="2_aqnkm"]
+
+[resource]
+script = ExtResource("2_aqnkm")
+NewAbility = ExtResource("1_b56tt")
+UpgradeName = ""
+UpgradeDescription = ""
+metadata/_custom_type_script = "uid://codmjrsvjg6h7"

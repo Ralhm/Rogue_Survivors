@@ -2,6 +2,10 @@
 
 [ext_resource type="Script" uid="uid://ct2ay84gc7p63" path="res://Assets/Scripts/PlayerController.cs" id="1_tf7e1"]
 
-[node name="PlayerController" type="Node2D" node_paths=PackedStringArray("Allies")]
+[node name="PlayerController" type="Node2D" node_paths=PackedStringArray("LoadTimer", "Allies")]
 script = ExtResource("1_tf7e1")
+LoadTimer = NodePath("Timer")
 Allies = []
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.2

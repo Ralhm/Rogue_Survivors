@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="CharacterData" load_steps=5 format=3 uid="uid://c7ct4i1v2lv10"]
+
+[ext_resource type="Resource" uid="uid://bjef6yq1ua54s" path="res://Assets/Resources/Abilities/Angel/Blessing.tres" id="1_e7grq"]
+[ext_resource type="Resource" uid="uid://d1ssplv42oa2h" path="res://Assets/Resources/Abilities/Cure.tres" id="2_h3d03"]
+[ext_resource type="Resource" uid="uid://bnkc3flhqyvdw" path="res://Assets/Resources/Abilities/Angel/Purify.tres" id="3_c1fp0"]
+[ext_resource type="Script" uid="uid://2foo8pp68rrk" path="res://Assets/Scripts/Data/CharacterData.cs" id="6_gxj2a"]
+
+[resource]
+script = ExtResource("6_gxj2a")
+Name = ""
+MaxHealth = 100
+MoveRange = 750.0
+AttackRange = 250.0
+Attack = 20
+Magic = 20
+PhysDefense = 10
+MagDefense = 10
+DefaultAbilityList = Array[Object]([ExtResource("1_e7grq"), ExtResource("2_h3d03"), ExtResource("3_c1fp0")])
+ElementalWeakness = 0
+ElementalResistance = 0
+PhysicalWeakness = 0
+PhysicalResistance = 0
+metadata/_custom_type_script = "uid://2foo8pp68rrk"

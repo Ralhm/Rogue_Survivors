@@ -1,8 +1,8 @@
 [gd_scene load_steps=14 format=3 uid="uid://n7i0rx6wvwsw"]
 
-[ext_resource type="Texture2D" uid="uid://vmm4pb6m67gs" path="res://Assets/Sprites/Knight_Sheet.png" id="1_gs2pf"]
+[ext_resource type="Texture2D" uid="uid://vmm4pb6m67gs" path="res://Assets/Sprites/Placeholder/Knight_Sheet.png" id="1_gs2pf"]
 [ext_resource type="Script" uid="uid://c68r6c57vpdcw" path="res://Assets/Scripts/Enemy.cs" id="1_ylwg3"]
-[ext_resource type="Resource" uid="uid://cbc708j4lsyu8" path="res://Assets/Resources/Base_Data.tres" id="2_ylwg3"]
+[ext_resource type="Resource" uid="uid://cbc708j4lsyu8" path="res://Assets/Resources/CharacterData/Base_Data.tres" id="2_ylwg3"]
 [ext_resource type="Resource" uid="uid://cjgfrsmcvof63" path="res://Assets/Resources/Damage_Modifier_Data.tres" id="3_gid5l"]
 [ext_resource type="PackedScene" uid="uid://c615icsa45yhb" path="res://Assets/Characters/Sprites/sprite.tscn" id="5_gid5l"]
 [ext_resource type="PackedScene" uid="uid://cyg58xfb1swdp" path="res://Assets/UI/target_arrow.tscn" id="6_xud2f"]

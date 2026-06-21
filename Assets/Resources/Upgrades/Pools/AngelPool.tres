@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="UpgradePool" load_steps=16 format=3 uid="uid://14d18q42nb5f"]
+
+[ext_resource type="Script" uid="uid://dlc7ygw5ejjrm" path="res://Assets/Scripts/Data/Upgrade/UpgradePool.cs" id="1_31wyj"]
+[ext_resource type="Resource" uid="uid://x67ipncnm1t0" path="res://Assets/Resources/Upgrades/Abilities/Angel/Unlock_Benediction.tres" id="2_sbpxe"]
+[ext_resource type="Resource" uid="uid://mgssqfcj1dmo" path="res://Assets/Resources/Upgrades/Abilities/Angel/Unlock_Confession.tres" id="3_pwhyf"]
+[ext_resource type="Resource" uid="uid://qprxyease128" path="res://Assets/Resources/Upgrades/Abilities/Angel/Unlock_VoiceOfGod.tres" id="3_ra4dh"]
+[ext_resource type="Resource" uid="uid://cotvja2q6wpu7" path="res://Assets/Resources/Upgrades/Abilities/Angel/Unlock_HolyPunishment.tres" id="4_2sbk0"]
+[ext_resource type="Resource" uid="uid://d2ga64dv5sux7" path="res://Assets/Resources/Upgrades/Abilities/Angel/Unlock_Lecture.tres" id="4_ftsbb"]
+[ext_resource type="Resource" uid="uid://cgx4u6xpybja1" path="res://Assets/Resources/Upgrades/Abilities/Angel/Unlock_Smite.tres" id="5_a28lw"]
+[ext_resource type="Resource" uid="uid://rch5ivmabich" path="res://Assets/Resources/Upgrades/Abilities/Angel/Unlock_Preach.tres" id="5_jvy3b"]
+[ext_resource type="Resource" uid="uid://dy5lasrlm0u7l" path="res://Assets/Resources/Upgrades/Abilities/Angel/Unlock_HolyKick.tres" id="6_igwe0"]
+[ext_resource type="Resource" uid="uid://cdpgnmp5f3so0" path="res://Assets/Resources/Upgrades/Abilities/Angel/Unlock_SpearOfMichael.tres" id="8_q7bc2"]
+[ext_resource type="Resource" uid="uid://d1rbly3uxo81l" path="res://Assets/Resources/Upgrades/Abilities/Angel/Unlock_FiresOfSodom.tres" id="9_ftsbb"]
+[ext_resource type="Resource" uid="uid://cj06ew0tfhaxh" path="res://Assets/Resources/Upgrades/Abilities/Angel/Unlock_HealingRain.tres" id="10_ckr51"]
+[ext_resource type="Resource" uid="uid://c70lnqiqe7n0w" path="res://Assets/Resources/Upgrades/Abilities/Angel/Unlock_Kaminari.tres" id="12_liud3"]
+[ext_resource type="Resource" uid="uid://bkut2t3gwxnhb" path="res://Assets/Resources/Upgrades/Abilities/Angel/Unlock_HailMary.tres" id="13_rohl4"]
+[ext_resource type="Resource" uid="uid://bqqyw1no8ihl0" path="res://Assets/Resources/Upgrades/Abilities/Angel/Unlock_HolySlap.tres" id="14_gr60x"]
+
+[resource]
+script = ExtResource("1_31wyj")
+CommonUpgrades = Array[Object]([ExtResource("2_sbpxe"), ExtResource("3_pwhyf"), ExtResource("4_ftsbb"), ExtResource("5_jvy3b"), ExtResource("6_igwe0")])
+UnCommonUpgrades = Array[Object]([ExtResource("5_a28lw"), ExtResource("12_liud3"), ExtResource("13_rohl4"), ExtResource("14_gr60x")])
+RareUpgrades = Array[Object]([ExtResource("4_2sbk0"), ExtResource("10_ckr51")])
+LegendaryUpgrades = Array[Object]([ExtResource("3_ra4dh"), ExtResource("8_q7bc2"), ExtResource("9_ftsbb")])
+metadata/_custom_type_script = "uid://dlc7ygw5ejjrm"

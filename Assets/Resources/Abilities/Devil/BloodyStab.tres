@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="Ability" load_steps=2 format=3 uid="uid://co2jhhnpxfbb6"]
+
+[ext_resource type="Script" uid="uid://cqipoqgybe2r5" path="res://Assets/Scripts/Data/Abilities/Ability.cs" id="1_wmtip"]
+
+[resource]
+script = ExtResource("1_wmtip")
+Name = "Bloody Stab"
+Description = "Stab an Enemy and drain their health"
+Range = 1.5
+AimRange = 0.0
+PowerLevels = PackedFloat32Array(1, 1.2, 1.7, 2.4)
+IsUpgradeable = true
+TargetingType = 0
+AimingType = 0
+Damage_Type = 1
+Element_Type = 0
+Physical_Type = 2
+Restore = 6
+ShoveDirection = 0
+ShoveForce = 0.0
+Point = false
+DecisionType = 0
+metadata/_custom_type_script = "uid://cqipoqgybe2r5"

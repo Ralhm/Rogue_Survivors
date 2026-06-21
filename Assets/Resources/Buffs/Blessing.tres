@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="BuffData" load_steps=2 format=3 uid="uid://efvytqjg8hgw"]
+
+[ext_resource type="Script" uid="uid://b6rdeg483ytv5" path="res://Assets/Scripts/Data/BuffData.cs" id="1_ul38x"]
+
+[resource]
+script = ExtResource("1_ul38x")
+BuffName = "Blessing"
+BuffType = 3
+PowerLevel = PackedFloat32Array(0.2, 0.25, 0.35, 0.5)
+BaseDuration = 3
+metadata/_custom_type_script = "uid://b6rdeg483ytv5"

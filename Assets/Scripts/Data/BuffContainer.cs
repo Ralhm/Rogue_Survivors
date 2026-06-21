@@ -4,71 +4,120 @@ using System.Collections.Generic;
 
 public partial class BuffContainer
 {
-    //Consider turning this into a map so we don't have to find the buff if it's already there?
-    //But there will only ever be so many buffs, so maybe later
+
     List<Buff> Buffs = new List<Buff>(); 
+    List<Buff> DeBuffs = new List<Buff>(); 
 
     float MagDefense = 1.0f;
     float MagAttack = 1.0f;
     float PhysAttack = 1.0f;
     float PhysDefense = 1.0f;
+    bool Drain = false;
 
 
-    public void AddBuff(Buff buff)
+    public void AddBuff(BuffData NewBuff, int PowerLevel)
     {
-        if (Buffs.Contains(buff))
-        {
+        //Kinda nasty but whatever, there probably won't ever be more than a few buffs at a time
+        if (!NewBuff.isDebuff) {
+            //Increment the buff duration if the character already has the buff
             for (int i = 0; i < Buffs.Count; i++)
             {
-                Buffs[i].IncrementDuration(buff.GetDuration());
+                if (Buffs[i].Data == NewBuff)
+                {
+                    Buffs[i].IncrementDuration(NewBuff.GetDuration());
+                    return;
+                }
+
+            }
+        }
+        else
+        {
+            //Increment the Debuff duration if the character already has the buff
+            for (int i = 0; i < DeBuffs.Count; i++)
+            {
+                if (DeBuffs[i].Data == NewBuff)
+                {
+                    DeBuffs[i].IncrementDuration(NewBuff.GetDuration());
+                    return;
+                }
+
             }
         }
 
-        Buffs.Add(buff);
-        switch (buff.GetBuffType()) {
+        Buff buff = new Buff();
+        buff.SetData(NewBuff, PowerLevel);
+        int DebuffMult = 1;
+
+        if (NewBuff.isDebuff)
+        {
+            Buffs.Add(buff);
+            DebuffMult = -1;
+        }
+        else
+        {
+            DeBuffs.Add(buff);
+        }
+
+        switch (NewBuff.GetBuffType())
+        {
             case BuffType.PhysAttack:
-                PhysAttack += buff.GetPercentage();
+                PhysAttack += buff.GetBuffPower() * DebuffMult;
                 break;
             case BuffType.PhysDefense:
-                PhysDefense += buff.GetPercentage();
+                PhysDefense += buff.GetBuffPower() * DebuffMult;
                 break;
             case BuffType.MagAttack:
-                MagAttack += buff.GetPercentage();
+                MagAttack += buff.GetBuffPower() * DebuffMult;
                 break;
             case BuffType.MagDefense:
-                MagDefense += buff.GetPercentage();
+                MagDefense += buff.GetBuffPower() * DebuffMult;
+                break;
+            case BuffType.Drain:
+                Drain = true;
                 break;
         }
     }
 
+
     public void RemoveBuff(Buff buff) {
         DecrementBuff(buff);
-        Buffs.Remove(buff);
+        if (buff.GetBuffPower() > 0) {
+            Buffs.Remove(buff);
+        }
+        else
+        {
+            DeBuffs.Remove(buff);
+        }
+
+        
         
     }
 
-    public void RemoveBuffAt(int index)
-    {
-        DecrementBuff(Buffs[index]);
-        Buffs.RemoveAt(index);
-        
-    }
 
 
     public void DecrementBuff(Buff buff) {
-        switch (buff.GetBuffType())
+        int DebuffMult = 1;
+        if (buff.Data.isDebuff)
+        {
+            DebuffMult = -1;
+        }
+
+        switch (buff.Data.GetBuffType())
         {
             case BuffType.PhysAttack:
-                PhysAttack -= buff.GetPercentage();
+                PhysAttack -= buff.GetBuffPower() * DebuffMult;
                 break;
             case BuffType.PhysDefense:
-                PhysDefense -= buff.GetPercentage();
+                PhysDefense -= buff.GetBuffPower() * DebuffMult;
                 break;
             case BuffType.MagAttack:
-                MagAttack -= buff.GetPercentage();
+                MagAttack -= buff.GetBuffPower() * DebuffMult;
                 break;
             case BuffType.MagDefense:
-                MagDefense -= buff.GetPercentage();
+                MagDefense -= buff.GetBuffPower() * DebuffMult;
+                break;
+            case BuffType.Drain:
+                Drain = false;
                 break;
         }
     }
@@ -78,9 +127,25 @@ public partial class BuffContainer
         for (int i = 0; i < Buffs.Count; i++)
         {
             Buffs[i].IncrementDuration(-1);
-            if (Buffs[i].GetDuration() <= 0) { 
+            if (Buffs[i].Data.GetDuration() <= 0) { 
                 RemoveBuff(Buffs[i]);
             }
+        }
+    }
+
+    public void ClearBuffs()
+    {
+        while (Buffs.Count > 0)
+        {
+            RemoveBuff(Buffs[0]);
+        }
+    }
+
+    public void ClearDeBuffs()
+    {
+        while (DeBuffs.Count > 0)
+        {
+            RemoveBuff(DeBuffs[0]);
         }
     }
 
@@ -104,6 +169,15 @@ public partial class BuffContainer
     public bool GetIsBuffed()
     {
         if (Buffs.Count == 0)
+        {
+            return false;
+        }
+        return true;
+    }
+
+    public bool GetIsDeBuffed ()
+    {
+        if (DeBuffs.Count == 0)
         {
             return false;
         }

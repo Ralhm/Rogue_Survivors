@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="GenericUpgradePool" load_steps=8 format=3 uid="uid://dfqy8il8dscqg"]
+
+[ext_resource type="Resource" uid="uid://cs6unpnhlkf44" path="res://Assets/Resources/Upgrades/GenericStats/MagAttack.tres" id="1_tduye"]
+[ext_resource type="Script" uid="uid://ds636lart52cr" path="res://Assets/Scripts/Data/Upgrade/GenericUpgradePool.cs" id="1_uyxbw"]
+[ext_resource type="Resource" uid="uid://bmu5hxyyea0cj" path="res://Assets/Resources/Upgrades/GenericStats/MagDefense.tres" id="2_cegak"]
+[ext_resource type="Resource" uid="uid://bfagrf2m1mqng" path="res://Assets/Resources/Upgrades/GenericStats/MaxHealth.tres" id="3_lu3e7"]
+[ext_resource type="Resource" uid="uid://qi7vcqwl4prr" path="res://Assets/Resources/Upgrades/GenericStats/MoveRange.tres" id="4_q3hdj"]
+[ext_resource type="Resource" uid="uid://c8pqmsfwpnsbh" path="res://Assets/Resources/Upgrades/GenericStats/PhysAttack.tres" id="5_r2mge"]
+[ext_resource type="Resource" uid="uid://bgxxr14ik1rhf" path="res://Assets/Resources/Upgrades/GenericStats/PhysDefense.tres" id="6_2mdh6"]
+
+[resource]
+script = ExtResource("1_uyxbw")
+CommonUpgrades = Array[Object]([ExtResource("1_tduye"), ExtResource("2_cegak"), ExtResource("3_lu3e7"), ExtResource("4_q3hdj"), ExtResource("5_r2mge"), ExtResource("6_2mdh6")])
+UnCommonUpgrades = null
+RareUpgrades = null
+LegendaryUpgrades = null
+metadata/_custom_type_script = "uid://ds636lart52cr"

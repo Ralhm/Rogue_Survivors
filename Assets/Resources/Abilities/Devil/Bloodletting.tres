@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="Ability_Sacrifice" load_steps=2 format=3 uid="uid://dei5kdif6lnhw"]
+
+[ext_resource type="Script" uid="uid://csp5el1nh1cr4" path="res://Assets/Scripts/Data/Abilities/Ability_Sacrifice.cs" id="1_tpjb0"]
+
+[resource]
+script = ExtResource("1_tpjb0")
+HealthLoss = 10
+Name = "Bloodletting"
+Description = "Sacrifice some health to heal an ally"
+Range = 2.0
+AimRange = 0.0
+PowerLevels = PackedFloat32Array(2, 3.5, 4, 6)
+IsUpgradeable = true
+TargetingType = 1
+AimingType = 0
+Damage_Type = 0
+Element_Type = 0
+Physical_Type = 0
+AbilityAilment = 0
+Restore = 1
+ShoveDirection = 0
+ShoveForce = 0.0
+Point = false
+DecisionType = 0
+metadata/_custom_type_script = "uid://csp5el1nh1cr4"

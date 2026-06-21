@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="AbilityUnlockUpgrade" load_steps=3 format=3 uid="uid://h66fvug8x4ce"]
+
+[ext_resource type="Resource" uid="uid://gnv8wde0qu6y" path="res://Assets/Resources/Abilities/Mage/Fireball.tres" id="1_hwpvk"]
+[ext_resource type="Script" uid="uid://codmjrsvjg6h7" path="res://Assets/Scripts/Data/Upgrade/AbilityUnlockUpgrade.cs" id="2_c5wjp"]
+
+[resource]
+script = ExtResource("2_c5wjp")
+NewAbility = ExtResource("1_hwpvk")
+UpgradeName = ""
+UpgradeDescription = ""
+metadata/_custom_type_script = "uid://codmjrsvjg6h7"

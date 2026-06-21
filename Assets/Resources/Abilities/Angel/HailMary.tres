@@ -1,0 +1,70 @@
+[gd_resource type="Resource" script_class="Ability_HailMary" load_steps=8 format=3 uid="uid://cae2gtrxkxn0n"]
+
+[ext_resource type="Script" uid="uid://bta1b5fvmqrwm" path="res://Assets/Scripts/Data/Abilities/Ability_HailMary.cs" id="1_bt6o3"]
+[ext_resource type="Script" uid="uid://b6rdeg483ytv5" path="res://Assets/Scripts/Data/BuffData.cs" id="1_ec0gv"]
+
+[sub_resource type="Resource" id="Resource_dvv50"]
+script = ExtResource("1_ec0gv")
+BuffName = "HailMary_"
+BuffType = 1
+PowerLevel = PackedFloat32Array(0.2, 0.25, 0.35, 0.5)
+BaseDuration = 3
+isDebuff = false
+metadata/_custom_type_script = "uid://b6rdeg483ytv5"
+
+[sub_resource type="Resource" id="Resource_gaf81"]
+script = ExtResource("1_ec0gv")
+BuffName = "HailMary_PhysDefense"
+BuffType = 2
+PowerLevel = PackedFloat32Array(0.2, 0.25, 0.35, 0.5)
+BaseDuration = 3
+isDebuff = false
+metadata/_custom_type_script = "uid://b6rdeg483ytv5"
+
+[sub_resource type="Resource" id="Resource_ec0gv"]
+script = ExtResource("1_ec0gv")
+BuffName = "HailMary_MagAttack"
+BuffType = 3
+PowerLevel = PackedFloat32Array(0.2, 0.25, 0.35, 0.5)
+BaseDuration = 3
+isDebuff = false
+metadata/_custom_type_script = "uid://b6rdeg483ytv5"
+
+[sub_resource type="Resource" id="Resource_iolf4"]
+script = ExtResource("1_ec0gv")
+BuffName = "HailMary_MagDefense"
+BuffType = 4
+PowerLevel = PackedFloat32Array(0.2, 0.25, 0.35, 0.5)
+BaseDuration = 3
+isDebuff = false
+metadata/_custom_type_script = "uid://b6rdeg483ytv5"
+
+[sub_resource type="Resource" id="Resource_lw43u"]
+script = ExtResource("1_ec0gv")
+BuffName = "HailMary_Drain"
+BuffType = 5
+PowerLevel = PackedFloat32Array(0.2, 0.25, 0.35, 0.5)
+BaseDuration = 3
+isDebuff = false
+metadata/_custom_type_script = "uid://b6rdeg483ytv5"
+
+[resource]
+script = ExtResource("1_bt6o3")
+PotentialBuffs = Array[Object]([SubResource("Resource_dvv50"), SubResource("Resource_gaf81"), SubResource("Resource_ec0gv"), SubResource("Resource_iolf4"), SubResource("Resource_lw43u")])
+Name = "Hail Mary"
+Description = "Random buff to ally"
+Range = 1.0
+AimRange = 0.0
+PowerLevels = PackedFloat32Array(1, 1.2, 1.5, 2)
+IsUpgradeable = true
+TargetingType = 1
+AimingType = 0
+Damage_Type = 0
+Element_Type = 0
+Physical_Type = 0
+Restore = 0
+ShoveDirection = 0
+ShoveForce = 0.0
+Point = false
+DecisionType = 0
+metadata/_custom_type_script = "uid://cqipoqgybe2r5"

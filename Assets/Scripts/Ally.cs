@@ -1,12 +1,10 @@
 using Godot;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 
 public partial class Ally : Character
 {
-
-
-    [Export]
-    public CharacterUpgradeContainer UpgradeData;
 
     //Create a number icon that shows the order in which the characters will act
     [Export]
@@ -30,10 +28,20 @@ public partial class Ally : Character
     //so players can't move characters onto the same position
     private Vector2 ColliderOrigin;
 
+    [Export]
+    public AllyType AllyType;
+
+
     public override void _Ready()
     {
         base._Ready();
         ColliderOrigin = Collider.Position;
+        
+
+        
+
+        //UpgradeContainer.Owner = this;
+        
     }
 
 
@@ -69,7 +77,15 @@ public partial class Ally : Character
 
     public override void BeginAction()
     {
-        base.BeginAction();
+        AilmentContainer.AilmentEffects();
+        if (SkippingTurn)
+        {
+            SkippingTurn = false;
+            CombatManager.Instance.ExecuteNextAction();
+            return;
+        }
+
+        BeginNavigation();
     }
 
     public override float GetStoredOffensiveRange()
@@ -77,7 +93,7 @@ public partial class Ally : Character
         if (CharacterAction == StoredAction.Attack)
         {
             GD.Print("Getting Normal Attack Range!");
-            return BaseData.GetAttackRange() * UpgradeData.GetAttackRangeMult();
+            return BaseData.GetAttackRange() * UpgradeContainer.GetAttackRangeMult();
         }
         else if (CharacterAction == StoredAction.Ability)
         {
@@ -87,7 +103,7 @@ public partial class Ally : Character
                 GD.Print("NO STORED ABILITY SET!)");
                 return 0;
             }
-            return BaseData.GetAttackRange() * UpgradeData.GetAttackRangeMult() * StoredAbility.GetAbilityRange();
+            return BaseData.GetAttackRange() * UpgradeContainer.GetAttackRangeMult() * StoredAbility.GetAbilityRange();
         }
         return 0f;
 
@@ -95,18 +111,26 @@ public partial class Ally : Character
 
     public override int CalculateNormalAttackDamage()
     {
-        return (int)(BaseData.GetAttack() * UpgradeData.GetAttackMult());
+        return (int)(BaseData.GetAttack() * UpgradeContainer.GetAttackMult());
     }
 
     public override int GetAbilityDamage(DamageType type)
     {
+
         int Damage = 0;
         switch (type) {
             case DamageType.Physical:
-                Damage = (int)(BaseData.GetAttack() * UpgradeData.GetAttackMult());
+                Damage = (int)(BaseData.GetAttack() * UpgradeContainer.GetAttackMult());
+                Damage = (int)(Damage * BuffContainer.GetPhysAttack());
                 break;
             case DamageType.Magic:
-                Damage = (int)(BaseData.GetMagic() * UpgradeData.GetMagicMult());
+                Damage = (int)(BaseData.GetMagic() * UpgradeContainer.GetMagicMult());
+                GD.Print("Base Calculated Damage: " + Damage);
+                GD.Print("Buff Container Multiplier: " + BuffContainer.GetMagAttack());
+
+
+                Damage = (int)(Damage * BuffContainer.GetMagAttack());
+                GD.Print("Final Calculated Damage: " + Damage);
                 break;
         
         }
@@ -166,7 +190,7 @@ public partial class Ally : Character
 
     public override float GetMoveRange()
     {
-        float range = BaseData.GetMoveRange() * UpgradeData.GetMoveRangeMult();
+        float range = BaseData.GetMoveRange() * UpgradeContainer.GetMoveRangeMult();
 
 
         if (IsDashing)
@@ -180,5 +204,25 @@ public partial class Ally : Character
         return range;
     }
 
+    
+    public void AddAbility(Ability ability)
+    {
+        if (!Abilities.Contains(ability)) {
+            Abilities.Add(ability);
+            UpgradeContainer.AbilityLevels.Add(ability, 0);
+        }
+        else
+        {
+            UpgradeContainer.UpgradeAbility(ability);
+        }
+        
+    }
+
+    public override void ActivateAbility()
+    {
+        base.ActivateAbility();
+
+        StoredAbility.OnActivate(this, UpgradeContainer.AbilityLevels[StoredAbility]);
+    }
 
 }

@@ -1,47 +1,15 @@
 using Godot;
 using System;
 
-
-public enum BuffType
+public partial class Buff
 {
-    None,
-    PhysAttack,
-    PhysDefense,
-    MagAttack,
-    MagDefense
-}
 
-//We don't need to make separate buff classes or instances, let each ability handle that
-[GlobalClass]
-public partial class Buff : Resource
-{
-    [Export]
-    BuffType BuffType;
 
-    [Export]
-    float Percentage;
-
-    [Export]
     int Duration;
 
-    //Set to true if the buff targets the user themself
-    [Export]
-    bool Self = false;
+    public BuffData Data;
 
-    public float GetPercentage()
-    {
-        return Percentage;
-    }
-
-    public BuffType GetBuffType() {
-        return BuffType;
-    }
-
-
-    public int GetDuration()
-    {
-        return Duration;
-    }
+    int Level;
 
     public void SetDuration(int dur)
     {
@@ -53,9 +21,16 @@ public partial class Buff : Resource
         Duration += dur;
     }
 
-    public bool IsSelf()
+    public void SetData(BuffData data, int level)
     {
-        return Self;
+        Data = data;
+        Level = level;
+        SetDuration(Data.GetDuration());
+    }
+
+    public float GetBuffPower()
+    {
+        return Data.GetPowerLevel(Level);
     }
 
 }

@@ -1,0 +1,65 @@
+[gd_scene load_steps=8 format=3 uid="uid://befefhjfb80tp"]
+
+[ext_resource type="FontFile" uid="uid://brwe5ydicky4n" path="res://Assets/Fonts/PixelOperator8-Bold.ttf" id="1_f0wcq"]
+[ext_resource type="Script" uid="uid://c46cl4f0jluul" path="res://Assets/Scripts/UI/UpgradePanel.cs" id="1_frgt0"]
+[ext_resource type="Script" uid="uid://fvuv0p6i3sjt" path="res://Assets/Scripts/UI/UpgradeButton.cs" id="2_frgt0"]
+[ext_resource type="Texture2D" uid="uid://bbaa56bxycibn" path="res://Assets/Sprites/Placeholder/Devil_Icon.png" id="3_bo2ro"]
+[ext_resource type="Texture2D" uid="uid://c0admir1wsv78" path="res://Assets/Sprites/Placeholder/Angel_Icon.png" id="4_ka0y5"]
+[ext_resource type="Texture2D" uid="uid://c5hcksfe8p8ls" path="res://Assets/Sprites/Placeholder/Mage_Icon.png" id="4_vo28m"]
+[ext_resource type="Texture2D" uid="uid://bx3kycxayqs6g" path="res://Assets/Sprites/Placeholder/Knight_Icon.png" id="5_yx4nf"]
+
+[node name="UpgradeButtonPanel" type="PanelContainer" node_paths=PackedStringArray("UpgradeButton", "DescriptionText", "NameText", "CharacterIcon")]
+custom_minimum_size = Vector2(600, 800)
+script = ExtResource("1_frgt0")
+UpgradeButton = NodePath("Button")
+DescriptionText = NodePath("DescriptionPanel/DescriptionText")
+NameText = NodePath("NamePanel/NameText")
+CharacterIcons = Array[Texture2D]([ExtResource("4_vo28m"), ExtResource("3_bo2ro"), ExtResource("4_ka0y5"), ExtResource("5_yx4nf")])
+CharacterIcon = NodePath("IconPanel/CharacterIcon")
+
+[node name="NamePanel" type="PanelContainer" parent="."]
+self_modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(0, 400)
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="NameText" type="RichTextLabel" parent="NamePanel"]
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("1_f0wcq")
+theme_override_font_sizes/normal_font_size = 36
+text = "Name Text
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DescriptionPanel" type="PanelContainer" parent="."]
+self_modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(0, 400)
+layout_mode = 2
+size_flags_vertical = 8
+
+[node name="DescriptionText" type="RichTextLabel" parent="DescriptionPanel"]
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("1_f0wcq")
+theme_override_font_sizes/normal_font_size = 36
+text = "Description Text
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="." node_paths=PackedStringArray("Panel")]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+script = ExtResource("2_frgt0")
+Panel = NodePath("..")
+
+[node name="IconPanel" type="PanelContainer" parent="."]
+self_modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(384, 384)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+
+[node name="CharacterIcon" type="TextureRect" parent="IconPanel"]
+layout_mode = 2
+texture = ExtResource("4_vo28m")

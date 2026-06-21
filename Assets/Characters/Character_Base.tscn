@@ -1,8 +1,7 @@
-[gd_scene load_steps=14 format=3 uid="uid://cl80nmrn4b3cx"]
+[gd_scene load_steps=13 format=3 uid="uid://cl80nmrn4b3cx"]
 
 [ext_resource type="Script" uid="uid://b2s1ppdcxdc5x" path="res://Assets/Scripts/Ally.cs" id="1_xn0le"]
-[ext_resource type="Resource" uid="uid://cbc708j4lsyu8" path="res://Assets/Resources/Base_Data.tres" id="2_3xuki"]
-[ext_resource type="Resource" uid="uid://bmeq78tmr4fkj" path="res://Assets/Resources/Base_Upgrade_Container.tres" id="3_nmc61"]
+[ext_resource type="Resource" uid="uid://cbc708j4lsyu8" path="res://Assets/Resources/CharacterData/Base_Data.tres" id="2_3xuki"]
 [ext_resource type="Resource" uid="uid://cjgfrsmcvof63" path="res://Assets/Resources/Damage_Modifier_Data.tres" id="4_3xuki"]
 [ext_resource type="PackedScene" uid="uid://c615icsa45yhb" path="res://Assets/Characters/Sprites/sprite.tscn" id="4_xn0le"]
 [ext_resource type="PackedScene" uid="uid://ba0a11vug0c6c" path="res://Assets/Prefabs/AllyNavAgent.tscn" id="6_gvh6i"]
@@ -29,7 +28,6 @@ y_sort_enabled = true
 collision_mask = 23
 slide_on_ceiling = false
 script = ExtResource("1_xn0le")
-UpgradeData = ExtResource("3_nmc61")
 OrderIcon = NodePath("OrderIcon")
 OrderNum = NodePath("OrderIcon/Panel/OrderNum")
 ProjectionTargetIndicator = NodePath("Projection/ProjectionTargetArrow")

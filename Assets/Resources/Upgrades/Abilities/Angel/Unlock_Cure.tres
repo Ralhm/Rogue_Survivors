@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="AbilityUnlockUpgrade" load_steps=3 format=3 uid="uid://bm871wgo48734"]
+
+[ext_resource type="Resource" uid="uid://d1ssplv42oa2h" path="res://Assets/Resources/Abilities/Cure.tres" id="1_wrmxy"]
+[ext_resource type="Script" uid="uid://codmjrsvjg6h7" path="res://Assets/Scripts/Data/Upgrade/AbilityUnlockUpgrade.cs" id="2_noqmg"]
+
+[resource]
+script = ExtResource("2_noqmg")
+NewAbility = ExtResource("1_wrmxy")
+UpgradeName = ""
+UpgradeDescription = ""
+metadata/_custom_type_script = "uid://codmjrsvjg6h7"

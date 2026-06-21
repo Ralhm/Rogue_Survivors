@@ -7,6 +7,8 @@ public partial class Enemy : Character
 
     DecisionMaker AIEngine;
 
+    [Export]
+    public int Level = 0;
 
     //Let this be the deciding factor on how the Enemy should behave
     //Is it a support type, an offensive type, a defensive type, or maybe something else?
@@ -23,18 +25,24 @@ public partial class Enemy : Character
         IsEnemy = true;
         AIEngine = new DecisionMaker();
         AIEngine.SetOwner(this);
+
     }
+
+
 
     public override void BeginAction()
     {
-        
         AilmentContainer.AilmentEffects();
         if (SkippingTurn)
         {
+            GD.Print("SKIPPING TURN!!!!!");
             SkippingTurn = false;
             CombatManager.Instance.ExecuteNextAction();
+            return;
         }
-        
+
+
+
         if (AIEngine == null)
         {
             GD.Print("NO AI ENGINE SET");
@@ -89,7 +97,7 @@ public partial class Enemy : Character
         //Again, consider removing this check entirely 
         if ((MinDistToTarget - 10) <= AIEngine.GetMinDistanceToTarget())
         {
-            GD.Print(Name + ": I'm Within Range, Executing my action!");
+            //GD.Print(Name + ": I'm Within Range, Executing my action!");
             ExecuteAction();
         }
         else
@@ -112,7 +120,12 @@ public partial class Enemy : Character
     }
 
 
+    public override void ActivateAbility()
+    {
+        base.ActivateAbility();
 
+        StoredAbility.OnActivate(this, Level);
+    }
     public AI_Priority GetPriority() { 
         return MainPriority;
     }

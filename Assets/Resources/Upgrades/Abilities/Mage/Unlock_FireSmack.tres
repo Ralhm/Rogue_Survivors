@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="AbilityUnlockUpgrade" load_steps=3 format=3 uid="uid://cx08e7juektgt"]
+
+[ext_resource type="Resource" uid="uid://ddwf8d302dc46" path="res://Assets/Resources/Abilities/Mage/FireSmack.tres" id="1_2n224"]
+[ext_resource type="Script" uid="uid://codmjrsvjg6h7" path="res://Assets/Scripts/Data/Upgrade/AbilityUnlockUpgrade.cs" id="2_ow2lm"]
+
+[resource]
+script = ExtResource("2_ow2lm")
+NewAbility = ExtResource("1_2n224")
+Type = 3
+DefaultRarity = 0
+UpgradeName = ""
+UpgradeDescription = ""
+metadata/_custom_type_script = "uid://codmjrsvjg6h7"

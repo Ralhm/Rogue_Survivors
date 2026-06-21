@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="AbilityUnlockUpgrade" load_steps=3 format=3 uid="uid://krio735g8yks"]
+
+[ext_resource type="Resource" uid="uid://dei5kdif6lnhw" path="res://Assets/Resources/Abilities/Devil/Bloodletting.tres" id="1_bjugw"]
+[ext_resource type="Script" uid="uid://codmjrsvjg6h7" path="res://Assets/Scripts/Data/Upgrade/AbilityUnlockUpgrade.cs" id="2_jo2fn"]
+
+[resource]
+script = ExtResource("2_jo2fn")
+NewAbility = ExtResource("1_bjugw")
+UpgradeName = ""
+UpgradeDescription = ""
+metadata/_custom_type_script = "uid://codmjrsvjg6h7"

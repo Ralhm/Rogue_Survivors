@@ -3,7 +3,7 @@ using System;
 
 
 
-//Let this class contain the base values of a character
+//Let this class contain the base, DEFAULT values of a character
 [GlobalClass]
 public partial class CharacterData : Resource
 {
@@ -15,10 +15,10 @@ public partial class CharacterData : Resource
     private int MaxHealth = 100;
 
     [Export]
-    private float MoveRange = 400.0f;
+    private float MoveRange = 750.0f;
 
     [Export]
-    public float AttackRange = 150;
+    public float AttackRange = 375;
 
     [Export]
     private int Attack = 20;
@@ -35,7 +35,7 @@ public partial class CharacterData : Resource
 
 
     [Export]
-    private Ability[] AbilityList;
+    private Ability[] DefaultAbilityList;
 
     [Export]
     private ElementType ElementalWeakness;
@@ -112,9 +112,10 @@ public partial class CharacterData : Resource
         return PhysicalResistance;
     }
 
-    public Ability[] GetAbilities() {
-        return AbilityList;
+    public Ability[] GetDefaultAbilities() {
+        return DefaultAbilityList;
     }
 
-    
+
+
 }

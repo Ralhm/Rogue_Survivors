@@ -1,0 +1,130 @@
+[gd_scene load_steps=13 format=3 uid="uid://bu88ypn03hm1r"]
+
+[ext_resource type="Script" uid="uid://b2s1ppdcxdc5x" path="res://Assets/Scripts/Ally.cs" id="1_njl0g"]
+[ext_resource type="Resource" uid="uid://c7ct4i1v2lv10" path="res://Assets/Resources/CharacterData/Angel_Data.tres" id="2_njl0g"]
+[ext_resource type="Resource" uid="uid://cjgfrsmcvof63" path="res://Assets/Resources/Damage_Modifier_Data.tres" id="3_gr50s"]
+[ext_resource type="PackedScene" uid="uid://c615icsa45yhb" path="res://Assets/Characters/Sprites/sprite.tscn" id="4_ucqsj"]
+[ext_resource type="PackedScene" uid="uid://ba0a11vug0c6c" path="res://Assets/Prefabs/AllyNavAgent.tscn" id="5_5kvbm"]
+[ext_resource type="PackedScene" uid="uid://cyg58xfb1swdp" path="res://Assets/UI/target_arrow.tscn" id="6_1b5mg"]
+[ext_resource type="FontFile" uid="uid://brwe5ydicky4n" path="res://Assets/Fonts/PixelOperator8-Bold.ttf" id="7_cr5a6"]
+[ext_resource type="Script" uid="uid://divlop3v6ty52" path="res://Assets/Characters/CounterBox.cs" id="8_u6swe"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_kv0qp"]
+radius = 42.0
+height = 172.23
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_nmc61"]
+radius = 42.0
+height = 114.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_woks1"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ung7o"]
+radius = 88.0
+height = 180.0
+
+[node name="Angel" type="CharacterBody2D" node_paths=PackedStringArray("OrderIcon", "OrderNum", "ProjectionTargetIndicator", "Collider", "ProjectionSprite", "Sprite", "Projection", "TargetIndicator", "NavAgent", "Obstacle")]
+y_sort_enabled = true
+collision_mask = 23
+slide_on_ceiling = false
+script = ExtResource("1_njl0g")
+OrderIcon = NodePath("OrderIcon")
+OrderNum = NodePath("OrderIcon/Panel/OrderNum")
+ProjectionTargetIndicator = NodePath("Projection/ProjectionTargetArrow")
+Collider = NodePath("HitBox")
+ProjectionSprite = NodePath("Projection/ProjectionSprite")
+AllyType = 2
+Sprite = NodePath("Sprite")
+Projection = NodePath("Projection")
+TargetIndicator = NodePath("TargetArrow")
+NavAgent = NodePath("NavAgent")
+Obstacle = NodePath("NavigationObstacle2D")
+BaseData = ExtResource("2_njl0g")
+DamageData = ExtResource("3_gr50s")
+
+[node name="HitBox" type="CollisionShape2D" parent="."]
+z_index = 1
+position = Vector2(0, 22.885)
+shape = SubResource("CapsuleShape2D_kv0qp")
+
+[node name="Sprite" parent="." instance=ExtResource("4_ucqsj")]
+animation = &"Front_Walk"
+frame = 0
+frame_progress = 0.0
+
+[node name="NavAgent" parent="." instance=ExtResource("5_5kvbm")]
+radius = 25.0
+neighbor_distance = 700.0
+
+[node name="TargetArrow" parent="." instance=ExtResource("6_1b5mg")]
+position = Vector2(0, 103.29)
+
+[node name="OrderIcon" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Panel" type="Panel" parent="OrderIcon"]
+custom_minimum_size = Vector2(100, 90)
+layout_mode = 0
+offset_left = -135.0
+offset_top = -154.0
+offset_right = -35.0
+offset_bottom = -64.0
+
+[node name="OrderNum" type="RichTextLabel" parent="OrderIcon/Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -50.0
+offset_right = 50.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/normal_font = ExtResource("7_cr5a6")
+theme_override_font_sizes/normal_font_size = 64
+text = "1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Projection" type="Node2D" parent="."]
+visible = false
+
+[node name="ProjectionSprite" parent="Projection" instance=ExtResource("4_ucqsj")]
+modulate = Color(1, 1, 1, 0.141176)
+
+[node name="ProjectionArea" type="Area2D" parent="Projection/ProjectionSprite"]
+collision_mask = 5
+
+[node name="ProjectionCollision" type="CollisionShape2D" parent="Projection/ProjectionSprite/ProjectionArea"]
+position = Vector2(0, 47)
+shape = SubResource("CapsuleShape2D_nmc61")
+
+[node name="ProjectionTargetArrow" parent="Projection" instance=ExtResource("6_1b5mg")]
+position = Vector2(0, 103.29)
+
+[node name="ShapeCast2D" type="ShapeCast2D" parent="."]
+visible = false
+shape = SubResource("RectangleShape2D_woks1")
+target_position = Vector2(663, 0)
+collision_mask = 0
+
+[node name="Counter" type="Area2D" parent="."]
+collision_layer = 65536
+collision_mask = 196608
+script = ExtResource("8_u6swe")
+
+[node name="CounterShape" type="CollisionShape2D" parent="Counter"]
+position = Vector2(1, 18)
+shape = SubResource("CapsuleShape2D_ung7o")
+
+[node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="."]
+position = Vector2(-1, 42)
+radius = 65.0
+avoidance_layers = 256

@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="AbilityUnlockUpgrade" load_steps=3 format=3 uid="uid://dy5lasrlm0u7l"]
+
+[ext_resource type="Resource" uid="uid://hnltgn2v76dk" path="res://Assets/Resources/Abilities/Angel/HolyKick.tres" id="1_k8x8t"]
+[ext_resource type="Script" uid="uid://codmjrsvjg6h7" path="res://Assets/Scripts/Data/Upgrade/AbilityUnlockUpgrade.cs" id="2_7n8sf"]
+
+[resource]
+script = ExtResource("2_7n8sf")
+NewAbility = ExtResource("1_k8x8t")
+UpgradeName = ""
+UpgradeDescription = ""
+metadata/_custom_type_script = "uid://codmjrsvjg6h7"

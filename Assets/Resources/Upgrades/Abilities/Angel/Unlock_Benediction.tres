@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="AbilityUnlockUpgrade" load_steps=3 format=3 uid="uid://x67ipncnm1t0"]
+
+[ext_resource type="Resource" uid="uid://c4jbyn8eramv7" path="res://Assets/Resources/Abilities/Angel/HealingRain.tres" id="1_yjclq"]
+[ext_resource type="Script" uid="uid://codmjrsvjg6h7" path="res://Assets/Scripts/Data/Upgrade/AbilityUnlockUpgrade.cs" id="2_64v2b"]
+
+[resource]
+script = ExtResource("2_64v2b")
+NewAbility = ExtResource("1_yjclq")
+UpgradeName = ""
+UpgradeDescription = ""
+metadata/_custom_type_script = "uid://codmjrsvjg6h7"

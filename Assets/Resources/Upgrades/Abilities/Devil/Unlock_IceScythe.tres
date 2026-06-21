@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="AbilityUnlockUpgrade" load_steps=3 format=3 uid="uid://djvct5ebph7lu"]
+
+[ext_resource type="Resource" uid="uid://b5fefmbarg20b" path="res://Assets/Resources/Abilities/Devil/IceScythe.tres" id="1_fuagt"]
+[ext_resource type="Script" uid="uid://codmjrsvjg6h7" path="res://Assets/Scripts/Data/Upgrade/AbilityUnlockUpgrade.cs" id="2_a50y4"]
+
+[resource]
+script = ExtResource("2_a50y4")
+NewAbility = ExtResource("1_fuagt")
+UpgradeName = ""
+UpgradeDescription = ""
+metadata/_custom_type_script = "uid://codmjrsvjg6h7"

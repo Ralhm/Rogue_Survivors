@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="Ability" load_steps=2 format=3 uid="uid://djvgyadcppclk"]
+
+[ext_resource type="Script" uid="uid://cqipoqgybe2r5" path="res://Assets/Scripts/Data/Abilities/Ability.cs" id="2_lwjwq"]
+
+[resource]
+script = ExtResource("2_lwjwq")
+Name = "Explosion"
+Description = "Massive Fire damage in range. Indiscriminate"
+Range = 600.0
+AimRange = 1000.0
+PowerLevels = PackedFloat32Array(3, 4, 5, 6)
+IsUpgradeable = false
+TargetingType = 3
+AimingType = 1
+Damage_Type = 2
+Element_Type = 1
+Physical_Type = 0
+AbilityAilment = 0
+Restore = 0
+ShoveDirection = 0
+ShoveForce = 0.0
+Point = false
+DecisionType = 0
+metadata/_custom_type_script = "uid://cqipoqgybe2r5"

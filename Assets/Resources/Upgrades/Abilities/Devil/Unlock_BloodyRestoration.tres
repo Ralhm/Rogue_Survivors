@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="AbilityUnlockUpgrade" load_steps=3 format=3 uid="uid://xtqe8vf13ul8"]
+
+[ext_resource type="Resource" uid="uid://bx1mlt5fj4pyy" path="res://Assets/Resources/Abilities/Devil/BloodyRestorarion.tres" id="1_71m00"]
+[ext_resource type="Script" uid="uid://codmjrsvjg6h7" path="res://Assets/Scripts/Data/Upgrade/AbilityUnlockUpgrade.cs" id="2_5bcha"]
+
+[resource]
+script = ExtResource("2_5bcha")
+NewAbility = ExtResource("1_71m00")
+UpgradeName = ""
+UpgradeDescription = ""
+metadata/_custom_type_script = "uid://codmjrsvjg6h7"

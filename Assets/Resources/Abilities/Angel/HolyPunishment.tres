@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="Ability" load_steps=2 format=3 uid="uid://bwqjtu47ug1bs"]
+
+[ext_resource type="Script" uid="uid://cqipoqgybe2r5" path="res://Assets/Scripts/Data/Abilities/Ability.cs" id="1_0iyc1"]
+
+[resource]
+script = ExtResource("1_0iyc1")
+Name = "Holy Punishment"
+Description = "Smite foes in an area"
+Range = 300.0
+AimRange = 0.0
+PowerLevels = PackedFloat32Array(3, 3.2, 4, 2.4)
+IsUpgradeable = true
+TargetingType = 0
+AimingType = 1
+Damage_Type = 2
+Element_Type = 5
+Physical_Type = 0
+Restore = 0
+ShoveDirection = 0
+ShoveForce = 0.0
+Point = false
+DecisionType = 0
+metadata/_custom_type_script = "uid://cqipoqgybe2r5"

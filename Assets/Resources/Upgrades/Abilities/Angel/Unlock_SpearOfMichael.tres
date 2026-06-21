@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="AbilityUnlockUpgrade" load_steps=3 format=3 uid="uid://cdpgnmp5f3so0"]
+
+[ext_resource type="Resource" uid="uid://cgn0od4eimyix" path="res://Assets/Resources/Abilities/Angel/SpearOfMichael.tres" id="1_ctr3x"]
+[ext_resource type="Script" uid="uid://codmjrsvjg6h7" path="res://Assets/Scripts/Data/Upgrade/AbilityUnlockUpgrade.cs" id="2_macfy"]
+
+[resource]
+script = ExtResource("2_macfy")
+NewAbility = ExtResource("1_ctr3x")
+UpgradeName = ""
+UpgradeDescription = ""
+metadata/_custom_type_script = "uid://codmjrsvjg6h7"

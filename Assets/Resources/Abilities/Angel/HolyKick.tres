@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="Ability" load_steps=2 format=3 uid="uid://hnltgn2v76dk"]
+
+[ext_resource type="Script" uid="uid://cqipoqgybe2r5" path="res://Assets/Scripts/Data/Abilities/Ability.cs" id="1_3ot87"]
+
+[resource]
+script = ExtResource("1_3ot87")
+Name = "Holy Kick"
+Description = "Kick an enemy away with holy force"
+Range = 0.8
+AimRange = 0.0
+PowerLevels = PackedFloat32Array(1, 1.2, 1.7, 2.4)
+IsUpgradeable = true
+TargetingType = 0
+AimingType = 0
+Damage_Type = 1
+Element_Type = 5
+Physical_Type = 3
+Restore = 0
+ShoveDirection = 1
+ShoveForce = 4000.0
+Point = false
+DecisionType = 0
+metadata/_custom_type_script = "uid://cqipoqgybe2r5"

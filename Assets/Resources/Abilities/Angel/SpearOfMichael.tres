@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="Ability_Aim" load_steps=2 format=3 uid="uid://cgn0od4eimyix"]
+
+[ext_resource type="Script" uid="uid://cqc6acnefewn7" path="res://Assets/Scripts/Data/Abilities/Ability_Aim.cs" id="1_qv7bj"]
+
+[resource]
+script = ExtResource("1_qv7bj")
+Length = 0.0
+Width = 0.0
+Name = "Spear of Michael"
+Description = "Attack Enemies in a line with a spear"
+Range = 1.0
+AimRange = 0.0
+PowerLevels = PackedFloat32Array(1, 1.2, 1.7, 2.4)
+IsUpgradeable = true
+TargetingType = 0
+AimingType = 0
+Damage_Type = 2
+Element_Type = 5
+Physical_Type = 2
+Restore = 0
+ShoveDirection = 0
+ShoveForce = 0.0
+Point = false
+DecisionType = 0
+metadata/_custom_type_script = "uid://cqc6acnefewn7"

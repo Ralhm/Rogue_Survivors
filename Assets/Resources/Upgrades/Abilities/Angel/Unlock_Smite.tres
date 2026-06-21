@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="AbilityUnlockUpgrade" load_steps=3 format=3 uid="uid://cgx4u6xpybja1"]
+
+[ext_resource type="Resource" uid="uid://pgei63bm0j7h" path="res://Assets/Resources/Abilities/Angel/Smite.tres" id="1_bt4j2"]
+[ext_resource type="Script" uid="uid://codmjrsvjg6h7" path="res://Assets/Scripts/Data/Upgrade/AbilityUnlockUpgrade.cs" id="2_cj2yu"]
+
+[resource]
+script = ExtResource("2_cj2yu")
+NewAbility = ExtResource("1_bt4j2")
+UpgradeName = ""
+UpgradeDescription = ""
+metadata/_custom_type_script = "uid://codmjrsvjg6h7"

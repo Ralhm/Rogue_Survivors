@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="AbilityUnlockUpgrade" load_steps=3 format=3 uid="uid://cobgahb1wtncv"]
+
+[ext_resource type="Resource" uid="uid://de1rkc0a56jpm" path="res://Assets/Resources/Abilities/Devil/Siphon.tres" id="1_yobg4"]
+[ext_resource type="Script" uid="uid://codmjrsvjg6h7" path="res://Assets/Scripts/Data/Upgrade/AbilityUnlockUpgrade.cs" id="2_2pmk0"]
+
+[resource]
+script = ExtResource("2_2pmk0")
+NewAbility = ExtResource("1_yobg4")
+UpgradeName = ""
+UpgradeDescription = ""
+metadata/_custom_type_script = "uid://codmjrsvjg6h7"

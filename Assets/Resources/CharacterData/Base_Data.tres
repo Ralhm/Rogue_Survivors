@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="CharacterData" load_steps=6 format=3 uid="uid://cbc708j4lsyu8"]
+
+[ext_resource type="Resource" uid="uid://cmlutjy65agdc" path="res://Assets/Resources/Abilities/Shove.tres" id="1_wxkc8"]
+[ext_resource type="Resource" uid="uid://gnv8wde0qu6y" path="res://Assets/Resources/Abilities/Mage/Fireball.tres" id="2_6s2ka"]
+[ext_resource type="Resource" uid="uid://d1ssplv42oa2h" path="res://Assets/Resources/Abilities/Cure.tres" id="2_i727k"]
+[ext_resource type="Script" uid="uid://2foo8pp68rrk" path="res://Assets/Scripts/Data/CharacterData.cs" id="4_5ysea"]
+[ext_resource type="Resource" uid="uid://dhu8erv25itlg" path="res://Assets/Resources/Abilities/Slash.tres" id="4_ixdvv"]
+
+[resource]
+script = ExtResource("4_5ysea")
+Name = ""
+MaxHealth = 6
+MoveRange = 750.0
+AttackRange = 250.0
+Attack = 20
+Magic = 20
+PhysDefense = 10
+MagDefense = 10
+DefaultAbilityList = Array[Object]([ExtResource("1_wxkc8"), ExtResource("2_i727k"), ExtResource("2_6s2ka"), ExtResource("4_ixdvv")])
+ElementalWeakness = 0
+ElementalResistance = 0
+PhysicalWeakness = 0
+PhysicalResistance = 0
+metadata/_custom_type_script = "uid://2foo8pp68rrk"

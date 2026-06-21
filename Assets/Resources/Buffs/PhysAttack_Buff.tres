@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="BuffData" load_steps=2 format=3 uid="uid://dlqavnsxfmx53"]
+
+[ext_resource type="Script" uid="uid://b6rdeg483ytv5" path="res://Assets/Scripts/Data/BuffData.cs" id="1_ivyyf"]
+
+[resource]
+script = ExtResource("1_ivyyf")
+BuffName = "Physical Attack"
+BuffType = 1
+Percentage = 20.0
+BaseDuration = 3
+Self = false
+metadata/_custom_type_script = "uid://b6rdeg483ytv5"

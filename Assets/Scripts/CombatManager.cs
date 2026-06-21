@@ -46,7 +46,7 @@ public partial class CombatManager : Node2D
     RangeIndicatorContainer Indices;
 
     [Export]
-    RangeCollider RangeArea;
+    public RangeCollider RangeArea;
 
     //Hold a number of characters that are currently experiencing a force.
     //As long as this number is greater than 0, do NOT progress to the next action
@@ -60,6 +60,11 @@ public partial class CombatManager : Node2D
     int CurrentActionIndex;
 
     public bool AllyPhase = true;
+
+    //This may or may not be necessary
+    public Dictionary<AllyType, Ally> AllyMap = new Dictionary<AllyType, Ally>();
+
+
 
     public override void _Ready()
     {
@@ -85,6 +90,7 @@ public partial class CombatManager : Node2D
         {
             BeginAllyPhaseCall += AllyList[i].OnEndOfPhase;
             BeginAllyPhaseCall += AllyList[i].OnBeginningOfPhase;
+            AllyMap.Add(AllyList[i].AllyType, AllyList[i]);
         }
 
     }
@@ -244,6 +250,12 @@ public partial class CombatManager : Node2D
         Indices.Position = GetGlobalMousePosition();
     }
 
+    public void SetRangeToPos(Vector2 Pos)
+    {
+        RangeArea.Position = Pos;
+        Indices.Position = Pos;
+    }
+
     public bool HasViableTarget()
     {
         if (CurrentlyTargetedCharacter == null)
@@ -305,7 +317,7 @@ public partial class CombatManager : Node2D
         {
             return SpawnDamageToPool(transform, damage);
         }
-        GD.Print("Pooled Damage Count: " + PooledDamageText.Count);
+        //GD.Print("Pooled Damage Text: " + damage);
         for (int i = 0; i < PooledDamageText.Count; i++)
         {
 
@@ -328,12 +340,16 @@ public partial class CombatManager : Node2D
         PooledDamageText.Add(instance);
         GetTree().Root.AddChild(instance);
         instance.SetText(transform, damage);
-        GD.Print("Spawning new Damage!");
+        //GD.Print("Spawning new Damage!");
         return instance;
 
     }
 
 
+    public Ally GetAllyByType(AllyType type)
+    {
+        return AllyMap[type];
+    }
     //RANGE CHECKING
     #region RangeChecking
 
@@ -415,6 +431,7 @@ public partial class CombatManager : Node2D
         return false;
     }
 
+
     #endregion
 
     //RANGE INDICATION
@@ -423,6 +440,7 @@ public partial class CombatManager : Node2D
     //Specifically for Positional type abilities
     public void DisplayTargetRange(TargetType type, float Range)
     {
+
         RangeArea.Monitoring = true;
         if (type == TargetType.Indiscriminate)
         {
@@ -490,8 +508,8 @@ public partial class CombatManager : Node2D
 
     public void SelectEnemyInRange(int increment, float Range, Vector2 Position)
     {
-        GD.Print("Attack Range:" + Range);
-        GD.Print("Enemy Count:" + EnemyList.Length);
+        //GD.Print("Attack Range:" + Range);
+        //GD.Print("Enemy Count:" + EnemyList.Length);
         int i = 0;
         while (i < EnemyList.Length)
         {
@@ -506,13 +524,13 @@ public partial class CombatManager : Node2D
                 CurrentlySelectedTargetIndex = 0;
             }
 
-            GD.Print("Current Target Index: " + CurrentlySelectedTargetIndex);
+            //GD.Print("Current Target Index: " + CurrentlySelectedTargetIndex);
             if (EnemyList[CurrentlySelectedTargetIndex] != null)
             {
 
                 if (CheckTargetInRange(EnemyList[CurrentlySelectedTargetIndex].Position, Range, Position))
                 {
-                    GD.Print("Found Target!");
+                    //GD.Print("Found Target!");
                     CurrentlyTargetedCharacter = EnemyList[CurrentlySelectedTargetIndex];
                     CurrentlyTargetedCharacter.SetTargetArrowVisibility(true);
                     return;
@@ -522,6 +540,12 @@ public partial class CombatManager : Node2D
         }
         CurrentlyTargetedCharacter = null;
         GD.Print("NO ENEMIES IN RANGE");
+    }
+
+    public void SetCurrentTarget(Character target)
+    {
+        CurrentlyTargetedCharacter = target;
+        CurrentlyTargetedCharacter.SetTargetArrowVisibility(true);
     }
 
     public void SelectAllyInRange(int increment, float Range, Vector2 Position)
@@ -556,7 +580,7 @@ public partial class CombatManager : Node2D
                 }
                 if (CheckTargetInRange(AllyList[CurrentlySelectedTargetIndex].GetProjectionPos(), Range, Position)) //Check if their projection is in range
                 {
-                    GD.Print("Projection is within range!");
+                    //GD.Print("Projection is within range!");
                     CurrentlyTargetedCharacter = AllyList[CurrentlySelectedTargetIndex];
                     AllyList[CurrentlySelectedTargetIndex].SetTargetArrowVisibility(true);
                     return;

@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="AbilityUnlockUpgrade" load_steps=3 format=3 uid="uid://chinnri552fs7"]
+
+[ext_resource type="Resource" uid="uid://blpg81ovu3ayf" path="res://Assets/Resources/Abilities/Mage/Concentrate.tres" id="1_hdvit"]
+[ext_resource type="Script" uid="uid://codmjrsvjg6h7" path="res://Assets/Scripts/Data/Upgrade/AbilityUnlockUpgrade.cs" id="2_2xb1i"]
+
+[resource]
+script = ExtResource("2_2xb1i")
+NewAbility = ExtResource("1_hdvit")
+UpgradeName = ""
+UpgradeDescription = ""
+metadata/_custom_type_script = "uid://codmjrsvjg6h7"

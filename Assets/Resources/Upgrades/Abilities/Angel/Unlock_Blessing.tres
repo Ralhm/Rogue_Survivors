@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="AbilityUnlockUpgrade" load_steps=3 format=3 uid="uid://bfrqwohc6kdfq"]
+
+[ext_resource type="Resource" uid="uid://bjef6yq1ua54s" path="res://Assets/Resources/Abilities/Angel/Blessing.tres" id="1_ee8xf"]
+[ext_resource type="Script" uid="uid://codmjrsvjg6h7" path="res://Assets/Scripts/Data/Upgrade/AbilityUnlockUpgrade.cs" id="2_f5j2d"]
+
+[resource]
+script = ExtResource("2_f5j2d")
+NewAbility = ExtResource("1_ee8xf")
+UpgradeName = ""
+UpgradeDescription = ""
+metadata/_custom_type_script = "uid://codmjrsvjg6h7"

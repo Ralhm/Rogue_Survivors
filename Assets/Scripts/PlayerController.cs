@@ -1,20 +1,30 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 
 //TO DO LIST
 //---Move CombatController.ExecuteNextAction Calls to after animations finish
 //---Animation Functionality
 //--Cooler UI
+//--Rewards/Upgrades at end of combat
+//--Combat/Room/Enemy layouts
+//--Load up next combat after selecting combat reward
+//--Check if Target is still in range upon finishing movement and attempting to execute
+//--Ally Death
+//--Enemy Death
+//--Consider making death behavior the same for allies and enemies so they can be revived the same way and don't need unique behavior
 //-Replace the range indices with a proper range circle
-//-Check if Target is still in range upon finishing movement and attempting to execute
-//-Ailments
-//Consider making normal attacks a form of ability
+//-Level up system (basic)
+//-Power levels increase range for certain abilities that don't do damage or buff or whatever
 //Fine-Tune Enemy Behavior
 //Remove Projection for enemies
 //Move Projection stuff out of character and into ally
 //UI Scaling with aspect ratio
+//Consider making normal attacks a form of ability for code streamlining
+//Boss that can only be damaged by being shoved then countered, will become vulnerable if countered enough times
+//Mage Explodes and damages an area around her when countering
 
 public enum CurrentPlayerState
 {
@@ -37,7 +47,8 @@ public partial class PlayerController : Node2D
 
     public static PlayerController Instance { get { return _instance; } }
 
-
+    [Export]
+    public Timer LoadTimer;
 
 
     [Export]
@@ -71,9 +82,17 @@ public partial class PlayerController : Node2D
 
     bool DisablePlayerInput = false;
 
+
+
     public override void _Ready()
     {
         base._Ready();
+
+        //Change this to an async task or something like that
+        DisablePlayerInput = true;
+        LoadTimer.Timeout += SetAllies;
+        LoadTimer.Start();
+
         GD.Randomize();
         if (_instance != null && _instance != this)
         {
@@ -83,17 +102,25 @@ public partial class PlayerController : Node2D
         {
             _instance = this;
         }
+
+
+
+    }
+
+    public void SetAllies()
+    {
+        DisablePlayerInput = false;
+        LoadTimer.Timeout -= SetAllies;
         PossessCharacter();
         ActionMenu.Hide();
 
-        for (int i = 0; i < Allies.Length; i++) {
+        for (int i = 0; i < Allies.Length; i++)
+        {
             Allies[i].CharacterIndex = i;
-            
+
 
 
         }
-
-
     }
 
     public override void _Process(double delta)
@@ -109,17 +136,21 @@ public partial class PlayerController : Node2D
 
             if (PlayerState == CurrentPlayerState.SelectingTarget && CurrentSelectionType == SelectionType.Position)
             {
-                CombatManager.Instance.SetRangePos();
+                if (CheckPositionalAbilityInRange())
+                {
+                    CombatManager.Instance.SetRangePos();
+                }
+                
             }
 
 
-            if (Input.IsActionJustPressed("SelectUp") && CurrentAlly.GetCurrentState() == CurrentState.Moving)
+            if (Input.IsActionJustPressed("SelectUp"))
             {
                 if (PlayerState == CurrentPlayerState.SelectingTarget && CurrentSelectionType == SelectionType.Target)
                 {
                     ChangeSelectedTarget(1);
                 }
-                else
+                else if (PlayerState == CurrentPlayerState.Moving)
                 {
                     UnPossessCharacter();
                     SwapCurrentCharacter(1);
@@ -127,13 +158,13 @@ public partial class PlayerController : Node2D
 
             }
 
-            if (Input.IsActionJustPressed("SelectDown") && CurrentAlly.GetCurrentState() == CurrentState.Moving)
+            if (Input.IsActionJustPressed("SelectDown"))
             {
                 if (PlayerState == CurrentPlayerState.SelectingTarget && CurrentSelectionType == SelectionType.Target)
                 {
                     ChangeSelectedTarget(-1);
                 }
-                else
+                else if (PlayerState == CurrentPlayerState.Moving)
                 {
                     UnPossessCharacter();
                     SwapCurrentCharacter(-1);
@@ -204,7 +235,7 @@ public partial class PlayerController : Node2D
         
         if (CurrentSelectionType == SelectionType.Target && CombatManager.Instance.HasViableTarget())
         {
-            GD.Print("Confirming Target!");
+            //GD.Print("Confirming Target!");
             RegisterTarget();
 
         }
@@ -312,12 +343,24 @@ public partial class PlayerController : Node2D
         CurrentSelectionType = type;
         if (CurrentSelectionType == SelectionType.Target)
         {
-            GD.Print("Setting Target Selection!");
+            //GD.Print("Setting Target Selection!");
             CombatManager.Instance.SetRangeIndices(CurrentAlly.GetStoredOffensiveRange(), CurrentAlly.Position);
+
+            if (CurrentAlly.GetStoredActionType() == StoredAction.Ability)
+            {
+                if (CurrentAlly.GetAbilityTargetType() == TargetType.Self)
+                {
+                    CombatManager.Instance.SetCurrentTarget(CurrentAlly);
+                    return;
+                }
+            }
             ChangeSelectedTarget(1);
+
+
         }
         else if (CurrentSelectionType == SelectionType.Position) {
-            GD.Print("Setting Positional Selection!");
+            //GD.Print("Setting Positional Selection!");
+            CombatManager.Instance.SetRangeToPos(CurrentAlly.Position);
             CombatManager.Instance.DisplayTargetRange(CurrentAlly.GetAbilityTargetType(), CurrentAlly.GetStoredAbilityRange());
         }
     }
@@ -488,7 +531,7 @@ public partial class PlayerController : Node2D
 
     public void FinalizeCommand()
     {
-        GD.Print("Finalizing Command!");
+        //GD.Print("Finalizing Command!");
         ActionMenu.Hide();
         CurrentAlly.SetActionSet();
         AllyActionOrder.Add(CurrentAlly);
@@ -523,7 +566,8 @@ public partial class PlayerController : Node2D
                 CombatManager.Instance.NullifyTargetedCharacter();
                 break;
             case SelectionType.Position:
-                CurrentAlly.SetStoredTargetPos(GetGlobalMousePosition());
+
+                CurrentAlly.SetStoredTargetPos(CombatManager.Instance.RangeArea.Position);
                 CombatManager.Instance.HideTargets();
                 break;
             case SelectionType.Aim:
@@ -531,6 +575,15 @@ public partial class PlayerController : Node2D
                 break;
         }
         FinalizeCommand();
+    }
+
+    public bool CheckPositionalAbilityInRange()
+    {
+        if ((GetGlobalMousePosition() - CurrentAlly.Position).Length() < CurrentAlly.GetStoredAimRange())
+        {
+            return true;
+        }
+        return false;
     }
 
 

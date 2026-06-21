@@ -16,29 +16,31 @@ public partial class AbilityMenu : Control
     [Export]
     RichTextLabel DescriptionText;
 
-    public void SetAbilities(Ability[] abilities)
+    public void SetAbilities(List<Ability> abilities)
     {
-
+        //Generate new buttons if none/not enough have been made
         int i;
-        for (i = 0; i < abilities.Length; i++)
+        for (i = 0; i < abilities.Count; i++)
         {
-
+            
             if (ButtonList.Count <= i)
             {
-                GD.Print("Generating Button!");
+                //GD.Print("Generating Button!");
                 GenerateButton(abilities[i]);
             }
             else
             {
-                GD.Print("Button Already Exists!");
+                //GD.Print("Button Already Exists!");
                 ButtonList[i].Show();
                 ButtonList[i].SetAbility(abilities[i]);
             }
         }
-        if (i < ButtonList.Count - 1) {
-            while (i < ButtonList.Count - 1) { 
+
+        //Hide any extra buttons if there are more buttons than abilities needed to be displayed
+        if (i < ButtonList.Count) {
+            while (i < ButtonList.Count) { 
                 ButtonList[i].Hide();
-            
+                i++;
             }
         }
 
